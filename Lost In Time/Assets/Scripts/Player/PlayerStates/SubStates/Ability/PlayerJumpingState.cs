@@ -1,16 +1,29 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class PlayerJumpingState : MonoBehaviour
+public class PlayerJumpingState : PlayerAbility
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private int jumpsLeft;
+    public PlayerJumpingState(Player player, PlayerStateMachine stateMachine, CharacterData charData, string animBoolName) : base(player, stateMachine, charData, animBoolName)
     {
-        
+        jumpsLeft = charData.jumps;
+    }
+    public override void Enter()
+    {
+        base.Enter();
+
+        player.playerInput.UseJumpInput();
+        core.Movement.SetVelocityY(charData.jumpPower);
+        isAbilityDone = true;
+        jumpsLeft--;
+        player.playerInAirState.SetIsJumping();
+        Debug.Log("Jumping");
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ResetJumps() => jumpsLeft = charData.jumps;
+    public void DecreaseAmountOfJumpsLeft() => jumpsLeft--;
+    public bool CanJump()
     {
-        
+        return jumpsLeft > 0;
     }
 }

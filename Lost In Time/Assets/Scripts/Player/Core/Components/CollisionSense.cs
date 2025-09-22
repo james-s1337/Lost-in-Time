@@ -1,16 +1,17 @@
 using UnityEngine;
 
-public class CollisionSense : MonoBehaviour
+public class CollisionSense : CoreComponent
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public Transform GroundCheck { get => groundCheck; private set => groundCheck = value; }
+    public float GroundCheckRadius { get => groundCheckRadius; private set => groundCheckRadius = value; }
+    public LayerMask WhatIsGround { get => whatIsGround; private set => whatIsGround = value; }
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private float groundCheckRadius;
+    [SerializeField] private LayerMask whatIsGround;
+
+    public bool Ground
     {
-        
+        get => Physics2D.OverlapCircle(GroundCheck.position, groundCheckRadius, whatIsGround);
     }
 }

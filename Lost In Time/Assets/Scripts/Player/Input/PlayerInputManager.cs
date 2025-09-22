@@ -7,7 +7,14 @@ public class PlayerInputManager : MonoBehaviour
     public int NormInputX { get; private set; }
     public bool jumpInput { get; private set; }
     public bool jumpInputStop { get; private set; }
+    private float inputHoldTime = 0.2f;
+    private float jumpInputStartTime;
     public bool fireInput { get; private set; }
+
+    void Update()
+    {
+        CheckJumpInputHoldTime();
+    }
 
     public void OnMoveInput(InputAction.CallbackContext context)
     {
@@ -21,6 +28,7 @@ public class PlayerInputManager : MonoBehaviour
         {
             jumpInput = true;
             jumpInputStop = false;
+            jumpInputStartTime = Time.time;
         }
 
         if (context.canceled)
@@ -28,6 +36,15 @@ public class PlayerInputManager : MonoBehaviour
             jumpInputStop = true;
         }
     }
+    private void CheckJumpInputHoldTime()
+    {
+        if (Time.time >= jumpInputStartTime + inputHoldTime)
+        {
+            jumpInput = false;
+        }
+    }
+
+    public void UseJumpInput() { jumpInput = false; }
 
     public void OnFireInput(InputAction.CallbackContext context)
     {

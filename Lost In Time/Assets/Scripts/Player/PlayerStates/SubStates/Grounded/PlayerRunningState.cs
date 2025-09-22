@@ -1,16 +1,31 @@
 using UnityEngine;
+using UnityEngine.Windows;
 
-public class PlayerRunningState : MonoBehaviour
+public class PlayerRunningState : PlayerGrounded
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public PlayerRunningState(Player player, PlayerStateMachine stateMachine, CharacterData charData, string animBoolName) : base(player, stateMachine, charData, animBoolName)
     {
-        
+    }
+    public override void Enter()
+    {
+        base.Enter();
+
+        Debug.Log("Moving");
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void LogicUpdate()
     {
-        
+        base.LogicUpdate();
+
+        core.Movement.CheckIfShouldFlip(InputX);
+        core.Movement.SetVelocityX(charData.movementSpeed * InputX);
+
+        if (!isExitingState)
+        {
+            if (InputX == 0)
+            {
+                stateMachine.ChangeState(player.playerIdleState);
+            }
+        }
     }
 }
