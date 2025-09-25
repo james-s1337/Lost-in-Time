@@ -38,7 +38,7 @@ public class PlayerGrounded : PlayerState
 
         if (FireInput)
         {
-            // stateMachine.ChangeState(player.playerFireState);
+            stateMachine.ChangeState(player.playerFireState);
         }
         else if (JumpInput && player.playerJumpingState.CanJump())
         {

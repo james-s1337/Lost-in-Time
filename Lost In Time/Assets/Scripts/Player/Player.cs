@@ -14,9 +14,12 @@ public class Player : MonoBehaviour
     public PlayerJumpingState playerJumpingState { get; private set; }
     public PlayerFireState playerFireState { get; private set; }
     public PlayerInAir playerInAirState { get; private set; }
+
+    public Weapon weapon { get; private set; }
     void Awake()
     {
         core = GetComponentInChildren<Core>();
+        weapon = GetComponentInChildren<Weapon>();
         anim = GetComponentInChildren<Animator>();
 
         stateMachine = new PlayerStateMachine();
@@ -28,6 +31,7 @@ public class Player : MonoBehaviour
         playerInAirState = new PlayerInAir(this, stateMachine, charData, "inAir");
 
         stateMachine.ChangeState(playerIdleState);
+        ChangeWeapon(0);
     }
 
     void Start()
@@ -41,6 +45,11 @@ public class Player : MonoBehaviour
     {
         core.LogicUpdate();
         stateMachine.currentState.LogicUpdate();
+    }
+
+    public void ChangeWeapon(int weaponIndex)
+    {
+        weapon.ChangeWeapon(weaponIndex);
     }
 
     // Call these from the animation to call the AnimationTrigger in the states

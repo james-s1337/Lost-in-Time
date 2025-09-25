@@ -46,7 +46,7 @@ public class PlayerInAir : PlayerState
 
         if (FireInput)
         {
-            // stateMachine.ChangeState(player.playerFireState);
+            stateMachine.ChangeState(player.playerFireState);
         }
         else if (isGrounded && core.Movement.velocity.y < 0.01f)
         {

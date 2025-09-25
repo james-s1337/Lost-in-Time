@@ -58,4 +58,9 @@ public class PlayerInputManager : MonoBehaviour
             fireInput = false;
         }
     }
+
+    public void UseFireInput()
+    {
+        fireInput = false;
+    }
 }
