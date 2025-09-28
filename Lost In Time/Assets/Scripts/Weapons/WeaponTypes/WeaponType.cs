@@ -19,5 +19,6 @@ public class WeaponType : MonoBehaviour
 
 public enum WeaponCatalogue
 {
-    Pistol
+    Pistol,
+    Burst
 }

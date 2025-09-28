@@ -7,17 +7,15 @@ public class Weapon : MonoBehaviour
     private Animator anim;
     private Player player;
 
-    [SerializeField] private List<WeaponType> weapons; 
+    [SerializeField] private List<WeaponType> weapons;
+    private int currentWeaponIndex;
 
     private void Awake()
     {
         player = GetComponentInParent<Player>();
         anim = GetComponent<Animator>();
     }
-    private void Start()
-    {
-        weapon.SetPlayer(player);
-    }
+
     #region Melee functions
     public void EnterWeap()
     {
@@ -50,12 +48,31 @@ public class Weapon : MonoBehaviour
     public void ChangeWeapon(int weaponIndex)
     {
         weapon = weapons[weaponIndex];
+        weapon.SetPlayer(player);
+        currentWeaponIndex = weaponIndex;
+        Debug.Log("Weapon Changed: " + weaponIndex);
+    }
+
+    public int GetRandomWeaponIndex()
+    {
+        int newWeaponIndex = Random.Range(0, weapons.Count);
+        Debug.Log("Current: " + currentWeaponIndex + "Want to switch to: " + (weapons.Count - 1));
+        if (newWeaponIndex == currentWeaponIndex && currentWeaponIndex < weapons.Count-1)
+        {
+            newWeaponIndex++;
+        }
+        else
+        {
+            newWeaponIndex--;
+        }
+
+        return newWeaponIndex;
     }
 }
 
 /* Weapon Index
  * 0 = Pistol
- * 
+ * 1 = Burst
  * 
  * 
  * 

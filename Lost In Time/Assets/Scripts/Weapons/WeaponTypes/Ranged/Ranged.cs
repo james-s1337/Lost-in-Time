@@ -18,7 +18,7 @@ public class Ranged : WeaponType
         canFire = true;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         if (weaponData)
         {
@@ -26,7 +26,7 @@ public class Ranged : WeaponType
         }
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (Time.time >= timeSinceLastFire + cooldown && !isFiring)
         {

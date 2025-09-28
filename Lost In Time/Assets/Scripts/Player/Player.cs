@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
     public PlayerInputManager playerInput { get; private set; }
     public Core core { get; private set; }
@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
     public PlayerInAir playerInAirState { get; private set; }
 
     public Weapon weapon { get; private set; }
+
+    private int currentHealth;
     void Awake()
     {
         core = GetComponentInChildren<Core>();
@@ -36,6 +38,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        currentHealth = charData.health;
         core.Movement.SetPlayerGravity(charData.defaultGravity);
         playerInput = GetComponent<PlayerInputManager>();
     }
@@ -52,7 +55,21 @@ public class Player : MonoBehaviour
         weapon.ChangeWeapon(weaponIndex);
     }
 
+    public void ChangeToRandomWeapon()
+    {
+        weapon.ChangeWeapon(weapon.GetRandomWeaponIndex());
+    }
+
     // Call these from the animation to call the AnimationTrigger in the states
     public void AnimationTrigger() => stateMachine.currentState.AnimationTrigger();
     public void AnimationFinishTrigger() => stateMachine.currentState.AnimationFinishTrigger();
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth--;
+        if (currentHealth <= 0)
+        {
+            // Dead
+        }
+    }
 }
