@@ -9,5 +9,5 @@ public class RangedWeaponData : ScriptableObject
     public float burstCooldown = 1f;
     public int numOfShots = 1;
     // Add status effect later
-    public GameObject bulletPrefab;
+    // public GameObject bulletPrefab;
 }

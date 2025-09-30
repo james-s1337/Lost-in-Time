@@ -61,7 +61,7 @@ public class Weapon : MonoBehaviour
         {
             newWeaponIndex++;
         }
-        else
+        else if (newWeaponIndex == currentWeaponIndex && currentWeaponIndex > 0)
         {
             newWeaponIndex--;
         }
@@ -73,7 +73,7 @@ public class Weapon : MonoBehaviour
 /* Weapon Index
  * 0 = Pistol
  * 1 = Burst
- * 
+ * 2 = Mine
  * 
  * 
 */

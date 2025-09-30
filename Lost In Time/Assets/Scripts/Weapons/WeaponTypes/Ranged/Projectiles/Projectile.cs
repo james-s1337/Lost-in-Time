@@ -12,12 +12,12 @@ public class Projectile : MonoBehaviour
         // Play audio
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         Invoke(nameof(DisableBullet), travelTime);
     }
 
-    private void DisableBullet()
+    protected virtual void DisableBullet()
     {
         transform.rotation = Quaternion.identity;
         gameObject.SetActive(false);
@@ -38,5 +38,17 @@ public class Projectile : MonoBehaviour
         {
             return;
         }
+
+        //Check collision of enemy/obstacle
+    }
+
+    protected virtual void DamageEnemy(IDamageable enemyDamageable)
+    {
+        if (enemyDamageable == null)
+        {
+            return;
+        }
+
+        enemyDamageable.TakeDamage(damage);
     }
 }
