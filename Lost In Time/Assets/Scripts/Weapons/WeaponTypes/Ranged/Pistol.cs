@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class Pistol : Ranged
 {
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();   
         weaponType = WeaponCatalogue.Pistol;
     }
     public override void Fire()

@@ -21,5 +21,6 @@ public enum WeaponCatalogue
 {
     Pistol,
     Burst,
-    Mine
+    Mine,
+    Boomerang
 }

@@ -13,7 +13,7 @@ public class Ranged : WeaponType
 
     [SerializeField] protected List<GameObject> bulletPrefabPool;
     protected int bulletIndex;
-    private void Awake()
+    protected virtual void Awake()
     {
         canFire = true;
     }
@@ -79,7 +79,7 @@ public class Ranged : WeaponType
         {
             return;
         }
-        Debug.Log("Yipp1");
+
         if (bulletIndex >= numOfPrefabs)
         {
             bulletIndex = 0;
@@ -91,7 +91,7 @@ public class Ranged : WeaponType
             bulletPrefabPool[bulletIndex].transform.Rotate(0f, 180f, 0f);
         }
         bulletPrefabPool[bulletIndex].SetActive(true);
-        Debug.Log("Yipp2");
+
         bulletIndex++;
     }
 }

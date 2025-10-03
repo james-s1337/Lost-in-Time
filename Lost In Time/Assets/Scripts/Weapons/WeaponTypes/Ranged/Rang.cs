@@ -1,25 +1,16 @@
 using System.Collections;
 using UnityEngine;
 
-public class Burst : Ranged
+public class Rang : Ranged
 {
-    private float burstCooldown;
     protected override void Awake()
     {
         base.Awake();
-        weaponType = WeaponCatalogue.Burst;
-    }
-    protected override void Start()
-    {
-        base.Start();
-        burstCooldown = weaponData.burstCooldown;
+        weaponType = WeaponCatalogue.Pistol;
     }
     protected override void Update()
     {
-        if (Time.time >= timeSinceLastFire + burstCooldown && !isFiring)
-        {
-            canFire = true;
-        }
+        
     }
     public override void Fire()
     {
@@ -36,5 +27,10 @@ public class Burst : Ranged
     protected override IEnumerator SpawnBulletThread()
     {
         return base.SpawnBulletThread();
+    }
+
+    public void SetCanFireTrue()
+    {
+        canFire = true;
     }
 }

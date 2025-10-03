@@ -50,13 +50,11 @@ public class Weapon : MonoBehaviour
         weapon = weapons[weaponIndex];
         weapon.SetPlayer(player);
         currentWeaponIndex = weaponIndex;
-        Debug.Log("Weapon Changed: " + weaponIndex);
     }
 
     public int GetRandomWeaponIndex()
     {
         int newWeaponIndex = Random.Range(0, weapons.Count);
-        Debug.Log("Current: " + currentWeaponIndex + "Want to switch to: " + (weapons.Count - 1));
         if (newWeaponIndex == currentWeaponIndex && currentWeaponIndex < weapons.Count-1)
         {
             newWeaponIndex++;
@@ -74,6 +72,6 @@ public class Weapon : MonoBehaviour
  * 0 = Pistol
  * 1 = Burst
  * 2 = Mine
- * 
+ * 3 = Boomerang
  * 
 */
