@@ -33,6 +33,11 @@ public class Mine : Projectile
         StartCoroutine(DoAOEDamage());
     }
 
+    public override void SetFacingAngle(float angle)
+    {
+        
+    }
+
     private IEnumerator DoAOEDamage()
     {
         Collider2D [] targets = Physics2D.OverlapCircleAll(transform.position, explosionRadius, whatIsEnemy);

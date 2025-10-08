@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Ranged : WeaponType
 {
@@ -12,6 +13,9 @@ public class Ranged : WeaponType
     protected float timeSinceLastFire;
 
     [SerializeField] protected List<GameObject> bulletPrefabPool;
+
+    private Vector2 mouseWorldPosition;
+    private Vector2 direction;
     protected int bulletIndex;
     protected virtual void Awake()
     {
@@ -85,11 +89,23 @@ public class Ranged : WeaponType
             bulletIndex = 0;
         }
 
-        bulletPrefabPool[bulletIndex].transform.position = gameObject.transform.position;
+        mouseWorldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        direction = mouseWorldPosition - (Vector2)transform.position;
+        // Calculate angle in radians
+        float angleRad = Mathf.Atan2(direction.y, direction.x);
+        // Convert to degrees
+        float angleDeg = angleRad * Mathf.Rad2Deg;
+
+        GameObject bullet = bulletPrefabPool[bulletIndex];
+        bullet.transform.position = transform.position;
+        bullet.GetComponent<Projectile>().SetFacingAngle(angleDeg);
+        bullet.GetComponent<Projectile>().SetTravelDirection(direction);
+        /*
         if (player.core.Movement.facingDir == -1)
         {
             bulletPrefabPool[bulletIndex].transform.Rotate(0f, 180f, 0f);
         }
+        */
         bulletPrefabPool[bulletIndex].SetActive(true);
 
         bulletIndex++;

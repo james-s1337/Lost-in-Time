@@ -3,14 +3,14 @@ using UnityEngine;
 public class Boomerang : Projectile
 {
     public bool isReturning { get; private set; }
-    [SerializeField] float travelDistance;
     public AnimationCurve easeOutCurve;
     public AnimationCurve easeInCurve;
     public int maxTargets = 1; // how many enemies can be hit through one run at start
+    [SerializeField] float travelDistance = 8f;
     private int targetsHit;
     // travel time is the lerp time
-    private Vector2 travelPosition;
     private Vector2 startPos;
+    private Vector2 targetPos;
     private Player player;
     private float lerpTime;
     protected override void OnEnable()
@@ -19,8 +19,10 @@ public class Boomerang : Projectile
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         lerpTime = 0;
         targetsHit = 0;
-        travelPosition = new Vector2(transform.position.x + (travelDistance * player.core.Movement.facingDir), transform.position.y);
+        travelTime = travelDistance / travelSpeed;
+
         startPos = transform.position;
+        targetPos = startPos + (Vector2)(travelDirection.normalized * travelDistance);
     }
 
     protected override void Update()
@@ -31,10 +33,10 @@ public class Boomerang : Projectile
             float t = Mathf.Clamp01(lerpTime);
 
             // apply easing
-            float easedT = easeOutCurve.Evaluate(t) * travelSpeed;
-            transform.position = Vector2.Lerp(startPos, travelPosition, easedT);
+            float easedT = easeOutCurve.Evaluate(t);
+            transform.position = Vector2.Lerp(startPos, targetPos, easedT);
 
-            if (t >= travelTime) // finished outward path
+            if (t >= 1f) // finished outward path
             {
                 isReturning = true;
                 lerpTime = 0; // reset for return trip
@@ -46,9 +48,13 @@ public class Boomerang : Projectile
             lerpTime += Time.deltaTime / travelTime;
             float t = Mathf.Clamp01(lerpTime);
 
-            float easedT = easeInCurve.Evaluate(t) * travelSpeed;
+            float easedT = easeInCurve.Evaluate(t);
             transform.position = Vector2.Lerp(startPos, player.transform.position, easedT);
 
+            Vector2 toPlayer = (Vector2)player.transform.position - (Vector2)transform.position;
+            float angleRad = Mathf.Atan2(toPlayer.y, toPlayer.x);
+            float angleDeg = angleRad * Mathf.Rad2Deg;
+            SetFacingAngle(angleDeg);
         }
     }
 

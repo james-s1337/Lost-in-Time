@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour
     protected int damage = 1;
     // Include audio for hit sound
     // Include audio for shoot sound
+    protected Vector3 travelDirection;
     private void Start()
     {
         // Play audio
@@ -24,12 +25,22 @@ public class Projectile : MonoBehaviour
     }
     protected virtual void Update()
     {
-        transform.Translate(new Vector2(travelSpeed * Time.deltaTime, 0f));
+        transform.Translate(travelDirection * Time.deltaTime * travelSpeed, Space.World);
     }
 
     public void SetDamage(int damage)
     {
         this.damage = damage;
+    }
+
+    public virtual void SetFacingAngle(float angle)
+    {
+        transform.rotation = Quaternion.Euler(0f, 0f, angle - 90f);
+    }
+
+    public virtual void SetTravelDirection(Vector3 direction)
+    {
+        travelDirection = direction.normalized;
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
