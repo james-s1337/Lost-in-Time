@@ -75,4 +75,5 @@ public class Weapon : MonoBehaviour
  * 3 = Boomerang
  * 4 = Revolver
  * 5 = Flamethrower
+ * 6 = Sword?
 */

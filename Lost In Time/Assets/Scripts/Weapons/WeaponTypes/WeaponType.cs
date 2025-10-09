@@ -3,6 +3,10 @@ using UnityEngine;
 public class WeaponType : MonoBehaviour
 {
     protected WeaponCatalogue weaponType;
+    protected bool canFire;
+    protected float cooldown;
+    protected bool isFiring;
+    protected float timeSinceLastFire;
     protected Player player;
     public virtual void Fire() { }  
 

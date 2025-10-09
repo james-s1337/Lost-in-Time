@@ -7,10 +7,6 @@ using UnityEngine.InputSystem;
 public class Ranged : WeaponType
 {
     [SerializeField] protected RangedWeaponData weaponData;
-    protected bool canFire;
-    protected bool isFiring;
-    protected float cooldown;
-    protected float timeSinceLastFire;
 
     protected int numOfShots;
 
