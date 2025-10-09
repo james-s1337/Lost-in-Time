@@ -38,9 +38,21 @@ public class PlayerGrounded : PlayerState
 
         if (FireInput)
         {
-            stateMachine.ChangeState(player.playerFireState);
+            player.weapon.UseWeapon();
+            if (mouseWorldPos.x - player.transform.position.x >= 0)
+            {
+                shootingDirection = 1;
+            }
+            else
+            {
+                shootingDirection = -1;
+            }
+
+            core.Movement.CheckIfShouldFlip(shootingDirection);
+            // stateMachine.ChangeState(player.playerFireState);
         }
-        else if (JumpInput && player.playerJumpingState.CanJump())
+
+        if (JumpInput && player.playerJumpingState.CanJump())
         {
             stateMachine.ChangeState(player.playerJumpingState);
         }

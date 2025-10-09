@@ -22,5 +22,11 @@ public enum WeaponCatalogue
     Pistol,
     Burst,
     Mine,
-    Boomerang
+    Boomerang,
+    Revolver,
+    Flamethrower,
+    Flintlock,
+    Crossbow,
+    Longsword,
+    Spear,
 }

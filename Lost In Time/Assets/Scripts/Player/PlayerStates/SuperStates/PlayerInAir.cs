@@ -46,9 +46,21 @@ public class PlayerInAir : PlayerState
 
         if (FireInput)
         {
-            stateMachine.ChangeState(player.playerFireState);
+            player.weapon.UseWeapon();
+            if (mouseWorldPos.x - player.transform.position.x >= 0)
+            {
+                shootingDirection = 1;
+            }
+            else
+            {
+                shootingDirection = -1;
+            }
+
+            core.Movement.CheckIfShouldFlip(shootingDirection);
+            // stateMachine.ChangeState(player.playerFireState);
         }
-        else if (isGrounded && core.Movement.velocity.y < 0.01f)
+
+        if (isGrounded && core.Movement.velocity.y < 0.01f)
         {
             stateMachine.ChangeState(player.playerLandedState);
         }
@@ -59,7 +71,10 @@ public class PlayerInAir : PlayerState
         }
         else
         {
-            core.Movement.CheckIfShouldFlip(InputX);
+            if (!FireInput)
+            {
+                core.Movement.CheckIfShouldFlip(InputX);
+            }
             core.Movement.SetVelocityX(charData.movementSpeed * InputX);
 
             player.anim.SetFloat("yVelocity", core.Movement.velocity.y);

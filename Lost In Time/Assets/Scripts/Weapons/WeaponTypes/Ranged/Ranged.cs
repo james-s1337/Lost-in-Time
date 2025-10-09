@@ -12,6 +12,8 @@ public class Ranged : WeaponType
     protected float cooldown;
     protected float timeSinceLastFire;
 
+    protected int numOfShots;
+
     [SerializeField] protected List<GameObject> bulletPrefabPool;
 
     private Vector2 mouseWorldPosition;
@@ -20,6 +22,7 @@ public class Ranged : WeaponType
     protected virtual void Awake()
     {
         canFire = true;
+        numOfShots = weaponData.numOfShots;
     }
 
     protected virtual void Start()
@@ -49,7 +52,7 @@ public class Ranged : WeaponType
         canFire = false;
         isFiring = true;
 
-        if (weaponData.numOfShots > 1)
+        if (numOfShots > 1)
         {
             StartCoroutine(SpawnBulletThread());
         }
@@ -62,7 +65,7 @@ public class Ranged : WeaponType
 
     protected virtual IEnumerator SpawnBulletThread()
     {
-        for (int i = 0; i < weaponData.numOfShots; i++)
+        for (int i = 0; i < numOfShots; i++)
         {
             SpawnBullet();
             yield return new WaitForSeconds(cooldown);

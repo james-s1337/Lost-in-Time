@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerState
 {
@@ -12,6 +13,9 @@ public class PlayerState
     protected bool isExitingState;
 
     protected float startTime;
+
+    protected Vector2 mouseWorldPos;
+    protected int shootingDirection;
 
     private string animBoolName;
 
@@ -39,7 +43,7 @@ public class PlayerState
         isExitingState = true;
     }
 
-    public virtual void LogicUpdate() { } // Updates every Update()
+    public virtual void LogicUpdate() { mouseWorldPos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()); } // Updates every Update()
 
     public virtual void DoChecks() { } // Ground check, ledge check etc.
 

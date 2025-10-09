@@ -33,7 +33,7 @@ public class Player : MonoBehaviour, IDamageable
         playerInAirState = new PlayerInAir(this, stateMachine, charData, "inAir");
 
         stateMachine.ChangeState(playerIdleState);
-        ChangeWeapon(3);
+        ChangeWeapon(5);
     }
 
     void Start()

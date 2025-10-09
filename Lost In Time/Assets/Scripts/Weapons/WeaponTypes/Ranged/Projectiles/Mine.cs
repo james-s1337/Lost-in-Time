@@ -57,20 +57,20 @@ public class Mine : Projectile
         
     }
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.gameObject.tag == "Player")
         {
             return;
         }
 
         // Check collision with enemy only
-        if (collision.tag == "Enemy")
+        if (collision.gameObject.tag == "Enemy")
         {
-            // DisableBullet()
+            DisableBullet();
         }
 
-        if (collision.tag == "Ground")
+        if (collision.gameObject.tag == "Ground")
         {
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
         }

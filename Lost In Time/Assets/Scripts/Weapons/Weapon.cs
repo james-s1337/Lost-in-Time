@@ -73,5 +73,6 @@ public class Weapon : MonoBehaviour
  * 1 = Burst
  * 2 = Mine
  * 3 = Boomerang
- * 
+ * 4 = Revolver
+ * 5 = Flamethrower
 */

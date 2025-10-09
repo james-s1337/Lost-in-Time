@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &616748439571840860
+--- !u!1 &4620233012349440296
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,40 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5781333131771450197}
-  - component: {fileID: 5663893811694791097}
-  - component: {fileID: 5221694704709888075}
-  - component: {fileID: 1174033930078381618}
-  - component: {fileID: 7883701215107429034}
-  m_Layer: 9
-  m_Name: MineBullet
+  - component: {fileID: 7132123516151316224}
+  - component: {fileID: 5814037108454180510}
+  - component: {fileID: 123314754449126804}
+  - component: {fileID: 1905151683103098403}
+  m_Layer: 0
+  m_Name: FlamethrowerBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!4 &5781333131771450197
+--- !u!4 &7132123516151316224
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 616748439571840860}
+  m_GameObject: {fileID: 4620233012349440296}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.40058, y: 0.0482, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalPosition: {x: 0.11662, y: 1.72078, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &5663893811694791097
+--- !u!212 &5814037108454180510
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 616748439571840860}
+  m_GameObject: {fileID: 4620233012349440296}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -90,31 +89,13 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5221694704709888075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 616748439571840860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fafb6e34cd2399546a8717d3c454651a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  travelSpeed: 0
-  travelTime: 4
-  explosionRadius: 2
-  whatIsEnemy:
-    serializedVersion: 2
-    m_Bits: 256
---- !u!61 &1174033930078381618
+--- !u!61 &123314754449126804
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 616748439571840860}
+  m_GameObject: {fileID: 4620233012349440296}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -138,7 +119,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -154,30 +135,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!50 &7883701215107429034
-Rigidbody2D:
-  serializedVersion: 5
+--- !u!114 &1905151683103098403
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 616748439571840860}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
+  m_GameObject: {fileID: 4620233012349440296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 828fe6cf6807d3b4f9a91b27ad2cd856, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  travelSpeed: 3
+  travelTime: 1.5
+  startSize: {x: 0.3, y: 0.3}
+  endSize: {x: 0.8, y: 0.8}
