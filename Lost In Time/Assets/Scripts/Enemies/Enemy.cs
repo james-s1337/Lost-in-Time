@@ -1,19 +1,24 @@
+using System.Collections;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] private EnemyData enemyData;
     [SerializeField] private string targetTag = "Player";
+
     private Core core;
+    private BoxCollider2D boxCollider;
+
     private GameObject target;
+    private Player player;
 
     private float movementSpeed;
-    private float enemyBoundaryForce = 3f;
     private int currentHealth;
 
     private void Awake()
     {
         core = GetComponentInChildren<Core>();
+        boxCollider = GetComponent<BoxCollider2D>();
 
         movementSpeed = enemyData.speed;
         currentHealth = enemyData.health;
@@ -22,6 +27,10 @@ public class Enemy : MonoBehaviour, IDamageable
     private void Start()
     {
         target = GameObject.FindGameObjectWithTag(targetTag);
+        if (target)
+        {
+            player = target.GetComponent<Player>();
+        }
     }
 
     private void FixedUpdate()
@@ -52,12 +61,22 @@ public class Enemy : MonoBehaviour, IDamageable
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
-            Die();
+            StartCoroutine(Die());
         }  
     }
 
-    private void Die()
+    private IEnumerator Die()
     {
-        gameObject.SetActive(false);
+        // Give player drops
+        if (player)
+        {
+
+        }
+
+        // Die effects
+        boxCollider.enabled = false;
+
+        yield return new WaitForSeconds(0.3f);
+        Destroy(gameObject);
     }
 }
