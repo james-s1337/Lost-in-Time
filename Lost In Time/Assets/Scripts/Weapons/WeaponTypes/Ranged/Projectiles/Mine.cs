@@ -47,8 +47,12 @@ public class Mine : Projectile
         {
             if (target.tag == "Enemy")
             {
-                // Get IDamageable
-                // If IDamageable, DamageEnemy()
+                IDamageable enemyDamageable = target.GetComponent<IDamageable>();
+
+                if (enemyDamageable != null)
+                {
+                    enemyDamageable.TakeDamage(damage);
+                }
             }
         }
         // Play explosion animation for mine sprite

@@ -13,5 +13,5 @@ public class CharacterData : ScriptableObject
     public float gravityFallMult = 2f;
 
     [Header("Vitals")]
-    public int health = 4;
+    public int health = 50;
 }

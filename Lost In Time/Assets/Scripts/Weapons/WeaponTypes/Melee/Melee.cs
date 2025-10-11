@@ -8,6 +8,8 @@ public class Melee : WeaponType
     [SerializeField] protected MeleeData weaponData;
     private BoxCollider2D collider;
     private List<Collider2D> hitList = new List<Collider2D>();
+
+    private int damage;
     public override void Fire()
     {
         if (!canFire)
@@ -28,6 +30,8 @@ public class Melee : WeaponType
     void Awake()
     {
         collider = GetComponent<BoxCollider2D>();
+
+        damage = weaponData.damage;
     }
 
     private void Start()
@@ -65,8 +69,27 @@ public class Melee : WeaponType
     {
         if (collision.tag == "Enemy" && !hitList.Contains(collision))
         {
-            hitList.Add(collision);
-            // Do some damage
+            HitEnemy(collision);
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "Enemy" && !hitList.Contains(collision))
+        {
+            HitEnemy(collision);
+        }
+    }
+
+    private void HitEnemy(Collider2D collision)
+    {
+        hitList.Add(collision);
+        // Do some damage
+        IDamageable enemyDamageable = collision.GetComponent<IDamageable>();
+
+        if (enemyDamageable != null)
+        {
+            enemyDamageable.TakeDamage(damage);
         }
     }
 }

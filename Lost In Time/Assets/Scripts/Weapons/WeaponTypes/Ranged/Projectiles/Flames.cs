@@ -23,4 +23,19 @@ public class Flames : Projectile
             transform.localScale = Vector2.Lerp(startSize, endSize, lerpTime);
         }
     }
+
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        base.OnTriggerEnter2D(collision);
+
+        if (collision.tag == "Enemy")
+        {
+            IDamageable enemyDamageable = collision.GetComponent<IDamageable>();
+
+            if (enemyDamageable != null)
+            {
+                enemyDamageable.TakeDamage(damage);
+            }
+        }
+    }
 }

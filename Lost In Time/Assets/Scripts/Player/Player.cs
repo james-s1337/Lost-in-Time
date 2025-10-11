@@ -15,6 +15,7 @@ public class Player : MonoBehaviour, IDamageable
     public PlayerFireState playerFireState { get; private set; }
     public PlayerInAir playerInAirState { get; private set; }
 
+    [SerializeField] int weaponIndex = 0;
     public Weapon weapon { get; private set; }
 
     private int currentHealth;
@@ -33,7 +34,7 @@ public class Player : MonoBehaviour, IDamageable
         playerInAirState = new PlayerInAir(this, stateMachine, charData, "inAir");
 
         stateMachine.ChangeState(playerIdleState);
-        ChangeWeapon(5);
+        ChangeWeapon(weaponIndex);
     }
 
     void Start()

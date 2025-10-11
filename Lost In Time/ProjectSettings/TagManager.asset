@@ -6,6 +6,8 @@ TagManager:
   tags:
   - PowerCell
   - Ground
+  - Enemy
+  - Camera Follow Object
   layers:
   - Default
   - TransparentFX

@@ -38,9 +38,7 @@ public class Boomerang : Projectile
 
             if (t >= 1f) // finished outward path
             {
-                isReturning = true;
-                lerpTime = 0; // reset for return trip
-                startPos = transform.position; // reset starting pos for return
+                ResetLerpForReturn();
             }
         }
         else // returning
@@ -75,11 +73,25 @@ public class Boomerang : Projectile
         if (collision.tag == "Enemy")
         {
             targetsHit += 1;
+            IDamageable enemyDamageable = collision.GetComponent<IDamageable>();
+
+            if (enemyDamageable != null)
+            {
+                enemyDamageable.TakeDamage(damage);
+            }
+
             if (targetsHit >= maxTargets)
             {
-                isReturning = true;
+                ResetLerpForReturn();
             }   
         }
+    }
+
+    private void ResetLerpForReturn()
+    {
+        isReturning = true;
+        lerpTime = 0; // reset for return trip
+        startPos = transform.position; // reset starting pos for return
     }
 
     private void OnTriggerStay2D(Collider2D collision)

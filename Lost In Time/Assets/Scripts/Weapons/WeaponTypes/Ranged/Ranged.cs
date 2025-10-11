@@ -97,6 +97,7 @@ public class Ranged : WeaponType
 
         GameObject bullet = bulletPrefabPool[bulletIndex];
         bullet.transform.position = transform.position;
+        bullet.GetComponent<Projectile>().SetDamage(weaponData.damage);
         bullet.GetComponent<Projectile>().SetFacingAngle(angleDeg);
         bullet.GetComponent<Projectile>().SetTravelDirection(direction);
         /*
@@ -105,7 +106,7 @@ public class Ranged : WeaponType
             bulletPrefabPool[bulletIndex].transform.Rotate(0f, 180f, 0f);
         }
         */
-        bulletPrefabPool[bulletIndex].SetActive(true);
+        bullet.SetActive(true);
 
         bulletIndex++;
     }
