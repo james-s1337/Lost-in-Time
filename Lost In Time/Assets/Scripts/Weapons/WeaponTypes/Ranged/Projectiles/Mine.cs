@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -7,6 +8,8 @@ public class Mine : Projectile
     [SerializeField] float explosionRadius;
     [SerializeField] LayerMask whatIsEnemy;
     private Rigidbody2D rb;
+
+    private bool isExploding;
 
     protected override void Update()
     {
@@ -20,6 +23,8 @@ public class Mine : Projectile
             rb = GetComponent<Rigidbody2D>();
         }
         rb.constraints = rb.constraints & ~RigidbodyConstraints2D.FreezePositionX & ~RigidbodyConstraints2D.FreezePositionY;
+        isExploding = false;
+
         base.OnEnable();
     }
 
@@ -30,6 +35,7 @@ public class Mine : Projectile
             return;
         }
 
+        isExploding = true;
         StartCoroutine(DoAOEDamage());
     }
 
@@ -61,20 +67,20 @@ public class Mine : Projectile
         
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.tag == "Player" || isExploding)
         {
             return;
         }
 
         // Check collision with enemy only
-        if (collision.gameObject.tag == "Enemy")
+        if (collision.tag == "Enemy")
         {
             DisableBullet();
         }
 
-        if (collision.gameObject.tag == "Ground")
+        if (collision.tag == "Ground")
         {
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
         }

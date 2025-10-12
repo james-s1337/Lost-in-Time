@@ -80,7 +80,7 @@ public class Boomerang : Projectile
                 enemyDamageable.TakeDamage(damage);
             }
 
-            if (targetsHit >= maxTargets)
+            if (targetsHit >= maxTargets && !isReturning)
             {
                 ResetLerpForReturn();
             }   

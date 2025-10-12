@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamageable
@@ -35,6 +36,11 @@ public class Enemy : MonoBehaviour, IDamageable
 
     private void FixedUpdate()
     {
+        if (currentHealth <= 0)
+        {
+            return;
+        }
+
         Chase();
         core.LogicUpdate();
     }
@@ -61,6 +67,7 @@ public class Enemy : MonoBehaviour, IDamageable
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
+            core.Movement.SetVelocityZero();
             StartCoroutine(Die());
         }  
     }
@@ -78,5 +85,15 @@ public class Enemy : MonoBehaviour, IDamageable
 
         yield return new WaitForSeconds(0.3f);
         Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Player player = collision.GetComponent<Player>();
+
+        if (player)
+        {
+            player.core.Movement.AddForce(-(transform.position - player.gameObject.transform.position), 100f);
+        }
     }
 }

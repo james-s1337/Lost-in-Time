@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Movement : CoreComponent
@@ -6,6 +7,9 @@ public class Movement : CoreComponent
     public Vector2 velocity { get; private set; }
     public int facingDir { get; private set; }
     private Vector2 workspace;
+
+    private bool isGettingKnocked = false;
+    private float knockbackTime = 0.1f;
 
     // Player only
     private CameraFollowObject cameraFollowObject;
@@ -16,13 +20,17 @@ public class Movement : CoreComponent
         base.Awake();
 
         rb = GetComponentInParent<Rigidbody2D>();
+
+        facingDir = 1;
+    }
+
+    private void Start()
+    {
         if (GetComponentInParent<Player>())
         {
             cameraFollowObject = GameObject.FindGameObjectWithTag("Camera Follow Object").GetComponent<CameraFollowObject>();
             fallYSpeedDampChangeThreshold = CameraManager.instance.fallSpeedYDampingChangeThreshold;
         }
-
-        facingDir = 1;
     }
 
     public void SetPlayerGravity(float gravity)
@@ -68,11 +76,27 @@ public class Movement : CoreComponent
     // Recoil + Knockback
     public void AddForce(Vector2 direction, float force)
     {
+        SetVelocityZero();
+        isGettingKnocked = true;
+
         rb.AddForce(direction.normalized * force, ForceMode2D.Impulse);
+        StartCoroutine(SetGettingKnockedFalse());
+    }
+
+    private IEnumerator SetGettingKnockedFalse()
+    {
+        yield return new WaitForSeconds(knockbackTime);
+        isGettingKnocked = false;
+        SetVelocityZero();
     }
 
     private void SetFinalVelocity()
     {
+        if (isGettingKnocked)
+        {
+            return;
+        }
+
         rb.linearVelocity = workspace;
         velocity = workspace;
     }
