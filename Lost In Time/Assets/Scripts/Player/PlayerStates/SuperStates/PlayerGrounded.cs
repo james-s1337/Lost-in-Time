@@ -38,7 +38,6 @@ public class PlayerGrounded : PlayerState
 
         if (FireInput)
         {
-            player.weapon.UseWeapon();
             if (mouseWorldPos.x - player.transform.position.x >= 0)
             {
                 shootingDirection = 1;
@@ -49,6 +48,9 @@ public class PlayerGrounded : PlayerState
             }
 
             core.Movement.CheckIfShouldFlip(shootingDirection);
+            shootDirectionSwitchStart = Time.time;
+
+            player.weapon.UseWeapon();
             // stateMachine.ChangeState(player.playerFireState);
         }
 

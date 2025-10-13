@@ -17,7 +17,7 @@ public class PlayerRunningState : PlayerGrounded
     {
         base.LogicUpdate();
 
-        if (!FireInput)
+        if (!FireInput && Time.time >= shootDirectionSwitchStart + directionSwitchCooldown)
         {
             core.Movement.CheckIfShouldFlip(InputX);
         }

@@ -21,12 +21,13 @@ public class Projectile : MonoBehaviour
 
     protected virtual void DisableBullet()
     {
-        transform.rotation = Quaternion.identity;
+        transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         gameObject.SetActive(false);
     }
     protected virtual void Update()
     {
-        transform.Translate(travelDirection * Time.deltaTime * travelSpeed, Space.World);
+        // transform.Translate(travelDirection * Time.deltaTime * travelSpeed, Space.World);
+        transform.Translate(new Vector2(travelSpeed * Time.deltaTime, 0f));
     }
 
     public void SetDamage(int damage)

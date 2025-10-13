@@ -88,24 +88,26 @@ public class Ranged : WeaponType
             bulletIndex = 0;
         }
 
+        /*
         mouseWorldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         direction = mouseWorldPosition - (Vector2)transform.position;
         // Calculate angle in radians
         float angleRad = Mathf.Atan2(direction.y, direction.x);
         // Convert to degrees
         float angleDeg = angleRad * Mathf.Rad2Deg;
+        */
 
         GameObject bullet = bulletPrefabPool[bulletIndex];
         bullet.transform.position = transform.position;
         bullet.GetComponent<Projectile>().SetDamage(weaponData.damage);
-        bullet.GetComponent<Projectile>().SetFacingAngle(angleDeg);
-        bullet.GetComponent<Projectile>().SetTravelDirection(direction);
-        /*
+        // bullet.GetComponent<Projectile>().SetFacingAngle(angleDeg);
+        // bullet.GetComponent<Projectile>().SetTravelDirection(direction);
+
         if (player.core.Movement.facingDir == -1)
         {
-            bulletPrefabPool[bulletIndex].transform.Rotate(0f, 180f, 0f);
+            bullet.transform.Rotate(0f, 180f, 0f);
         }
-        */
+
         bullet.SetActive(true);
 
         bulletIndex++;

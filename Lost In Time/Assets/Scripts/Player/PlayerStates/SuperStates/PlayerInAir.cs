@@ -48,7 +48,7 @@ public class PlayerInAir : PlayerState
 
         if (FireInput)
         {
-            player.weapon.UseWeapon();
+            // Check if melee or ranged
             if (mouseWorldPos.x - player.transform.position.x >= 0)
             {
                 shootingDirection = 1;
@@ -59,6 +59,9 @@ public class PlayerInAir : PlayerState
             }
 
             core.Movement.CheckIfShouldFlip(shootingDirection);
+            shootDirectionSwitchStart = Time.time;
+
+            player.weapon.UseWeapon();
             // stateMachine.ChangeState(player.playerFireState);
         }
 
@@ -73,7 +76,7 @@ public class PlayerInAir : PlayerState
         }
         else
         {
-            if (!FireInput)
+            if (!FireInput && Time.time >= shootDirectionSwitchStart + directionSwitchCooldown)
             {
                 core.Movement.CheckIfShouldFlip(InputX);
             }

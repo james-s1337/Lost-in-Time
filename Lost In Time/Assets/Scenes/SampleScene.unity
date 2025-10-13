@@ -369,7 +369,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &119741694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6718,6 +6718,10 @@ PrefabInstance:
     - target: {fileID: 4620233012349440296, guid: 0dbd973a3e093c845aab2765c0811cb3, type: 3}
       propertyPath: m_Name
       value: FlamethrowerBullet
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620233012349440296, guid: 0dbd973a3e093c845aab2765c0811cb3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7132123516151316224, guid: 0dbd973a3e093c845aab2765c0811cb3, type: 3}
       propertyPath: m_LocalPosition.x
