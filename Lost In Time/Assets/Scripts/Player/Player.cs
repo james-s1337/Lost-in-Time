@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Player : MonoBehaviour, IDamageable
@@ -19,6 +20,9 @@ public class Player : MonoBehaviour, IDamageable
     public Weapon weapon { get; private set; }
 
     private int currentHealth;
+    private float timeSinceDamageTaken;
+    private float takeDamageCooldown = 0.1f;
+    private bool dead;
     void Awake()
     {
         core = GetComponentInChildren<Core>();
@@ -47,6 +51,11 @@ public class Player : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
+        if (dead)
+        {
+            return;
+        }
+
         core.LogicUpdate();
         stateMachine.currentState.LogicUpdate();
     }
@@ -67,10 +76,23 @@ public class Player : MonoBehaviour, IDamageable
 
     public void TakeDamage(int damage)
     {
+        if (Time.time < timeSinceDamageTaken + takeDamageCooldown)
+        {
+            return;
+        }
+
+        timeSinceDamageTaken = Time.time;
         currentHealth--;
+
         if (currentHealth <= 0)
         {
             // Dead
+            Die();
         }
+    }
+    private void Die()
+    {
+        Debug.Log("PLayer ded");
+        //dead = true;
     }
 }

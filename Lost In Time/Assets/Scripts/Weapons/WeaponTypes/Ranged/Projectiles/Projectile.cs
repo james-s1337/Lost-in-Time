@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Projectile : MonoBehaviour
 {
@@ -61,5 +62,6 @@ public class Projectile : MonoBehaviour
         }
 
         enemyDamageable.TakeDamage(damage);
+        DisableBullet();
     }
 }

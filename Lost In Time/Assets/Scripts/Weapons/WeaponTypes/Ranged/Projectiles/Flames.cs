@@ -30,12 +30,17 @@ public class Flames : Projectile
 
         if (collision.tag == "Enemy")
         {
-            IDamageable enemyDamageable = collision.GetComponent<IDamageable>();
-
-            if (enemyDamageable != null)
-            {
-                enemyDamageable.TakeDamage(damage);
-            }
+            DamageEnemy(collision.GetComponent<IDamageable>());
         }
+    }
+
+    protected override void DamageEnemy(IDamageable enemyDamageable)
+    {
+        if (enemyDamageable == null)
+        {
+            return;
+        }
+
+        enemyDamageable.TakeDamage(damage);
     }
 }

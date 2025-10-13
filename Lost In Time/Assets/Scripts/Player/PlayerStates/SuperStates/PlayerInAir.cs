@@ -11,6 +11,8 @@ public class PlayerInAir : PlayerState
     private bool isGrounded;
     private bool coyoteTime;
     private bool isJumping;
+
+    private float maxYFallVelocity = -20f;
     public PlayerInAir(Player player, PlayerStateMachine stateMachine, CharacterData charData, string animBoolName) : base(player, stateMachine, charData, animBoolName)
     {
     }
@@ -83,18 +85,19 @@ public class PlayerInAir : PlayerState
 
     private void CheckJumpMultiplier()
     {
-        if (isJumping)
+        if (!isJumping)
         {
-            if (JumpInputStop)
-            {
-                core.Movement.SetVelocityY(core.Movement.velocity.y * charData.jumpMult);
-                isJumping = false;
-            }
-            else if (core.Movement.velocity.y <= 0f)
-            {
-                isJumping = false;
-            }
+            return;
+        }
 
+        if (JumpInputStop)
+        {
+            core.Movement.SetVelocityY(core.Movement.velocity.y * charData.jumpMult);
+            isJumping = false;
+        }
+        else if (core.Movement.velocity.y <= 0f)
+        {
+            isJumping = false;
         }
     }
 
@@ -109,6 +112,11 @@ public class PlayerInAir : PlayerState
         else
         {
             core.Movement.SetPlayerGravity(charData.defaultGravity);
+        }
+
+        if (core.Movement.velocity.y < maxYFallVelocity)
+        {
+            core.Movement.SetVelocityY(maxYFallVelocity);
         }
     }
 

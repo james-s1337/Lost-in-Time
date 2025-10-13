@@ -8,17 +8,7 @@ public class SingleShot : Projectile
 
         if (collision.tag == "Enemy")
         {
-            IDamageable enemyDamageable = collision.GetComponent<IDamageable>();
-            if (enemyDamageable != null)
-            {
-                enemyDamageable.TakeDamage(damage);
-                DisableBullet();
-            }
+            DamageEnemy(collision.GetComponent<IDamageable>());
         }
-    }
-
-    protected override void Update()
-    {
-        base.Update();
     }
 }

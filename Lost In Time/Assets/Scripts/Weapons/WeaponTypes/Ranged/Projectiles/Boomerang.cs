@@ -73,18 +73,24 @@ public class Boomerang : Projectile
         if (collision.tag == "Enemy")
         {
             targetsHit += 1;
-            IDamageable enemyDamageable = collision.GetComponent<IDamageable>();
 
-            if (enemyDamageable != null)
-            {
-                enemyDamageable.TakeDamage(damage);
-            }
+            DamageEnemy(collision.GetComponent<IDamageable>());
 
             if (targetsHit >= maxTargets && !isReturning)
             {
                 ResetLerpForReturn();
             }   
         }
+    }
+
+    protected override void DamageEnemy(IDamageable enemyDamageable)
+    {
+        if (enemyDamageable == null)
+        {
+            return;
+        }
+
+        enemyDamageable.TakeDamage(damage);
     }
 
     private void ResetLerpForReturn()

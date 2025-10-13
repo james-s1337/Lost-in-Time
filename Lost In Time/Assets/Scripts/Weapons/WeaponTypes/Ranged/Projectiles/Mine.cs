@@ -53,18 +53,23 @@ public class Mine : Projectile
         {
             if (target.tag == "Enemy")
             {
-                IDamageable enemyDamageable = target.GetComponent<IDamageable>();
-
-                if (enemyDamageable != null)
-                {
-                    enemyDamageable.TakeDamage(damage);
-                }
+                DamageEnemy(target.GetComponent<IDamageable>());
             }
         }
         // Play explosion animation for mine sprite
         yield return new WaitForSeconds(0.3f);
         base.DisableBullet();
         
+    }
+
+    protected override void DamageEnemy(IDamageable enemyDamageable)
+    {
+        if (enemyDamageable == null)
+        {
+            return;
+        }
+
+        enemyDamageable.TakeDamage(damage);
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)

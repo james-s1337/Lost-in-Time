@@ -93,7 +93,15 @@ public class Enemy : MonoBehaviour, IDamageable
 
         if (player)
         {
-            player.core.Movement.AddForce(-(transform.position - player.gameObject.transform.position), 100f);
+            player.core.Movement.AddForce(-(transform.position - player.gameObject.transform.position), enemyData.knockback);
+            // DO Damage to player
+            IDamageable playerDamageable = player.GetComponent<IDamageable>();
+            if (playerDamageable == null)
+            {
+                return;
+            }
+
+            playerDamageable.TakeDamage(enemyData.damage);
         }
     }
 }
