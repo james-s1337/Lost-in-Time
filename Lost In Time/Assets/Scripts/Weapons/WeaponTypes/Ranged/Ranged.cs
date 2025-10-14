@@ -69,7 +69,7 @@ public class Ranged : WeaponType
         SetTimeSinceLastFired();
     }
 
-    private void SetTimeSinceLastFired()
+    protected void SetTimeSinceLastFired()
     {
         timeSinceLastFire = Time.time;
         isFiring = false;
@@ -98,15 +98,28 @@ public class Ranged : WeaponType
         */
 
         GameObject bullet = bulletPrefabPool[bulletIndex];
+
         bullet.transform.position = transform.position;
         bullet.GetComponent<Projectile>().SetDamage(weaponData.damage);
         // bullet.GetComponent<Projectile>().SetFacingAngle(angleDeg);
         // bullet.GetComponent<Projectile>().SetTravelDirection(direction);
 
+        if (weaponType == WeaponCatalogue.Boomerang)
+        {
+            bullet.GetComponent<Projectile>().SetTravelDirection(new Vector3(1, 0, 0));
+        }
+
         if (player.core.Movement.facingDir == -1)
         {
             bullet.transform.Rotate(0f, 180f, 0f);
+
+            if (weaponType == WeaponCatalogue.Boomerang)
+            {
+                bullet.GetComponent<Projectile>().SetTravelDirection(new Vector3(-1, 0, 0));
+            }
         }
+
+        
 
         bullet.SetActive(true);
 

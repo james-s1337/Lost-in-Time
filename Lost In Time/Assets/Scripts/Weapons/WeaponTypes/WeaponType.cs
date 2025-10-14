@@ -47,6 +47,7 @@ public enum WeaponCatalogue
     Revolver,
     Flamethrower,
     Flintlock,
+    Shotgun,
     Crossbow,
     Longsword,
     Spear,

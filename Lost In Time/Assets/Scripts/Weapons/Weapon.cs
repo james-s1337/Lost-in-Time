@@ -77,4 +77,5 @@ public class Weapon : MonoBehaviour
  * 4 = Revolver
  * 5 = Flamethrower
  * 6 = Sword?
+ * 7 = Sawed Off
 */
