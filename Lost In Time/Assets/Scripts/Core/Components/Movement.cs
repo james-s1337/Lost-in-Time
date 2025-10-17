@@ -9,7 +9,7 @@ public class Movement : CoreComponent
     private Vector2 workspace;
 
     private bool isGettingKnocked = false;
-    private float knockbackTime = 0.1f;
+    private float knockbackTime = 0.2f;
 
     // Player only
     private CameraFollowObject cameraFollowObject;

@@ -365,14 +365,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SawedOffBullet (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 3249690812859846586, guid: ff86d0993989f59419dd58313c49e422, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6313223478613640246, guid: ff86d0993989f59419dd58313c49e422, type: 3}
-      propertyPath: travelTime
-      value: 0.3
-      objectReference: {fileID: 0}
     - target: {fileID: 7730444417439320703, guid: ff86d0993989f59419dd58313c49e422, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.36291

@@ -4,7 +4,6 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     public WeaponType weapon { get; private set; }
-    public WeaponType reserveWeapon { get; private set; } // Weapon that is currently not being used
     private Animator anim;
     private Player player;
 
