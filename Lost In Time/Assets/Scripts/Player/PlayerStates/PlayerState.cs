@@ -17,7 +17,7 @@ public class PlayerState
     protected Vector2 mouseWorldPos;
     protected int shootingDirection;
     protected float shootDirectionSwitchStart;
-    protected float directionSwitchCooldown = 0.15f;
+    protected float directionSwitchCooldown = 0.2f;
 
     private string animBoolName;
 

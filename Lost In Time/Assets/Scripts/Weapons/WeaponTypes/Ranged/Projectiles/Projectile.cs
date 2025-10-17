@@ -9,6 +9,11 @@ public class Projectile : MonoBehaviour
     // Include audio for hit sound
     // Include audio for shoot sound
     protected Vector3 travelDirection;
+
+    private void Awake()
+    {
+        
+    }
     private void Start()
     {
         // Play audio
@@ -19,9 +24,14 @@ public class Projectile : MonoBehaviour
         Invoke(nameof(DisableBullet), travelTime);
     }
 
+    public void Initialize()
+    {
+        DisableBullet();
+    }
+
     protected virtual void DisableBullet()
     {
-        transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        transform.rotation = Quaternion.identity;
         gameObject.SetActive(false);
     }
     protected virtual void Update()
@@ -33,6 +43,11 @@ public class Projectile : MonoBehaviour
     public void SetDamage(int damage)
     {
         this.damage = damage;
+    }
+
+    public void SetTravelTime(float travelTime)
+    {
+        this.travelTime = travelTime;
     }
 
     public virtual void SetFacingAngle(float angle)

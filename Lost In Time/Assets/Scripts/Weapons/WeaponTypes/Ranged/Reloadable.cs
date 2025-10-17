@@ -3,8 +3,6 @@ using UnityEngine;
 public class Reloadable : Ranged
 {
     protected int bulletsLeft;
-    protected int maxBulletCapacity;
-    protected float reloadTime;
 
     public override void Fire()
     {
@@ -21,8 +19,8 @@ public class Reloadable : Ranged
         base.Awake();
         weaponType = WeaponCatalogue.Revolver;
 
-        maxBulletCapacity = weaponData.numOfShots;
-        bulletsLeft = maxBulletCapacity;
+        ammo = weaponData.numOfShots;
+        bulletsLeft = ammo;
         reloadTime = weaponData.burstCooldown;
         numOfShots = 1;
     }
@@ -32,7 +30,7 @@ public class Reloadable : Ranged
         if (bulletsLeft <= 0 && Time.time >= timeSinceLastFire + reloadTime && !isFiring)
         {
             canFire = true;
-            bulletsLeft = maxBulletCapacity;
+            bulletsLeft = ammo;
         }
         else if (bulletsLeft > 0 && Time.time >= timeSinceLastFire + cooldown && !isFiring)
         {

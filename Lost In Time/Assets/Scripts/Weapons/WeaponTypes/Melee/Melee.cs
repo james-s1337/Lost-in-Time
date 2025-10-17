@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using NUnit.Framework;
 using UnityEngine;
 
 public class Melee : WeaponType
@@ -8,8 +7,6 @@ public class Melee : WeaponType
     [SerializeField] protected MeleeData weaponData;
     private BoxCollider2D collider;
     private List<Collider2D> hitList = new List<Collider2D>();
-
-    private int damage;
     public override void Fire()
     {
         if (!canFire)
@@ -27,7 +24,7 @@ public class Melee : WeaponType
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+    protected override void Awake()
     {
         collider = GetComponent<BoxCollider2D>();
 

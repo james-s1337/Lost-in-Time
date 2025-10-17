@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Spread : Reloadable
 {
-    [SerializeField] private int ammo = 2;
+    [SerializeField] private int pellets = 2;
     [SerializeField] private float spread = 15f; // Angle in between bullets
     private float currentSpread;
     protected override void Awake()
@@ -11,7 +11,7 @@ public class Spread : Reloadable
         base.Awake();
         weaponType = WeaponCatalogue.Shotgun;
 
-        maxBulletCapacity = ammo;
+        ammo = pellets;
         bulletsLeft = ammo;
         reloadTime = weaponData.burstCooldown;
         numOfShots = weaponData.numOfShots;
@@ -27,6 +27,7 @@ public class Spread : Reloadable
         canFire = false;
         isFiring = true;
 
+        Recoil();
         SpawnBullet();
         SetTimeSinceLastFired();
     }
@@ -75,7 +76,7 @@ public class Spread : Reloadable
         GameObject bullet = bulletPrefabPool[bulletIndex];
 
         bullet.transform.position = transform.position;
-        bullet.GetComponent<Projectile>().SetDamage(weaponData.damage);
+        bullet.GetComponent<Projectile>().SetDamage(damage + speedDamage);
 
         if (player.core.Movement.facingDir == -1)
         {

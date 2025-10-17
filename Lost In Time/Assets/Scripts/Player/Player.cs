@@ -62,12 +62,12 @@ public class Player : MonoBehaviour, IDamageable
 
     public void ChangeWeapon(int weaponIndex)
     {
-        weapon.ChangeWeapon(weaponIndex);
+        weapon.ChangeWeapon(weaponIndex, charData);
     }
 
     public void ChangeToRandomWeapon()
     {
-        weapon.ChangeWeapon(weapon.GetRandomWeaponIndex());
+        weapon.ChangeWeapon(weapon.GetRandomWeaponIndex(), charData);
     }
 
     // Call these from the animation to call the AnimationTrigger in the states

@@ -45,10 +45,10 @@ public class Weapon : MonoBehaviour
         weapon.Fire();
     }
 
-    public void ChangeWeapon(int weaponIndex)
+    public void ChangeWeapon(int weaponIndex, CharacterData charData)
     {
         weapon = weapons[weaponIndex];
-        weapon.SetPlayer(player);
+        weapon.SetPlayer(player, charData);
         currentWeaponIndex = weaponIndex;
     }
 

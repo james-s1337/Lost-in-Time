@@ -1,26 +1,44 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 
 public class WeaponType : MonoBehaviour
 {
     protected WeaponCatalogue weaponType;
     protected bool canFire;
-    protected float cooldown;
     protected bool isFiring;
     protected float timeSinceLastFire;
     protected Player player;
+    protected CharacterData charData;
 
-    protected Dictionary<WeaponModifier, int> weaponModifiers = Enum.GetValues(typeof(WeaponModifier)).Cast<WeaponModifier>().ToDictionary(e => e, e => 0);
-    protected List<WeaponPerk> weaponPerks = new List<WeaponPerk>();
+    protected float cooldown;
+    protected int damage;
+    protected int bounce;
+    protected int pierce;
+    protected float travelTime;
+    protected float travelDistance; // Only for boomerang
+    protected float knockback;
+    protected float recoil;
+    protected float projectileSpeed;
+    protected int critChance;
+    protected int critDamage;
+    protected float reloadTime;
+    protected int ammo;
+    protected int speedDamage;
 
+    public Dictionary<WeaponModifier, int> weaponModifiers {get; private set;}
+    protected WeaponPerk[] weaponPerks = new WeaponPerk[3];
+    protected virtual void Awake()
+    {
+        weaponModifiers = Enum.GetValues(typeof(WeaponModifier)).Cast<WeaponModifier>().ToDictionary(e => e, e => 0);
+    }
     public virtual void Fire() { }  
 
-    public void SetPlayer(Player player)
+    public void SetPlayer(Player player, CharacterData charData)
     {
         this.player = player;
+        this.charData = charData;
     }
 
     public WeaponCatalogue GetWeaponType()
@@ -28,23 +46,28 @@ public class WeaponType : MonoBehaviour
         return weaponType;
     }
 
-    public void AddPerk(int perkIndex, WeaponModifier weapMod, int value)
+    public virtual void AddPerk(int perkIndex, WeaponModifier weapMod, int value)
     {
-        RemovePerk(perkIndex, weapMod, weaponPerks[perkIndex].value);
+        RemovePerk(perkIndex);
         weaponPerks[perkIndex].ChangePerk(weapMod, value);
+
         weaponModifiers[weapMod] += value;
     }
 
-    public void RemovePerk(int perkIndex, WeaponModifier weapMod, int value)
+    public virtual WeaponModifier RemovePerk(int perkIndex)
     {
+        WeaponModifier mod = weaponPerks[perkIndex].GetModifier();
+        weaponModifiers[mod] -= weaponPerks[perkIndex].GetValue();
         weaponPerks[perkIndex].SetZero();
-        weaponModifiers[weapMod] -= value;
+
+        return mod;
     }
 }
 
 public enum WeaponCatalogue
 {
     Pistol,
+    EnergyPistol,
     Burst,
     Mine,
     Boomerang,
@@ -54,26 +77,54 @@ public enum WeaponCatalogue
     Shotgun,
     Crossbow,
     Longsword,
+    Katana,
     Spear,
+    Dagger,
+    Khopesh,
+    Cutlass,
+    Sniper,
+    Cannon,
+    IceGun,
 }
 
 public enum WeaponModifier
 {
     // Perks
+    // Weapon Stats
     Cooldown,
     Damage,
     Bounce,
     Piercing,
     TravelDistance,
     Knockback,
+    Recoil,
     ProjectileSpeed,
     CritChance,
     CritDamage,
+    ReloadSpeed,
+    Ammo,
+    SpeedDMG, // How much speed will convert to damage
+    // Spawn
     ArrowSpawn,
     PlasmaSpawn,
-    ReloadSpeed,
-    LifeSteal,
+
+    Waves,
+    Spikes,
+    Drones,
+    // Player Stats
     MovementSpeed,
+    Armor, // Damage reduction
+    JumpPower,
+    JumpCount,
+    DashCount,
+    Health,
+    HealthRegen,
+ 
+    AbilityCooldown,
+    LastStand,
+    Momentum, // Move faster the longer you dont get hit
+    Overshield,
+    // On-hit
     FireDMG,
     PoisonDMG,
     FreezeDMG,
@@ -85,67 +136,56 @@ public enum WeaponModifier
     BleedChance,
     SlowChance,
     FullHPDMG,
-    Adrenaline,
-    LastStand,
-    Ammo,
-    Deflect,
-    Goo,
-    Frostbite,
     NearDMG,
     FarDMG,
     WeakDMG,
-    GGG, // GOLD GOLD GOlD
-    ExpGain,
     OverHeadDMG,
     Backstab,
+    Basic,
+    ProcGod,
+    LifeSteal,
+
+    FirstStrike,
+    ArmorReduction,
+    DashDamage, // Bonus damage after dash
+    StatueDMG,
+    StatusDMG,
+    ExplodingDMG,
+    InAirDMG,
+    HitNRun, // Hitting an enemy for the first time gives you a speed boost
+    Lightning, // Chain lightning
+    ExecuteEnemies,
+    // On Kill
+    Adrenaline,
+    Deflect,
+    Goo,
+    Frostbite,
+    GGG, // GOLD GOLD GOlD
+    ExpGain,
+
+    Triumph, // After getting a kill, gain resistance and hp regen 
+    SoulDMG, // 0.1%+ per kill, stacks to 20% damage
+    HealthOrb,
+    Looting,
+    Virus,
+    Fuel, // Reduce ability cooldown on kill
+    Predator, // After getting a kill with melee, do x2 damage for 3 seconds
+    // When you get hit
     InfectiousTouch,
     BurnTouch,
     FreezingTouch,
     SpikyTouch,
     StickyTouch,
-    Basic,
-    ProcGod,
-
-    // Items (not included in perk section)
-    FirstStrike,
-    Armor, // Damage reduction
-    DashDamage, // Bonus damage after dash
-    JumpPower,
-    JumpCount,
-    DashCount,
-    Health,
-    HealthRegen,
-    Triumph, // After getting a kill, gain resistance and hp regen 
-    SoulDMG, // 0.1%+ per kill, stacks to 20% damage
-    StatueDMG,
-    HealthOrb,
-    Momentum,
-    ArmorReduction,
-    StatusDamage,
-    Looting,
-    FalseCard,
-    Waves,
-    ExplodingDamage,
-    SpeedDMG, // How much speed will convert to damage
-    Spikes,
-    InAirDMG,
-    HitNRun,
-    Virus,
-    Fuel,
-    Lightning,
-    AbilityCooldown,
-    ExecuteEnemies,
-    Predator, // After getting a kill with melee, do x2 damage for 3 seconds
+    // Misc
+    FalseCard, // Purchases are free, 50% chance to break after use
     ExplodingGift, // Dashing leaves bombs behind you
-    Drones,
-    Overshield,
-    DeadlyRush, // Dashing through enemies deals damage
+    DeadlyRush, // Dashing through enemies deals damage 
 }
 
 public struct WeaponPerk
 {
-    public WeaponModifier modifier;
-    public int value;
+    private WeaponModifier modifier;
+    private int value;
 
     public void ChangePerk(WeaponModifier modifier, int value)
     {
@@ -156,5 +196,15 @@ public struct WeaponPerk
     public void SetZero()
     {
         value = 0;
+    }
+
+    public WeaponModifier GetModifier()
+    {
+        return modifier;
+    }
+
+    public int GetValue()
+    {
+        return value;
     }
 }
