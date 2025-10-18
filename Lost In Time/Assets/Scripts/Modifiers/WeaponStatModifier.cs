@@ -3,9 +3,11 @@ using NUnit.Framework;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Modifiers/WeaponModifier")]
-public class WeaponStatModifier : ScriptableObject, IWeaponModifier
+public class WeaponStatModifier : ScriptableObject, IWeaponModifier, IOnHitEffect
 {
     public List<WeaponMod> mods = new List<WeaponMod>();
+    public bool isOnHit;
+    public bool isOnKill;
 
     public void Apply(WeaponStats stats)
     {
@@ -82,6 +84,48 @@ public class WeaponStatModifier : ScriptableObject, IWeaponModifier
             }
         }
     }
+
+    public void ApplyEffects(GameObject hit, Vector2 startPos, Vector2 endPos, int facingDirTotal, WeaponStats stats)
+    {
+        if (!isOnHit || hit == null)
+        {
+            return;
+        }
+
+        Enemy enemy = hit.GetComponent<Enemy>();
+        Player player = stats.GetComponentInParent<Player>();
+
+        if (enemy == null || player == null)
+        {
+            return;
+        }
+
+        // Check if enemy is affected by any status
+        float maxFar = 20f;
+        float maxNear = 2f;
+        float distanceTravelled = (startPos - endPos).magnitude;
+
+        float maxFarDamage = distanceTravelled / maxFar;
+        maxFarDamage = Mathf.Clamp(maxFarDamage, 0f, 10f) * (stats.baseDamage * stats.farDamage);
+
+        float maxNearDamage = maxNear / distanceTravelled;
+        maxNearDamage = Mathf.Clamp(maxNearDamage, 0f, 10f) * (stats.baseDamage * stats.nearDamage);
+
+        float fullHPDMG = 0;
+        if (player.characterStats.currentHP == player.characterStats.baseHP)
+        {
+            fullHPDMG = stats.fullHPDamage * stats.baseDamage;
+        }
+
+        float totalDamage = maxFarDamage + maxNearDamage;
+
+        enemy.TakeDamage(totalDamage);
+
+        if (Random.value < stats.burnChance)
+        {
+            // enemy.ApplyBurn();
+        }
+    }
 }
 
 public enum WeaponModifier
@@ -140,7 +184,6 @@ public enum WeaponModifier
     LightningChance,
     ExecuteEnemies,
     // On Kill
-
     DamageBoostAfterKill,
     SpeedBoostAfterKill,
     ArmorAfterKill,
