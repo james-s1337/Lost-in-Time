@@ -111,19 +111,7 @@ public enum WeaponModifier
     Waves,
     Spikes,
     Drones,
-    // Player Stats
-    MovementSpeed,
-    Armor, // Damage reduction
-    JumpPower,
-    JumpCount,
-    DashCount,
-    Health,
-    HealthRegen,
- 
-    AbilityCooldown,
-    LastStand,
-    Momentum, // Move faster the longer you dont get hit
-    Overshield,
+
     // On-hit
     FireDMG,
     PoisonDMG,
@@ -170,17 +158,7 @@ public enum WeaponModifier
     Virus,
     Fuel, // Reduce ability cooldown on kill
     Predator, // After getting a kill with melee, do x2 damage for 3 seconds
-    // When you get hit
-    InfectiousTouch,
-    BurnTouch,
-    FreezingTouch,
-    SpikyTouch,
-    StickyTouch,
-    // Misc
-    FalseCard, // Purchases are free, 50% chance to break after use
-    ExplodingGift, // Dashing leaves bombs behind you
-    DeadlyRush, // Dashing through enemies deals damage 
-}
+}  
 
 public struct WeaponPerk
 {

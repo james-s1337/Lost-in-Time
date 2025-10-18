@@ -436,7 +436,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &119741694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -455,7 +455,7 @@ MonoBehaviour:
   enemies:
   - {fileID: 2441732194578354388, guid: 7d8fc82fecd9a4f4b991e91b782b8467, type: 3}
   startSpawnRate: 1
-  maxSpawnRate: 0.5
+  maxSpawnRate: 0.7
 --- !u!4 &119741695
 Transform:
   m_ObjectHideFlags: 0
@@ -5417,7 +5417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charData: {fileID: 11400000, guid: 0c1d96ec6dfdcc64ebc228ab1f876811, type: 2}
-  weaponIndex: 7
+  weaponIndex: 3
 --- !u!1 &1693529377
 GameObject:
   m_ObjectHideFlags: 0

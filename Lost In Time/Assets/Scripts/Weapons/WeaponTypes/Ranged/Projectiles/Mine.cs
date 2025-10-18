@@ -53,6 +53,7 @@ public class Mine : Projectile
         {
             if (target.tag == "Enemy")
             {
+                ApplyKnockback(target.GetComponent<Enemy>());
                 DamageEnemy(target.GetComponent<IDamageable>());
             }
         }
@@ -74,7 +75,9 @@ public class Mine : Projectile
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player" || isExploding)
+        base.OnTriggerEnter2D(collision);
+
+        if (isExploding)
         {
             return;
         }

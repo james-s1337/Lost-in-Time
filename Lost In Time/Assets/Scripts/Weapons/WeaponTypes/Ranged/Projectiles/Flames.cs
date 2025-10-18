@@ -30,6 +30,7 @@ public class Flames : Projectile
 
         if (collision.tag == "Enemy")
         {
+            ApplyKnockback(collision.GetComponent<Enemy>());
             DamageEnemy(collision.GetComponent<IDamageable>());
         }
     }

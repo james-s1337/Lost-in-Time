@@ -96,3 +96,30 @@ public class Player : MonoBehaviour, IDamageable
         //dead = true;
     }
 }
+
+public enum PlayerModifiers
+{
+    // Player Stats
+    MovementSpeed,
+    Armor, // Damage reduction
+    JumpPower,
+    JumpCount,
+    DashCount,
+    Health,
+    HealthRegen,
+
+    AbilityCooldown,
+    LastStand,
+    Momentum, // Move faster the longer you dont get hit
+    Overshield,
+    // When you get hit
+    InfectiousTouch,
+    BurnTouch,
+    FreezingTouch,
+    SpikyTouch,
+    StickyTouch,
+    // Misc
+    FalseCard, // Purchases are free, 50% chance to break after use
+    ExplodingGift, // Dashing leaves bombs behind you
+    DeadlyRush, // Dashing through enemies deals damage 
+}

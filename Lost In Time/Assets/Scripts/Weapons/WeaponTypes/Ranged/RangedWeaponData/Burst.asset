@@ -16,4 +16,12 @@ MonoBehaviour:
   cooldown: 0.1
   burstCooldown: 0.7
   numOfShots: 3
-  bulletPrefab: {fileID: 3183512504394825668, guid: 7b9bbeba98113f74185b3fb6eee43f10, type: 3}
+  bounces: 0
+  piercing: 0
+  knockback: 0
+  recoil: 0
+  travelTime: 1
+  travelDistance: 0
+  projectileSpeed: 20
+  critChance: 0
+  critDamage: 0

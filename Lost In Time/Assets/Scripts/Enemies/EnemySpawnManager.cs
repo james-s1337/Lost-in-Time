@@ -10,11 +10,11 @@ public class EnemySpawnManager : MonoBehaviour
     public List<Enemy> enemies;
 
     [SerializeField] private float startSpawnRate = 1f;  
-    [SerializeField] private float maxSpawnRate = 0.5f;
+    [SerializeField] private float maxSpawnRate = 0.7f;
     private float timeSinceLastSpawn;
 
     private float timeSinceLastIncrease;
-    private float spawnRateIncreaseRate = 2f; // Spawn rate increases every 5 seconds
+    private float spawnRateIncreaseRate = 10f; // Spawn rate increases every 5 seconds
     private float spawnRateIncreaseAmount = 0.1f;
     private float currentSpawnRate;
 

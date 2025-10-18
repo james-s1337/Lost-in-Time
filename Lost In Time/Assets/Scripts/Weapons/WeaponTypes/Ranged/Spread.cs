@@ -27,7 +27,6 @@ public class Spread : Reloadable
         canFire = false;
         isFiring = true;
 
-        Recoil();
         SpawnBullet();
         SetTimeSinceLastFired();
     }
@@ -76,7 +75,15 @@ public class Spread : Reloadable
         GameObject bullet = bulletPrefabPool[bulletIndex];
 
         bullet.transform.position = transform.position;
-        bullet.GetComponent<Projectile>().SetDamage(damage + speedDamage);
+
+        Projectile proj = bullet.GetComponent<Projectile>();
+        proj.SetDamage(damage + speedDamage);
+        proj.SetCritChance(critChance);
+        proj.SetCritDamage(critDamage);
+        proj.SetTravelTime(travelTime);
+        proj.SetKnockback(knockback);
+        proj.SetPiercing(pierce);
+        proj.SetProjectileSpeed(projectileSpeed);
 
         if (player.core.Movement.facingDir == -1)
         {

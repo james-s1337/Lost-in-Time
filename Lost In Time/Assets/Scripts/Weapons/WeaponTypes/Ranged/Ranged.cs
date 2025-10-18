@@ -39,10 +39,11 @@ public class Ranged : WeaponType
             recoil = weaponData.recoil;
             critChance = weaponData.critChance;
             critDamage = weaponData.critDamage;
+            projectileSpeed = weaponData.projectileSpeed;
 
-            AddPerk(0, WeaponModifier.Cooldown, 100);
-            AddPerk(1, WeaponModifier.ReloadSpeed, 100);
-            AddPerk(2, WeaponModifier.SpeedDMG, 100);
+            AddPerk(0, WeaponModifier.ProjectileSpeed, 50);
+            AddPerk(1, WeaponModifier.Piercing, 3);
+            AddPerk(2, WeaponModifier.TravelDistance, 10);
         }
     }
 
@@ -65,7 +66,6 @@ public class Ranged : WeaponType
         canFire = false;
         isFiring = true;
 
-        Recoil();
         if (numOfShots > 1)
         {
             StartCoroutine(SpawnBulletThread());
@@ -75,11 +75,6 @@ public class Ranged : WeaponType
             SpawnBullet();
             SetTimeSinceLastFired();
         }
-    }
-
-    protected void Recoil()
-    {
-        player.core.Movement.AddForce(-(player.gameObject.transform.position + new Vector3(player.core.Movement.facingDir, 0, 0)), recoil);
     }
 
     protected virtual IEnumerator SpawnBulletThread()
@@ -124,14 +119,21 @@ public class Ranged : WeaponType
 
         bullet.transform.position = transform.position;
 
-        bullet.GetComponent<Projectile>().SetDamage(damage + speedDamage);
-        bullet.GetComponent <Projectile>().SetTravelTime(travelTime);
+        Projectile proj = bullet.GetComponent<Projectile>();
+        proj.SetDamage(damage + speedDamage);
+        proj.SetCritChance(critChance);
+        proj.SetCritDamage(critDamage);
+        proj.SetTravelTime(travelTime);
+        proj.SetKnockback(knockback);
+        proj.SetPiercing(pierce);
+        proj.SetProjectileSpeed(projectileSpeed);
         // bullet.GetComponent<Projectile>().SetFacingAngle(angleDeg);
         // bullet.GetComponent<Projectile>().SetTravelDirection(direction);
 
         if (weaponType == WeaponCatalogue.Boomerang)
         {
-            bullet.GetComponent<Projectile>().SetTravelDirection(new Vector3(1, 0, 0));
+            proj.SetTravelDirection(new Vector3(1, 0, 0));
+            bullet.GetComponent<Boomerang>().SetTravelDistance(travelDistance);
         }
 
         if (player.core.Movement.facingDir == -1)
@@ -140,7 +142,7 @@ public class Ranged : WeaponType
 
             if (weaponType == WeaponCatalogue.Boomerang)
             {
-                bullet.GetComponent<Projectile>().SetTravelDirection(new Vector3(-1, 0, 0));
+                proj.SetTravelDirection(new Vector3(-1, 0, 0));
             }
         }
 
@@ -200,19 +202,19 @@ public class Ranged : WeaponType
             case WeaponModifier.Damage:
                 damage = weaponData.damage + weaponData.damage * value / 100;
                 break;
-            case WeaponModifier.Bounce: // Clone dummy projectile for bounce
+            case WeaponModifier.Bounce: // Clone dummy projectile for bounce, not used for now
                 bounce = weaponData.bounces + value;
                 break;
             case WeaponModifier.Piercing:
                 pierce = weaponData.piercing + value;
                 break;
-            case WeaponModifier.TravelDistance:
+            case WeaponModifier.TravelDistance: // Only for boomerang
                 travelDistance = weaponData.travelDistance + value;
                 break;
             case WeaponModifier.Knockback:
                 knockback = weaponData.knockback + value;
                 break;
-            case WeaponModifier.Recoil:
+            case WeaponModifier.Recoil: // Not used for now
                 recoil = weaponData.recoil + value;
                 break;
             case WeaponModifier.CritChance:
@@ -229,6 +231,9 @@ public class Ranged : WeaponType
                 break;
             case WeaponModifier.SpeedDMG:
                 speedDamage = (int)(weaponData.damage * (charData.movementSpeed) * value / 100);
+                break;
+            case WeaponModifier.ProjectileSpeed:
+                projectileSpeed = weaponData.projectileSpeed + value;
                 break;
         }
 

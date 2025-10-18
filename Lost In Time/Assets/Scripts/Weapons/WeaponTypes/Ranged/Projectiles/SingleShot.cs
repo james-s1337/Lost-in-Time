@@ -8,6 +8,7 @@ public class SingleShot : Projectile
 
         if (collision.tag == "Enemy")
         {
+            ApplyKnockback(collision.GetComponent<Enemy>());
             DamageEnemy(collision.GetComponent<IDamageable>());
         }
     }

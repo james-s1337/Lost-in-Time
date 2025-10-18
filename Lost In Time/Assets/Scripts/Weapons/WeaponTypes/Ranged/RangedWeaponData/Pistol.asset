@@ -16,3 +16,12 @@ MonoBehaviour:
   cooldown: 0.3
   burstCooldown: 1
   numOfShots: 1
+  bounces: 0
+  piercing: 0
+  knockback: 0
+  recoil: 2
+  travelTime: 1
+  travelDistance: 0
+  projectileSpeed: 25
+  critChance: 0
+  critDamage: 0

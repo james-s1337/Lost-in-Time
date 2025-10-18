@@ -19,6 +19,7 @@ public class Boomerang : Projectile
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         lerpTime = 0;
         targetsHit = 0;
+        maxTargets = piercing;
         travelTime = travelDistance / travelSpeed;
 
         startPos = transform.position;
@@ -58,6 +59,7 @@ public class Boomerang : Projectile
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
+        base.OnTriggerEnter2D(collision);
         if (isReturning)
         {
             Rang rang = collision.GetComponent<Rang>();
@@ -74,6 +76,7 @@ public class Boomerang : Projectile
         {
             targetsHit += 1;
 
+            ApplyKnockback(collision.GetComponent<Enemy>());
             DamageEnemy(collision.GetComponent<IDamageable>());
 
             if (targetsHit >= maxTargets && !isReturning)
@@ -98,6 +101,11 @@ public class Boomerang : Projectile
         isReturning = true;
         lerpTime = 0; // reset for return trip
         startPos = transform.position; // reset starting pos for return
+    }
+
+    public void SetTravelDistance(float travelDistance)
+    {
+        this.travelDistance = travelDistance;
     }
 
     private void OnTriggerStay2D(Collider2D collision)

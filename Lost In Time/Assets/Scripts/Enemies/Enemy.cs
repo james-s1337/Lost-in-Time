@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] private EnemyData enemyData;
     [SerializeField] private string targetTag = "Player";
 
-    private Core core;
+    public Core core { get; private set; }
     private BoxCollider2D boxCollider;
 
     private GameObject target;
