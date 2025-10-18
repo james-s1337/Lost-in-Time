@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using NUnit.Framework;
 using UnityEngine;
 
 public class Player : MonoBehaviour, IDamageable
@@ -7,6 +9,7 @@ public class Player : MonoBehaviour, IDamageable
     public Core core { get; private set; }
     public Animator anim { get; private set; }
     [SerializeField] CharacterData charData;
+    public CharacterStats characterStats { get; private set; }
 
     private PlayerStateMachine stateMachine;
     public PlayerIdleState playerIdleState { get; private set; }
@@ -19,10 +22,12 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] int weaponIndex = 0;
     public Weapon weapon { get; private set; }
 
-    private int currentHealth;
+    private float currentHealth;
     private float timeSinceDamageTaken;
     private float takeDamageCooldown = 0.1f;
     private bool dead;
+
+    public List<ScriptableObject> modifiers = new List<ScriptableObject>();
     void Awake()
     {
         core = GetComponentInChildren<Core>();
@@ -43,9 +48,12 @@ public class Player : MonoBehaviour, IDamageable
 
     void Start()
     {
+        characterStats = GetComponent<CharacterStats>();
         currentHealth = charData.health;
         core.Movement.SetPlayerGravity(charData.defaultGravity);
         playerInput = GetComponent<PlayerInputManager>();
+
+        
     }
 
     // Update is called once per frame
@@ -95,31 +103,4 @@ public class Player : MonoBehaviour, IDamageable
         Debug.Log("PLayer ded");
         //dead = true;
     }
-}
-
-public enum PlayerModifiers
-{
-    // Player Stats
-    MovementSpeed,
-    Armor, // Damage reduction
-    JumpPower,
-    JumpCount,
-    DashCount,
-    Health,
-    HealthRegen,
-
-    AbilityCooldown,
-    LastStand,
-    Momentum, // Move faster the longer you dont get hit
-    Overshield,
-    // When you get hit
-    InfectiousTouch,
-    BurnTouch,
-    FreezingTouch,
-    SpikyTouch,
-    StickyTouch,
-    // Misc
-    FalseCard, // Purchases are free, 50% chance to break after use
-    ExplodingGift, // Dashing leaves bombs behind you
-    DeadlyRush, // Dashing through enemies deals damage 
 }

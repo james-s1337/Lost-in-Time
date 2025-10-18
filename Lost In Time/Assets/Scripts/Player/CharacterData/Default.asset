@@ -15,9 +15,13 @@ MonoBehaviour:
   movementSpeed: 10
   jumpPower: 13
   jumps: 1
+  dashForce: 15
+  dashes: 1
   coyoteTime: 0.2
   jumpMult: 0.5
   defaultGravity: 2.5
-  gravityFloatMult: 0.5
   gravityFallMult: 2
-  health: 4
+  health: 50
+  healthRegen: 4
+  armor: 0
+  baseDamage: 1

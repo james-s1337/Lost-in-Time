@@ -111,7 +111,6 @@ public enum WeaponModifier
     Waves,
     Spikes,
     Drones,
-
     // On-hit
     FireDMG,
     PoisonDMG,

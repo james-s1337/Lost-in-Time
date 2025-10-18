@@ -436,7 +436,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &119741694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5213,6 +5213,7 @@ GameObject:
   - component: {fileID: 1683466800}
   - component: {fileID: 1683466798}
   - component: {fileID: 1683466803}
+  - component: {fileID: 1683466804}
   - component: {fileID: 1683466797}
   - component: {fileID: 1683466802}
   - component: {fileID: 1683466801}
@@ -5418,6 +5419,48 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   charData: {fileID: 11400000, guid: 0c1d96ec6dfdcc64ebc228ab1f876811, type: 2}
   weaponIndex: 3
+  modifiers:
+  - {fileID: 11400000, guid: e6bae47754b5b304a832c143e09568d8, type: 2}
+--- !u!114 &1683466804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683466796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9821aca2034f564f9071e2c017d7b59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  charData: {fileID: 11400000, guid: 0c1d96ec6dfdcc64ebc228ab1f876811, type: 2}
+  baseHP: 0
+  baseHPRegen: 0
+  baseSpeed: 0
+  baseJumpPower: 0
+  baseJumps: 0
+  baseDashForce: 0
+  baseDashes: 0
+  baseArmor: 0
+  baseDamage: 0
+  abilityCooldown: 0
+  baseOvershield: 0
+  currentHP: 0
+  overshield: 0
+  infectiousTouch: 0
+  burningTouch: 0
+  freezingTouch: 0
+  spikyTouch: 0
+  stickyTouch: 0
+  momentum: 0
+  lastStand: 0
+  falseCard: 0
+  explodingGift: 0
+  deadlyRush: 0
+  exp: 0
+  gold: 0
+  level: 0
+  statIncreasePerLevel: 0.2
 --- !u!1 &1693529377
 GameObject:
   m_ObjectHideFlags: 0
