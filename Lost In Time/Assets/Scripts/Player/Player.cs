@@ -41,6 +41,10 @@ public class Player : MonoBehaviour, IDamageable
             {
                 characterStats.AddModifier(statMod);
             }
+            else if (mod is IWeaponModifier weapMod)
+            {
+                weapon.ApplyWeaponModifier(weapMod);
+            }
         }
         // TEMP
 

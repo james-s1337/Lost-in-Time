@@ -4457,6 +4457,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1393462937}
+  - component: {fileID: 1393462940}
   - component: {fileID: 1393462939}
   - component: {fileID: 1393462938}
   m_Layer: 6
@@ -4532,6 +4533,78 @@ MonoBehaviour:
   - {fileID: 755990237}
   - {fileID: 82930717}
   - {fileID: 232853952}
+--- !u!114 &1393462940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1393462936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9548254bc5d548e458d4999483f9ab19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponData: {fileID: 11400000, guid: 54ad1b1261bff3a4ab53996e62b19376, type: 2}
+  baseDamage: 0
+  baseCooldown: 0
+  baseReloadTime: 0
+  baseKnockback: 0
+  baseTravelTime: 0
+  baseTravelDistance: 0
+  baseProjectileSpeed: 0
+  baseCritChance: 0
+  baseCritDamage: 0
+  numOfShots: 0
+  ammo: 0
+  piercing: 0
+  arrowSpawns: 0
+  plasmaSpawns: 0
+  waves: 0
+  spikes: 0
+  drones: 0
+  speedDamageScaling: 0
+  burnChance: 0
+  poisonChance: 0
+  freezeChance: 0
+  bleedChance: 0
+  slowChance: 0
+  armorReduction: 0
+  fireDamage: 0
+  poisonDamage: 0
+  freezeDamage: 0
+  bleedDamage: 0
+  slowDamage: 0
+  fullHPDamage: 0
+  nearDamage: 0
+  farDamage: 0
+  weakDamage: 0
+  overheadDamage: 0
+  backDamage: 0
+  firstStrikeDamage: 0
+  afterDashDamage: 0
+  statueDamage: 0
+  inAirDamage: 0
+  hitAndRun: 0
+  doubleProc: 0
+  lifesteal: 0
+  explosionChance: 0
+  lightningChance: 0
+  executeThreshold: 0
+  damageBoostAfterKill: 0
+  speedBoostAfterKill: 0
+  armorAfterKill: 0
+  regenAfterKill: 0
+  soulDamage: 0
+  healthOrbAfterKill: 0
+  looting: 0
+  virus: 0
+  wildfire: 0
+  frostbite: 0
+  goo: 0
+  hemorrhage: 0
+  fuel: 0
+  predator: 0
 --- !u!1 &1394016008
 GameObject:
   m_ObjectHideFlags: 0
@@ -5425,6 +5498,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9bf65292ccc83894c874c8e78786ffd3, type: 2}
   - {fileID: 11400000, guid: de0d2c8504e9d2a4f95abc7692d96bf3, type: 2}
   - {fileID: 11400000, guid: ec6f4bc6ce3af04478b58d82e5cfd9e6, type: 2}
+  - {fileID: 11400000, guid: ecf9a62266c3ac149aeb61687b36e8d3, type: 2}
 --- !u!114 &1683466804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5461,6 +5535,8 @@ MonoBehaviour:
   falseCard: 0
   explodingGift: 0
   deadlyRush: 0
+  goldGoldGold: 0
+  extraExp: 0
   exp: 0
   gold: 0
   level: 0

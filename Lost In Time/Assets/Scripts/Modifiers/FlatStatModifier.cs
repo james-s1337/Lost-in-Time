@@ -16,7 +16,10 @@ public class FlatStatModifier : ScriptableObject, IStatModifier
             case StatType.JumpCount: stats.baseJumps += (int) amount; break;
             case StatType.DashForce: stats.baseDashForce += amount; break;
             case StatType.DashCount: stats.baseDashes += (int) amount; break;
-            case StatType.Armor: stats.baseArmor += amount; break;
+            case StatType.Armor: 
+                stats.baseArmor += amount;
+                stats.baseArmor = Mathf.Clamp(stats.baseArmor, 0f, 0.9f);
+                break;
             case StatType.AbilityCooldown: stats.abilityCooldown += amount; break;
             case StatType.Overshield: stats.baseOvershield += amount; break;
             case StatType.LastStand: stats.lastStand += amount; break;
@@ -29,6 +32,9 @@ public class FlatStatModifier : ScriptableObject, IStatModifier
             case StatType.FalseCard: stats.falseCard += (int) amount; break;
             case StatType.ExplodingGift: stats.explodingGift += (int) amount; break;
             case StatType.DeadlyRush: stats.deadlyRush += (int) amount; break;
+
+            case StatType.GGG: stats.goldGoldGold += amount; break;
+            case StatType.Exp: stats.extraExp += amount; break;
         }
     }
 }
@@ -59,4 +65,6 @@ public enum StatType
     FalseCard, // Purchases are free, 50% chance to break after use
     ExplodingGift, // Dashing leaves bombs behind you
     DeadlyRush, // Dashing through enemies deals damage 
+    GGG,
+    Exp,
 }

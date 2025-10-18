@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Reflection;
 using System.Xml;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ public class CharacterStats : MonoBehaviour
     public int baseJumps;
     public float baseDashForce;
     public int baseDashes;
-    public float baseArmor;
+    public float baseArmor; // 0 - 0.9
     public float baseDamage;
     public float abilityCooldown; // Not from data, always default of 0
     public float baseOvershield;
@@ -38,6 +39,8 @@ public class CharacterStats : MonoBehaviour
     public int deadlyRush;
 
     // Other stats
+    public float goldGoldGold; // Extra gold percentage
+    public float extraExp; // Extra exp on kill
     public int exp;
     public int gold;
     public int level;
@@ -136,14 +139,14 @@ public class CharacterStats : MonoBehaviour
 
     public void AddEXP(int amount)
     {
-        exp += amount;
+        exp += (int) (amount * extraExp);
 
         CheckLevelUp();
     }
 
     public void AddGold(int amount)
     {
-        gold += amount;
+        gold += (int) (amount * goldGoldGold);
     }
 
     public void RemoveGold(int amount)
@@ -158,6 +161,7 @@ public class CharacterStats : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
+        amount -= amount * baseArmor;
         if (overshield > 0f)
         {
             overshield -= amount;
@@ -188,6 +192,8 @@ public class CharacterStats : MonoBehaviour
 
     public void CalculateStats()
     {
+        ResetAllStats();
+
         baseHP = charData.health + (charData.health * statIncreasePerLevel * (level-1));
         baseHPRegen = charData.healthRegen + (charData.healthRegen * statIncreasePerLevel * (level - 1));
         baseSpeed = charData.movementSpeed;
@@ -197,18 +203,6 @@ public class CharacterStats : MonoBehaviour
         baseDashes = charData.dashes;
         baseArmor = charData.armor;
         baseDamage = charData.baseDamage + (charData.baseDamage * statIncreasePerLevel * (level - 1));
-
-        abilityCooldown = 0;
-        infectiousTouch = 0;
-        burningTouch = 0;
-        freezingTouch = 0;
-        spikyTouch = 0;
-        stickyTouch = 0;
-        falseCard = 0;
-        explodingGift = 0;
-        deadlyRush = 0;
-        lastStand = 0;
-        momentum = 0;
 
         foreach (var modifier in activeModifiers)
         {
@@ -223,6 +217,18 @@ public class CharacterStats : MonoBehaviour
         if (overshield > baseOvershield)
         {
             overshield = baseOvershield;
+        }
+    }
+
+    private void ResetAllStats()
+    {
+        var fields = GetType().GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic);
+        foreach (var field in fields)
+        {
+            if (field.FieldType == typeof(float))
+                field.SetValue(this, 0f);
+            else if (field.FieldType == typeof(int))
+                field.SetValue(this, 0);
         }
     }
 }
