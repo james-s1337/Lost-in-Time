@@ -5,8 +5,8 @@ public class Boomerang : Projectile
     public bool isReturning { get; private set; }
     public AnimationCurve easeOutCurve;
     public AnimationCurve easeInCurve;
-    public int maxTargets = 1; // how many enemies can be hit through one run at start
-    [SerializeField] float travelDistance = 8f;
+    private int maxTargets = 1; // how many enemies can be hit through one run at start
+    private float travelDistance = 8f;
     private int targetsHit;
     // travel time is the lerp time
     private Vector2 startPos;

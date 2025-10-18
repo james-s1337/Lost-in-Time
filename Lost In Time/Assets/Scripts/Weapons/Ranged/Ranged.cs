@@ -8,12 +8,21 @@ using UnityEngine.InputSystem;
 public class Ranged : WeaponType
 {
     [SerializeField] GameObject bulletPrefab;
-    [SerializeField] protected List<GameObject> bulletPrefabPool;
+    protected List<GameObject> bulletPrefabPool = new List<GameObject>();
     protected int bulletIndex;
+
+    private GameObject bulletPoolObject;
 
     protected virtual void Start()
     {
-        
+        bulletPoolObject = new GameObject(weaponType.ToString());
+        if (weaponType == WeaponCatalogue.Flamethrower)
+        {
+            bulletPoolObject.transform.parent = transform;
+            bulletPoolObject.AddComponent<FollowParentPosition>();
+        }
+
+        UpdateBulletPool();
     }
 
     protected virtual void Update()
@@ -107,5 +116,50 @@ public class Ranged : WeaponType
         bullet.SetActive(true);
 
         bulletIndex++;
+    }
+
+    public override void ApplyWeaponModifier(IWeaponModifier mod)
+    {
+        base.ApplyWeaponModifier(mod);
+        UpdateBulletPool();
+    }
+
+    public override void RemoveWeaponModifier(IWeaponModifier mod)
+    {
+        base.RemoveWeaponModifier(mod);
+        UpdateBulletPool();
+    }
+
+    protected virtual void UpdateBulletPool()
+    {
+        if (bulletPoolObject == null || weaponType == WeaponCatalogue.Boomerang)
+        {
+            return;
+        }
+
+        int fireRate = Mathf.RoundToInt(weaponStats.baseTravelTime / weaponStats.baseCooldown);
+        if (weaponType == WeaponCatalogue.Burst)
+        {
+            fireRate = Mathf.RoundToInt(weaponStats.baseTravelTime / weaponStats.baseReloadTime);
+        }
+
+        int bulletCountDiff = fireRate - bulletPrefabPool.Count;
+
+        if (weaponStats.numOfShots > 1)
+        {
+            bulletCountDiff *= weaponStats.numOfShots;
+        }
+
+        if (bulletCountDiff >= 0)
+        {
+            for (int i = 0; i < bulletCountDiff + 1; i++)
+            {
+                GameObject newBulletPrefab = Instantiate(bulletPrefab);
+                newBulletPrefab.GetComponent<Projectile>().Initialize();
+                newBulletPrefab.transform.parent = bulletPoolObject.transform;
+
+                bulletPrefabPool.Add(newBulletPrefab);
+            }
+        }
     }
 }

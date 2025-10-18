@@ -37,12 +37,12 @@ public class WeaponType : MonoBehaviour
         return weaponType;
     }
 
-    public void ApplyWeaponModifier(IWeaponModifier mod)
+    public virtual void ApplyWeaponModifier(IWeaponModifier mod)
     {
         weaponStats.AddModifier(mod);
     }
 
-    public void RemoveWeaponModifier(IWeaponModifier mod)
+    public virtual void RemoveWeaponModifier(IWeaponModifier mod)
     {
         weaponStats.RemoveModifier(mod);
     }

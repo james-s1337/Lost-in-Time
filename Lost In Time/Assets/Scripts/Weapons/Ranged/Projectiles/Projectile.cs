@@ -3,8 +3,8 @@ using UnityEngine.InputSystem;
 
 public class Projectile : MonoBehaviour
 {
-    [SerializeField] protected float travelSpeed;
-    [SerializeField] protected float travelTime;
+    protected float travelSpeed;
+    protected float travelTime;
     protected float damage = 1;
     // Include audio for hit sound
     // Include audio for shoot sound
