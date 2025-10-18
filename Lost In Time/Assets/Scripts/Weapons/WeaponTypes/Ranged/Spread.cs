@@ -3,23 +3,21 @@ using UnityEngine;
 
 public class Spread : Reloadable
 {
-    [SerializeField] private int pellets = 2;
     [SerializeField] private float spread = 15f; // Angle in between bullets
+
     private float currentSpread;
     protected override void Awake()
     {
         base.Awake();
         weaponType = WeaponCatalogue.Shotgun;
 
-        ammo = pellets;
-        bulletsLeft = ammo;
-        reloadTime = weaponData.burstCooldown;
-        numOfShots = weaponData.numOfShots;
+        bulletsLeft = weaponStats.ammo;
+        numOfShots = weaponStats.numOfShots;
     }
 
     public override void Fire()
     {
-        if (!canFire || !weaponData || bulletsLeft <= 0)
+        if (!canFire || !weaponStats || bulletsLeft <= 0)
         {
             return;
         }
@@ -77,13 +75,13 @@ public class Spread : Reloadable
         bullet.transform.position = transform.position;
 
         Projectile proj = bullet.GetComponent<Projectile>();
-        proj.SetDamage(damage + speedDamage);
-        proj.SetCritChance(critChance);
-        proj.SetCritDamage(critDamage);
-        proj.SetTravelTime(travelTime);
-        proj.SetKnockback(knockback);
-        proj.SetPiercing(pierce);
-        proj.SetProjectileSpeed(projectileSpeed);
+        proj.SetDamage(weaponStats.baseDamage);
+        proj.SetCritChance(weaponStats.baseCritChance);
+        proj.SetCritDamage(weaponStats.baseCritDamage);
+        proj.SetTravelTime(weaponStats.baseTravelTime);
+        proj.SetKnockback(weaponStats.baseKnockback);
+        proj.SetPiercing(weaponStats.piercing);
+        proj.SetProjectileSpeed(weaponStats.baseProjectileSpeed);
 
         if (player.core.Movement.facingDir == -1)
         {

@@ -270,6 +270,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 82930716}
+  - component: {fileID: 82930719}
   - component: {fileID: 82930717}
   - component: {fileID: 82930718}
   m_Layer: 6
@@ -353,6 +354,78 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &82930719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82930715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9548254bc5d548e458d4999483f9ab19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponData: {fileID: 11400000, guid: 54ad1b1261bff3a4ab53996e62b19376, type: 2}
+  baseDamage: 0
+  baseCooldown: 0
+  baseReloadTime: 0
+  baseKnockback: 0
+  baseTravelTime: 0
+  baseTravelDistance: 0
+  baseProjectileSpeed: 0
+  baseCritChance: 0
+  baseCritDamage: 0
+  numOfShots: 0
+  ammo: 0
+  piercing: 0
+  arrowSpawns: 0
+  plasmaSpawns: 0
+  waves: 0
+  spikes: 0
+  drones: 0
+  speedDamageScaling: 0
+  burnChance: 0
+  poisonChance: 0
+  freezeChance: 0
+  bleedChance: 0
+  slowChance: 0
+  armorReduction: 0
+  fireDamage: 0
+  poisonDamage: 0
+  freezeDamage: 0
+  bleedDamage: 0
+  slowDamage: 0
+  fullHPDamage: 0
+  nearDamage: 0
+  farDamage: 0
+  weakDamage: 0
+  overheadDamage: 0
+  backDamage: 0
+  firstStrikeDamage: 0
+  afterDashDamage: 0
+  statueDamage: 0
+  inAirDamage: 0
+  hitAndRun: 0
+  doubleProc: 0
+  lifesteal: 0
+  explosionChance: 0
+  lightningChance: 0
+  executeThreshold: 0
+  damageBoostAfterKill: 0
+  speedBoostAfterKill: 0
+  armorAfterKill: 0
+  regenAfterKill: 0
+  soulDamage: 0
+  healthOrbAfterKill: 0
+  looting: 0
+  virus: 0
+  wildfire: 0
+  frostbite: 0
+  goo: 0
+  hemorrhage: 0
+  fuel: 0
+  predator: 0
 --- !u!1001 &83678129
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -646,6 +719,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 232853951}
+  - component: {fileID: 232853953}
   - component: {fileID: 232853952}
   m_Layer: 6
   m_Name: SawedOff
@@ -681,7 +755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5563191c0e3d5e34690bf0f08fd9eb3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponData: {fileID: 11400000, guid: 6a232f7d76c2cf948a3c5545174ce473, type: 2}
+  bulletPrefab: {fileID: 0}
   bulletPrefabPool:
   - {fileID: 5789490072374471090}
   - {fileID: 83678131}
@@ -693,8 +767,79 @@ MonoBehaviour:
   - {fileID: 870259588}
   - {fileID: 1873841560}
   - {fileID: 1173309259}
-  pellets: 2
   spread: 20
+--- !u!114 &232853953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232853950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9548254bc5d548e458d4999483f9ab19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponData: {fileID: 11400000, guid: 71d98332bf0d91a45b51a561e0394bdd, type: 2}
+  baseDamage: 0
+  baseCooldown: 0
+  baseReloadTime: 0
+  baseKnockback: 0
+  baseTravelTime: 0
+  baseTravelDistance: 0
+  baseProjectileSpeed: 0
+  baseCritChance: 0
+  baseCritDamage: 0
+  numOfShots: 0
+  ammo: 0
+  piercing: 0
+  arrowSpawns: 0
+  plasmaSpawns: 0
+  waves: 0
+  spikes: 0
+  drones: 0
+  speedDamageScaling: 0
+  burnChance: 0
+  poisonChance: 0
+  freezeChance: 0
+  bleedChance: 0
+  slowChance: 0
+  armorReduction: 0
+  fireDamage: 0
+  poisonDamage: 0
+  freezeDamage: 0
+  bleedDamage: 0
+  slowDamage: 0
+  fullHPDamage: 0
+  nearDamage: 0
+  farDamage: 0
+  weakDamage: 0
+  overheadDamage: 0
+  backDamage: 0
+  firstStrikeDamage: 0
+  afterDashDamage: 0
+  statueDamage: 0
+  inAirDamage: 0
+  hitAndRun: 0
+  doubleProc: 0
+  lifesteal: 0
+  explosionChance: 0
+  lightningChance: 0
+  executeThreshold: 0
+  damageBoostAfterKill: 0
+  speedBoostAfterKill: 0
+  armorAfterKill: 0
+  regenAfterKill: 0
+  soulDamage: 0
+  healthOrbAfterKill: 0
+  looting: 0
+  virus: 0
+  wildfire: 0
+  frostbite: 0
+  goo: 0
+  hemorrhage: 0
+  fuel: 0
+  predator: 0
 --- !u!1 &247918826 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4620233012349440296, guid: 0dbd973a3e093c845aab2765c0811cb3, type: 3}
@@ -2311,6 +2456,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 730345684}
+  - component: {fileID: 730345687}
   - component: {fileID: 730345686}
   - component: {fileID: 730345685}
   m_Layer: 6
@@ -2393,11 +2539,83 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3cdd05098cd3bd48858efdb8b756adf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponData: {fileID: 11400000, guid: 923e24b895dad8b43b17965f5068cfda, type: 2}
+  bulletPrefab: {fileID: 0}
   bulletPrefabPool:
   - {fileID: 9143612849084513398}
   - {fileID: 683868245}
   - {fileID: 1127434940}
+--- !u!114 &730345687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730345683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9548254bc5d548e458d4999483f9ab19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponData: {fileID: 11400000, guid: 405e86da596d94249a229cb570f9bec6, type: 2}
+  baseDamage: 0
+  baseCooldown: 0
+  baseReloadTime: 0
+  baseKnockback: 0
+  baseTravelTime: 0
+  baseTravelDistance: 0
+  baseProjectileSpeed: 0
+  baseCritChance: 0
+  baseCritDamage: 0
+  numOfShots: 0
+  ammo: 0
+  piercing: 0
+  arrowSpawns: 0
+  plasmaSpawns: 0
+  waves: 0
+  spikes: 0
+  drones: 0
+  speedDamageScaling: 0
+  burnChance: 0
+  poisonChance: 0
+  freezeChance: 0
+  bleedChance: 0
+  slowChance: 0
+  armorReduction: 0
+  fireDamage: 0
+  poisonDamage: 0
+  freezeDamage: 0
+  bleedDamage: 0
+  slowDamage: 0
+  fullHPDamage: 0
+  nearDamage: 0
+  farDamage: 0
+  weakDamage: 0
+  overheadDamage: 0
+  backDamage: 0
+  firstStrikeDamage: 0
+  afterDashDamage: 0
+  statueDamage: 0
+  inAirDamage: 0
+  hitAndRun: 0
+  doubleProc: 0
+  lifesteal: 0
+  explosionChance: 0
+  lightningChance: 0
+  executeThreshold: 0
+  damageBoostAfterKill: 0
+  speedBoostAfterKill: 0
+  armorAfterKill: 0
+  regenAfterKill: 0
+  soulDamage: 0
+  healthOrbAfterKill: 0
+  looting: 0
+  virus: 0
+  wildfire: 0
+  frostbite: 0
+  goo: 0
+  hemorrhage: 0
+  fuel: 0
+  predator: 0
 --- !u!1001 &747097267
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2478,6 +2696,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 755990236}
+  - component: {fileID: 755990238}
   - component: {fileID: 755990237}
   m_Layer: 6
   m_Name: Flamethrower
@@ -2514,7 +2733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 119866dfb2ff94548b17f418de473231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponData: {fileID: 11400000, guid: 8d3234ad60adb0e46bbb3d3e9c8ffb30, type: 2}
+  bulletPrefab: {fileID: 0}
   bulletPrefabPool:
   - {fileID: 6625836516994038916}
   - {fileID: 499808959}
@@ -2526,6 +2745,78 @@ MonoBehaviour:
   - {fileID: 77976571}
   - {fileID: 835424735}
   - {fileID: 1804526258}
+--- !u!114 &755990238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755990235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9548254bc5d548e458d4999483f9ab19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponData: {fileID: 11400000, guid: 7e5214e3135ed7e4b9b89be9ed05c73a, type: 2}
+  baseDamage: 0
+  baseCooldown: 0
+  baseReloadTime: 0
+  baseKnockback: 0
+  baseTravelTime: 0
+  baseTravelDistance: 0
+  baseProjectileSpeed: 0
+  baseCritChance: 0
+  baseCritDamage: 0
+  numOfShots: 0
+  ammo: 0
+  piercing: 0
+  arrowSpawns: 0
+  plasmaSpawns: 0
+  waves: 0
+  spikes: 0
+  drones: 0
+  speedDamageScaling: 0
+  burnChance: 0
+  poisonChance: 0
+  freezeChance: 0
+  bleedChance: 0
+  slowChance: 0
+  armorReduction: 0
+  fireDamage: 0
+  poisonDamage: 0
+  freezeDamage: 0
+  bleedDamage: 0
+  slowDamage: 0
+  fullHPDamage: 0
+  nearDamage: 0
+  farDamage: 0
+  weakDamage: 0
+  overheadDamage: 0
+  backDamage: 0
+  firstStrikeDamage: 0
+  afterDashDamage: 0
+  statueDamage: 0
+  inAirDamage: 0
+  hitAndRun: 0
+  doubleProc: 0
+  lifesteal: 0
+  explosionChance: 0
+  lightningChance: 0
+  executeThreshold: 0
+  damageBoostAfterKill: 0
+  speedBoostAfterKill: 0
+  armorAfterKill: 0
+  regenAfterKill: 0
+  soulDamage: 0
+  healthOrbAfterKill: 0
+  looting: 0
+  virus: 0
+  wildfire: 0
+  frostbite: 0
+  goo: 0
+  hemorrhage: 0
+  fuel: 0
+  predator: 0
 --- !u!1 &807406255 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4620233012349440296, guid: 0dbd973a3e093c845aab2765c0811cb3, type: 3}
@@ -3869,6 +4160,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1171340870}
+  - component: {fileID: 1171340872}
   - component: {fileID: 1171340871}
   m_Layer: 6
   m_Name: Mine
@@ -3904,7 +4196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e38166136192474993130f8ee6a120d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponData: {fileID: 11400000, guid: 72926c68255991e428c4fee6a9299035, type: 2}
+  bulletPrefab: {fileID: 0}
   bulletPrefabPool:
   - {fileID: 4055973061711662165}
   - {fileID: 2010687652}
@@ -3912,6 +4204,78 @@ MonoBehaviour:
   - {fileID: 1980715600}
   - {fileID: 300059038}
   - {fileID: 1514381314}
+--- !u!114 &1171340872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171340869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9548254bc5d548e458d4999483f9ab19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponData: {fileID: 11400000, guid: 9d673af72cfa7234da868253cf0f9467, type: 2}
+  baseDamage: 0
+  baseCooldown: 0
+  baseReloadTime: 0
+  baseKnockback: 0
+  baseTravelTime: 0
+  baseTravelDistance: 0
+  baseProjectileSpeed: 0
+  baseCritChance: 0
+  baseCritDamage: 0
+  numOfShots: 0
+  ammo: 0
+  piercing: 0
+  arrowSpawns: 0
+  plasmaSpawns: 0
+  waves: 0
+  spikes: 0
+  drones: 0
+  speedDamageScaling: 0
+  burnChance: 0
+  poisonChance: 0
+  freezeChance: 0
+  bleedChance: 0
+  slowChance: 0
+  armorReduction: 0
+  fireDamage: 0
+  poisonDamage: 0
+  freezeDamage: 0
+  bleedDamage: 0
+  slowDamage: 0
+  fullHPDamage: 0
+  nearDamage: 0
+  farDamage: 0
+  weakDamage: 0
+  overheadDamage: 0
+  backDamage: 0
+  firstStrikeDamage: 0
+  afterDashDamage: 0
+  statueDamage: 0
+  inAirDamage: 0
+  hitAndRun: 0
+  doubleProc: 0
+  lifesteal: 0
+  explosionChance: 0
+  lightningChance: 0
+  executeThreshold: 0
+  damageBoostAfterKill: 0
+  speedBoostAfterKill: 0
+  armorAfterKill: 0
+  regenAfterKill: 0
+  soulDamage: 0
+  healthOrbAfterKill: 0
+  looting: 0
+  virus: 0
+  wildfire: 0
+  frostbite: 0
+  goo: 0
+  hemorrhage: 0
+  fuel: 0
+  predator: 0
 --- !u!1001 &1173309258
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4324,6 +4688,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1364522112}
+  - component: {fileID: 1364522114}
   - component: {fileID: 1364522113}
   m_Layer: 6
   m_Name: Burst
@@ -4359,7 +4724,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 891149131f898174c8fe3dc054e13fa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponData: {fileID: 11400000, guid: 3416de283e737b44bbeefce3665c5abc, type: 2}
+  bulletPrefab: {fileID: 0}
   bulletPrefabPool:
   - {fileID: 4055973061852098959}
   - {fileID: 1189253121}
@@ -4373,6 +4738,78 @@ MonoBehaviour:
   - {fileID: 882553277}
   - {fileID: 663294434}
   - {fileID: 538463012}
+--- !u!114 &1364522114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1364522111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9548254bc5d548e458d4999483f9ab19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponData: {fileID: 11400000, guid: 3b735a79fc2f7b34bbac9cb7a3f96eac, type: 2}
+  baseDamage: 0
+  baseCooldown: 0
+  baseReloadTime: 0
+  baseKnockback: 0
+  baseTravelTime: 0
+  baseTravelDistance: 0
+  baseProjectileSpeed: 0
+  baseCritChance: 0
+  baseCritDamage: 0
+  numOfShots: 0
+  ammo: 0
+  piercing: 0
+  arrowSpawns: 0
+  plasmaSpawns: 0
+  waves: 0
+  spikes: 0
+  drones: 0
+  speedDamageScaling: 0
+  burnChance: 0
+  poisonChance: 0
+  freezeChance: 0
+  bleedChance: 0
+  slowChance: 0
+  armorReduction: 0
+  fireDamage: 0
+  poisonDamage: 0
+  freezeDamage: 0
+  bleedDamage: 0
+  slowDamage: 0
+  fullHPDamage: 0
+  nearDamage: 0
+  farDamage: 0
+  weakDamage: 0
+  overheadDamage: 0
+  backDamage: 0
+  firstStrikeDamage: 0
+  afterDashDamage: 0
+  statueDamage: 0
+  inAirDamage: 0
+  hitAndRun: 0
+  doubleProc: 0
+  lifesteal: 0
+  explosionChance: 0
+  lightningChance: 0
+  executeThreshold: 0
+  damageBoostAfterKill: 0
+  speedBoostAfterKill: 0
+  armorAfterKill: 0
+  regenAfterKill: 0
+  soulDamage: 0
+  healthOrbAfterKill: 0
+  looting: 0
+  virus: 0
+  wildfire: 0
+  frostbite: 0
+  goo: 0
+  hemorrhage: 0
+  fuel: 0
+  predator: 0
 --- !u!1001 &1386143799
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4457,7 +4894,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1393462937}
-  - component: {fileID: 1393462940}
   - component: {fileID: 1393462939}
   - component: {fileID: 1393462938}
   m_Layer: 6
@@ -4533,19 +4969,73 @@ MonoBehaviour:
   - {fileID: 755990237}
   - {fileID: 82930717}
   - {fileID: 232853952}
---- !u!114 &1393462940
+--- !u!1 &1394016008
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1394016009}
+  - component: {fileID: 1394016011}
+  - component: {fileID: 1394016010}
+  m_Layer: 6
+  m_Name: Revolver
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1394016009
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394016008}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1393462937}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1394016010
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1393462936}
+  m_GameObject: {fileID: 1394016008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a232c145281c9a43a1f6ed77958e3a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 0}
+  bulletPrefabPool:
+  - {fileID: 3625163599852814209}
+  - {fileID: 1676859259}
+  - {fileID: 1834059230}
+  - {fileID: 2132884705}
+  - {fileID: 1536401410}
+  - {fileID: 2122189423}
+  - {fileID: 747097269}
+--- !u!114 &1394016011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394016008}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9548254bc5d548e458d4999483f9ab19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponData: {fileID: 11400000, guid: 54ad1b1261bff3a4ab53996e62b19376, type: 2}
+  weaponData: {fileID: 11400000, guid: 2170c061831b9084eada2126ba13b45c, type: 2}
   baseDamage: 0
   baseCooldown: 0
   baseReloadTime: 0
@@ -4605,59 +5095,6 @@ MonoBehaviour:
   hemorrhage: 0
   fuel: 0
   predator: 0
---- !u!1 &1394016008
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1394016009}
-  - component: {fileID: 1394016010}
-  m_Layer: 6
-  m_Name: Revolver
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1394016009
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1394016008}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1393462937}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1394016010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1394016008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a232c145281c9a43a1f6ed77958e3a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponData: {fileID: 11400000, guid: 63a9769f57ed41d43863d332364241d4, type: 2}
-  bulletPrefabPool:
-  - {fileID: 3625163599852814209}
-  - {fileID: 1676859259}
-  - {fileID: 1834059230}
-  - {fileID: 2132884705}
-  - {fileID: 1536401410}
-  - {fileID: 2122189423}
-  - {fileID: 747097269}
 --- !u!1 &1432292910
 GameObject:
   m_ObjectHideFlags: 3
@@ -4755,6 +5192,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1479759538}
+  - component: {fileID: 1479759540}
   - component: {fileID: 1479759539}
   m_Layer: 6
   m_Name: Pistol
@@ -4790,7 +5228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba5a97295a6a437439964dcdfb125641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponData: {fileID: 11400000, guid: e0eb3f237656b9e48a62c38c5da25110, type: 2}
+  bulletPrefab: {fileID: 0}
   bulletPrefabPool:
   - {fileID: 1249120814}
   - {fileID: 1095427306}
@@ -4802,6 +5240,78 @@ MonoBehaviour:
   - {fileID: 298728240}
   - {fileID: 2002552045}
   - {fileID: 1040187553}
+--- !u!114 &1479759540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1479759537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9548254bc5d548e458d4999483f9ab19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponData: {fileID: 11400000, guid: 54ad1b1261bff3a4ab53996e62b19376, type: 2}
+  baseDamage: 0
+  baseCooldown: 0
+  baseReloadTime: 0
+  baseKnockback: 0
+  baseTravelTime: 0
+  baseTravelDistance: 0
+  baseProjectileSpeed: 0
+  baseCritChance: 0
+  baseCritDamage: 0
+  numOfShots: 0
+  ammo: 0
+  piercing: 0
+  arrowSpawns: 0
+  plasmaSpawns: 0
+  waves: 0
+  spikes: 0
+  drones: 0
+  speedDamageScaling: 0
+  burnChance: 0
+  poisonChance: 0
+  freezeChance: 0
+  bleedChance: 0
+  slowChance: 0
+  armorReduction: 0
+  fireDamage: 0
+  poisonDamage: 0
+  freezeDamage: 0
+  bleedDamage: 0
+  slowDamage: 0
+  fullHPDamage: 0
+  nearDamage: 0
+  farDamage: 0
+  weakDamage: 0
+  overheadDamage: 0
+  backDamage: 0
+  firstStrikeDamage: 0
+  afterDashDamage: 0
+  statueDamage: 0
+  inAirDamage: 0
+  hitAndRun: 0
+  doubleProc: 0
+  lifesteal: 0
+  explosionChance: 0
+  lightningChance: 0
+  executeThreshold: 0
+  damageBoostAfterKill: 0
+  speedBoostAfterKill: 0
+  armorAfterKill: 0
+  regenAfterKill: 0
+  soulDamage: 0
+  healthOrbAfterKill: 0
+  looting: 0
+  virus: 0
+  wildfire: 0
+  frostbite: 0
+  goo: 0
+  hemorrhage: 0
+  fuel: 0
+  predator: 0
 --- !u!1001 &1514381312
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5491,7 +6001,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charData: {fileID: 11400000, guid: 0c1d96ec6dfdcc64ebc228ab1f876811, type: 2}
-  weaponIndex: 3
+  weaponIndex: 7
   modifiers:
   - {fileID: 11400000, guid: e6bae47754b5b304a832c143e09568d8, type: 2}
   - {fileID: 11400000, guid: 8f77ddb853761274bb83a27e8ddc2aa9, type: 2}

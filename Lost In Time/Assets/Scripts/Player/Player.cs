@@ -34,20 +34,6 @@ public class Player : MonoBehaviour, IDamageable
         anim = GetComponentInChildren<Animator>();
         characterStats = GetComponent<CharacterStats>();
 
-        // TEMP
-        foreach (var mod in modifiers)
-        {
-            if (mod is IStatModifier statMod)
-            {
-                characterStats.AddModifier(statMod);
-            }
-            else if (mod is IWeaponModifier weapMod)
-            {
-                weapon.ApplyWeaponModifier(weapMod);
-            }
-        }
-        // TEMP
-
         stateMachine = new PlayerStateMachine();
         playerIdleState = new PlayerIdleState(this, stateMachine, charData, "idle");
         playerRunningState = new PlayerRunningState(this, stateMachine, charData, "run");
@@ -58,6 +44,20 @@ public class Player : MonoBehaviour, IDamageable
 
         stateMachine.ChangeState(playerIdleState);
         ChangeWeapon(weaponIndex);
+
+        // TEMP
+        UpdateModifiers();
+        // TEMP
+
+        /* How to make random weap mod
+        WeaponStatModifier n = new WeaponStatModifier();
+        WeaponMod mod = new WeaponMod();
+        mod.mod = WeaponModifier.Piercing;
+        mod.amount = 2;
+        n.mods.Add(mod);
+
+        AddModifier(n);
+        */
     }
 
     void Start()
@@ -79,6 +79,45 @@ public class Player : MonoBehaviour, IDamageable
         stateMachine.currentState.LogicUpdate();
     }
 
+    public void AddModifier(ScriptableObject modifier)
+    {
+        modifiers.Add(modifier);
+        UpdateModifiers();
+    }
+
+    public void RemoveModifier(ScriptableObject modifier)
+    {
+        modifiers.Remove(modifier);
+        UpdateRemoveModifier(modifier);
+    }
+
+    private void UpdateModifiers()
+    {
+        foreach (var mod in modifiers)
+        {
+            if (mod is IStatModifier statMod)
+            {
+                characterStats.AddModifier(statMod);
+            }
+            else if (mod is IWeaponModifier weapMod)
+            {
+                weapon.ApplyWeaponModifier(weapMod);
+            }
+        }
+    }
+
+    private void UpdateRemoveModifier(ScriptableObject mod)
+    {
+        if (mod is IStatModifier statMod)
+        {
+            characterStats.RemoveModifier(statMod);
+        }
+        else if (mod is IWeaponModifier weapMod)
+        {
+            weapon.RemoveWeaponModifier(weapMod);
+        }
+    }
+
     public void ChangeWeapon(int weaponIndex)
     {
         weapon.ChangeWeapon(weaponIndex, charData);
@@ -93,7 +132,7 @@ public class Player : MonoBehaviour, IDamageable
     public void AnimationTrigger() => stateMachine.currentState.AnimationTrigger();
     public void AnimationFinishTrigger() => stateMachine.currentState.AnimationFinishTrigger();
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         if (Time.time < timeSinceDamageTaken + takeDamageCooldown)
         {

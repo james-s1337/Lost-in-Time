@@ -12,7 +12,7 @@ public class Burst : Ranged
     protected override void Start()
     {
         base.Start();
-        burstCooldown = weaponData.burstCooldown;
+        burstCooldown = weaponStats.baseReloadTime;
     }
     protected override void Update()
     {

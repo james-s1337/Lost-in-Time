@@ -17,3 +17,15 @@ MonoBehaviour:
     amount: 0.5
   - mod: 1
     amount: 1
+  - mod: 11
+    amount: 3
+  - mod: 8
+    amount: 10
+  - mod: 12
+    amount: 10
+  - mod: 6
+    amount: 10
+  - mod: 9
+    amount: 0.5
+  - mod: 10
+    amount: 0.5

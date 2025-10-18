@@ -5,13 +5,13 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] protected float travelSpeed;
     [SerializeField] protected float travelTime;
-    protected int damage = 1;
+    protected float damage = 1;
     // Include audio for hit sound
     // Include audio for shoot sound
     protected Vector3 travelDirection;
 
-    protected int critChance;
-    protected int critDamage; // By default x2
+    protected float critChance;
+    protected float critDamage; // By default x2
 
     protected float knockback;
     protected int piercing;
@@ -48,7 +48,7 @@ public class Projectile : MonoBehaviour
         transform.Translate(new Vector2(travelSpeed * Time.deltaTime, 0f));
     }
 
-    public void SetDamage(int damage)
+    public void SetDamage(float damage)
     {
         this.damage = damage;
     }
@@ -58,12 +58,12 @@ public class Projectile : MonoBehaviour
         this.travelTime = travelTime;
     }
 
-    public void SetCritChance(int critChance)
+    public void SetCritChance(float critChance)
     {
         this.critChance = critChance;
     }
 
-    public void SetCritDamage(int critDamage)
+    public void SetCritDamage(float critDamage)
     {
         this.critDamage = critDamage;
     }
@@ -96,10 +96,10 @@ public class Projectile : MonoBehaviour
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         // CHECK ON HIT EFFECTS
-        if (Random.value < (float) critChance / 100)
+        if (Random.value < critChance)
         {
             damage *= 2;
-            damage += (damage * critDamage / 100);
+            damage += (damage * critDamage);
         }
     }
 

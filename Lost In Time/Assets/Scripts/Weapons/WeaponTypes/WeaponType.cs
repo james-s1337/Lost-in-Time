@@ -6,32 +6,23 @@ using UnityEngine;
 public class WeaponType : MonoBehaviour
 {
     protected WeaponCatalogue weaponType;
+    public WeaponStats weaponStats { get; private set; }
     protected bool canFire;
     protected bool isFiring;
     protected float timeSinceLastFire;
     protected Player player;
     protected CharacterData charData;
 
-    protected float cooldown;
-    protected int damage;
-    protected int bounce;
-    protected int pierce;
-    protected float travelTime;
-    protected float travelDistance; // Only for boomerang
-    protected float knockback;
-    protected float recoil;
-    protected float projectileSpeed;
-    protected int critChance;
-    protected int critDamage;
-    protected float reloadTime;
-    protected int ammo;
-    protected int speedDamage;
-
-    public Dictionary<WeaponModifier, int> weaponModifiers {get; private set;}
-    protected WeaponPerk[] weaponPerks = new WeaponPerk[3];
+    protected WeaponPerk perk;
     protected virtual void Awake()
     {
-        weaponModifiers = Enum.GetValues(typeof(WeaponModifier)).Cast<WeaponModifier>().ToDictionary(e => e, e => 0);
+        weaponStats = GetComponent<WeaponStats>();
+
+        canFire = true;
+
+        perk.ChangePerk(new WeaponStatModifier());
+        perk.Test(WeaponModifier.Piercing, 3);
+        ApplyWeaponModifier(perk.GetModifier());
     }
     public virtual void Fire() { }  
 
@@ -46,21 +37,21 @@ public class WeaponType : MonoBehaviour
         return weaponType;
     }
 
-    public virtual void AddPerk(int perkIndex, WeaponModifier weapMod, int value)
+    public void ApplyWeaponModifier(IWeaponModifier mod)
     {
-        RemovePerk(perkIndex);
-        weaponPerks[perkIndex].ChangePerk(weapMod, value);
-
-        weaponModifiers[weapMod] += value;
+        weaponStats.AddModifier(mod);
     }
 
-    public virtual WeaponModifier RemovePerk(int perkIndex)
+    public void RemoveWeaponModifier(IWeaponModifier mod)
     {
-        WeaponModifier mod = weaponPerks[perkIndex].GetModifier();
-        weaponModifiers[mod] -= weaponPerks[perkIndex].GetValue();
-        weaponPerks[perkIndex].SetZero();
+        weaponStats.RemoveModifier(mod);
+    }
 
-        return mod;
+    public void RollNewPerks(WeaponModifier newMod, float amount)
+    {
+        RemoveWeaponModifier(perk.GetModifier());
+        perk.Test(newMod, amount);
+        ApplyWeaponModifier(perk.GetModifier());
     }
 }
 
@@ -89,27 +80,27 @@ public enum WeaponCatalogue
 
 public struct WeaponPerk
 {
-    private WeaponModifier modifier;
-    private int value;
+    private WeaponStatModifier modifier;
 
-    public void ChangePerk(WeaponModifier modifier, int value)
+    public void ChangePerk(WeaponStatModifier modifier)
     {
         this.modifier = modifier;
-        this.value = value;
     }
 
-    public void SetZero()
-    {
-        value = 0;
-    }
-
-    public WeaponModifier GetModifier()
+    public IWeaponModifier GetModifier()
     {
         return modifier;
     }
 
-    public int GetValue()
+    //  replace with GenerateNewPerk()
+    public void Test(WeaponModifier newMod, float amount)
     {
-        return value;
+        modifier.mods.Clear();
+        WeaponMod mod = new WeaponMod();
+
+        mod.mod = newMod;
+        mod.amount = amount;
+
+        modifier.mods.Add(mod);
     }
 }

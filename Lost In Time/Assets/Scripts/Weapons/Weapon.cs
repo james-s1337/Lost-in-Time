@@ -4,7 +4,6 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     public WeaponType weapon { get; private set; }
-    public WeaponStats weaponStats { get; private set; }
     private Animator anim;
     private Player player;
 
@@ -15,7 +14,6 @@ public class Weapon : MonoBehaviour
     {
         player = GetComponentInParent<Player>();
         anim = GetComponent<Animator>();
-        weaponStats = GetComponent<WeaponStats>();
     }
 
     #region Melee functions
@@ -47,16 +45,6 @@ public class Weapon : MonoBehaviour
         weapon.Fire();
     }
 
-    public void ApplyWeaponModifier(IWeaponModifier mod)
-    {
-        weaponStats.AddModifier(mod);
-    }
-
-    public void RemoveWeaponModifier(IWeaponModifier mod)
-    {
-        weaponStats.RemoveModifier(mod);
-    }
-
     public void ChangeWeapon(int weaponIndex, CharacterData charData)
     {
         weapon = weapons[weaponIndex];
@@ -77,6 +65,16 @@ public class Weapon : MonoBehaviour
         }
 
         return newWeaponIndex;
+    }
+
+    public void ApplyWeaponModifier(IWeaponModifier mod)
+    {
+        weapon.weaponStats.AddModifier(mod);
+    }
+
+    public void RemoveWeaponModifier(IWeaponModifier mod)
+    {
+        weapon.weaponStats.RemoveModifier(mod);
     }
 }
 

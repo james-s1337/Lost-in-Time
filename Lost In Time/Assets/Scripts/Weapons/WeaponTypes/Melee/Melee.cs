@@ -7,6 +7,8 @@ public class Melee : WeaponType
     [SerializeField] protected MeleeData weaponData;
     private BoxCollider2D collider;
     private List<Collider2D> hitList = new List<Collider2D>();
+
+    private float cooldown;
     public override void Fire()
     {
         if (!canFire)
@@ -26,16 +28,15 @@ public class Melee : WeaponType
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Awake()
     {
+        base.Awake();
         collider = GetComponent<BoxCollider2D>();
-
-        damage = weaponData.damage;
     }
 
     private void Start()
     {
         if (weaponData)
         {
-            cooldown = weaponData.cooldown;
+            cooldown = weaponStats.baseCooldown;
         }
     }
 
@@ -86,7 +87,7 @@ public class Melee : WeaponType
 
         if (enemyDamageable != null)
         {
-            enemyDamageable.TakeDamage(damage);
+            enemyDamageable.TakeDamage(weaponStats.baseDamage);
         }
     }
 }

@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour, IDamageable
     private Player player;
 
     private float movementSpeed;
-    private int currentHealth;
+    private float currentHealth;
 
     private void Awake()
     {
@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour, IDamageable
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         currentHealth -= damage;
         if (currentHealth <= 0)

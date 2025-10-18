@@ -162,6 +162,7 @@ public class CharacterStats : MonoBehaviour
     public void TakeDamage(float amount)
     {
         amount -= amount * baseArmor;
+
         if (overshield > 0f)
         {
             overshield -= amount;
@@ -222,7 +223,7 @@ public class CharacterStats : MonoBehaviour
 
     private void ResetAllStats()
     {
-        var fields = GetType().GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic);
+        var fields = GetType().GetFields(BindingFlags.Public | BindingFlags.Instance);
         foreach (var field in fields)
         {
             if (field.FieldType == typeof(float))

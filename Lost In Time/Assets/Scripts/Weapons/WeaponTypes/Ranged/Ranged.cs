@@ -7,49 +7,18 @@ using UnityEngine.InputSystem;
 
 public class Ranged : WeaponType
 {
-    [SerializeField] protected RangedWeaponData weaponData;
-
-    protected int numOfShots;
-
+    [SerializeField] GameObject bulletPrefab;
     [SerializeField] protected List<GameObject> bulletPrefabPool;
-
-    private Vector2 mouseWorldPosition;
-    private Vector2 direction;
     protected int bulletIndex;
-    protected override void Awake()
-    {
-        base.Awake();
-
-        canFire = true;
-        numOfShots = weaponData.numOfShots;
-    }
 
     protected virtual void Start()
     {
-        if (weaponData)
-        {
-            cooldown = weaponData.cooldown;
-            damage = weaponData.damage;
-            damage = weaponData.damage;
-            bounce = weaponData.bounces;
-            pierce = weaponData.piercing;
-            travelTime = weaponData.travelTime;
-            travelDistance = weaponData.travelDistance;
-            knockback = weaponData.knockback;
-            recoil = weaponData.recoil;
-            critChance = weaponData.critChance;
-            critDamage = weaponData.critDamage;
-            projectileSpeed = weaponData.projectileSpeed;
-
-            AddPerk(0, WeaponModifier.ProjectileSpeed, 50);
-            AddPerk(1, WeaponModifier.Piercing, 3);
-            AddPerk(2, WeaponModifier.TravelDistance, 10);
-        }
+        
     }
 
     protected virtual void Update()
     {
-        if (Time.time >= timeSinceLastFire + cooldown && !isFiring)
+        if (Time.time >= timeSinceLastFire + weaponStats.baseCooldown && !isFiring)
         {
             canFire = true;
         }
@@ -57,7 +26,7 @@ public class Ranged : WeaponType
 
     public override void Fire()
     {
-        if (!canFire || !weaponData)
+        if (!canFire || !weaponStats)
         {
             return;
         }
@@ -66,7 +35,7 @@ public class Ranged : WeaponType
         canFire = false;
         isFiring = true;
 
-        if (numOfShots > 1)
+        if (weaponStats.numOfShots > 1)
         {
             StartCoroutine(SpawnBulletThread());
         }
@@ -79,10 +48,10 @@ public class Ranged : WeaponType
 
     protected virtual IEnumerator SpawnBulletThread()
     {
-        for (int i = 0; i < numOfShots; i++)
+        for (int i = 0; i < weaponStats.numOfShots; i++)
         {
             SpawnBullet();
-            yield return new WaitForSeconds(cooldown);
+            yield return new WaitForSeconds(weaponStats.baseCooldown);
         }
         SetTimeSinceLastFired();
     }
@@ -106,34 +75,23 @@ public class Ranged : WeaponType
             bulletIndex = 0;
         }
 
-        /*
-        mouseWorldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        direction = mouseWorldPosition - (Vector2)transform.position;
-        // Calculate angle in radians
-        float angleRad = Mathf.Atan2(direction.y, direction.x);
-        // Convert to degrees
-        float angleDeg = angleRad * Mathf.Rad2Deg;
-        */
-
         GameObject bullet = bulletPrefabPool[bulletIndex];
 
         bullet.transform.position = transform.position;
 
         Projectile proj = bullet.GetComponent<Projectile>();
-        proj.SetDamage(damage + speedDamage);
-        proj.SetCritChance(critChance);
-        proj.SetCritDamage(critDamage);
-        proj.SetTravelTime(travelTime);
-        proj.SetKnockback(knockback);
-        proj.SetPiercing(pierce);
-        proj.SetProjectileSpeed(projectileSpeed);
-        // bullet.GetComponent<Projectile>().SetFacingAngle(angleDeg);
-        // bullet.GetComponent<Projectile>().SetTravelDirection(direction);
+        proj.SetDamage(weaponStats.baseDamage);
+        proj.SetCritChance(weaponStats.baseCritChance);
+        proj.SetCritDamage(weaponStats.baseCritDamage);
+        proj.SetTravelTime(weaponStats.baseTravelTime);
+        proj.SetKnockback(weaponStats.baseKnockback);
+        proj.SetPiercing(weaponStats.piercing);
+        proj.SetProjectileSpeed(weaponStats.baseProjectileSpeed);
 
         if (weaponType == WeaponCatalogue.Boomerang)
         {
             proj.SetTravelDirection(new Vector3(1, 0, 0));
-            bullet.GetComponent<Boomerang>().SetTravelDistance(travelDistance);
+            bullet.GetComponent<Boomerang>().SetTravelDistance(weaponStats.baseTravelDistance);
         }
 
         if (player.core.Movement.facingDir == -1)
@@ -149,94 +107,5 @@ public class Ranged : WeaponType
         bullet.SetActive(true);
 
         bulletIndex++;
-    }
-
-    public override void AddPerk(int perkIndex, WeaponModifier weapMod, int value)
-    {
-        base.AddPerk(perkIndex, weapMod, value);
-        StartCoroutine(ApplyModifier(weapMod));
-    }
-
-    public override WeaponModifier RemovePerk(int perkIndex)
-    {
-        WeaponModifier mod = base.RemovePerk(perkIndex);
-        StartCoroutine(ApplyModifier(mod));
-
-        return mod;
-    }
-
-    private IEnumerator ApplyModifier(WeaponModifier mod)
-    {
-        int value = weaponModifiers[mod];
-
-        switch (mod)
-        {
-            case WeaponModifier.Cooldown:
-                cooldown = weaponData.cooldown / ((value + 100) / 100);
-                // Expand object pool if cooldown is low enough
-                if (weaponType == WeaponCatalogue.Boomerang)
-                {
-                    break;
-                }
-
-                int fireRate = Mathf.RoundToInt(travelTime / cooldown);
-                int bulletCountDiff = fireRate - bulletPrefabPool.Count;
-
-                if (numOfShots > 1)
-                {
-                    bulletCountDiff = (fireRate * numOfShots) - bulletPrefabPool.Count;
-                }
-
-                if (bulletCountDiff >= 0)
-                {
-                    for (int i = 0; i < bulletCountDiff + 1; i++)
-                    {
-                        GameObject newBulletPrefab = Instantiate(bulletPrefabPool[0]);
-                        newBulletPrefab.GetComponent<Projectile>().Initialize();
-                        newBulletPrefab.transform.parent = bulletPrefabPool[0].transform.parent;
-
-                        bulletPrefabPool.Add(newBulletPrefab);
-                    }
-                }
-                break;
-            case WeaponModifier.Damage:
-                damage = weaponData.damage + weaponData.damage * value / 100;
-                break;
-            case WeaponModifier.Bounce: // Clone dummy projectile for bounce, not used for now
-                bounce = weaponData.bounces + value;
-                break;
-            case WeaponModifier.Piercing:
-                pierce = weaponData.piercing + value;
-                break;
-            case WeaponModifier.TravelDistance: // Only for boomerang
-                travelDistance = weaponData.travelDistance + value;
-                break;
-            case WeaponModifier.Knockback:
-                knockback = weaponData.knockback + value;
-                break;
-            case WeaponModifier.Recoil: // Not used for now
-                recoil = weaponData.recoil + value;
-                break;
-            case WeaponModifier.CritChance:
-                critChance = weaponData.critChance + value;
-                break;
-            case WeaponModifier.CritDamage:
-                critDamage = weaponData.critDamage + value;
-                break;
-            case WeaponModifier.ReloadSpeed:
-                reloadTime = weaponData.burstCooldown / ((value + 100) / 100);
-                break;
-            case WeaponModifier.Ammo:
-                ammo = weaponData.numOfShots + value;
-                break;
-            case WeaponModifier.SpeedDMG:
-                speedDamage = (int)(weaponData.damage * (charData.movementSpeed) * value / 100);
-                break;
-            case WeaponModifier.ProjectileSpeed:
-                projectileSpeed = weaponData.projectileSpeed + value;
-                break;
-        }
-
-        yield return null;
     }
 }

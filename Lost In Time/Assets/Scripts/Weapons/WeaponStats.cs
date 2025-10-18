@@ -123,6 +123,8 @@ public class WeaponStats : MonoBehaviour
         {
             modifier.Apply(this);
         }
+
+        
     }
 
     private void ResetAllStats()
