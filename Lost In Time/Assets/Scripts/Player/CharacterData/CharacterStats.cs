@@ -45,36 +45,43 @@ public class CharacterStats : MonoBehaviour
 
     // Time stamps
     private float timeSinceLastRegen;
+    private float timeSinceLastShieldRegen;
     private float timeSinceLastDamage;
 
     private float overshieldRegenStep = 0.5f; // Every 0.5 seconds
+    private float overshieldRegenCooldown = 5f; // how much time you must wait before your overshield heals
     private float overshieldRegenAmount = 0.1f; // 10%
 
     private float HPRegenStep = 2f; // Every 2 seconds
 
     // Lists
-    public List<IStatModifier> activeModifiers = new List<IStatModifier>();
+    private List<IStatModifier> activeModifiers = new List<IStatModifier>();
 
     private void Start()
     {
         level = 1;
         CalculateStats();
+        currentHP = baseHP;
+        overshield = baseOvershield;
     }
 
     private void Update()
     {
-        if (Time.time >= timeSinceLastRegen + overshieldRegenStep)
+        if (Time.time >= timeSinceLastRegen + HPRegenStep)
         {
-            RegenHP();
+            RegenHP(baseHPRegen);
         }
 
-        if (Time.time >= timeSinceLastDamage + HPRegenStep)
+        if (Time.time >= timeSinceLastDamage + overshieldRegenCooldown)
         {
-            RegenOvershield();
+            if (Time.time >= timeSinceLastShieldRegen + overshieldRegenStep)
+            {
+                RegenOvershield();
+            }
         }
     }
 
-    private void RegenHP()
+    private void RegenHP(float HPRegen)
     {
         float missingHealth = baseHP - currentHP;
         if (missingHealth == 0f)
@@ -82,12 +89,13 @@ public class CharacterStats : MonoBehaviour
             return;
         }
 
-        float regenAmount = baseHPRegen;
+        float regenAmount = HPRegen;
         if (regenAmount > missingHealth)
         {
             regenAmount = missingHealth;
         }
 
+        timeSinceLastRegen = Time.time;
         currentHP += regenAmount;
     }
 
@@ -105,6 +113,7 @@ public class CharacterStats : MonoBehaviour
             regenAmount = missingShield;
         }
 
+        timeSinceLastShieldRegen = Time.time;
         overshield += regenAmount;
     }
 
@@ -145,6 +154,24 @@ public class CharacterStats : MonoBehaviour
         }
 
         gold -= amount;
+    }
+
+    public void TakeDamage(float amount)
+    {
+        if (overshield > 0f)
+        {
+            overshield -= amount;
+            overshield = Mathf.Clamp(overshield, 0, baseOvershield);
+            return;
+        }
+
+        float newHP = currentHP - amount;
+        if (currentHP - amount < 0f)
+        {
+            newHP = 0f;
+        }
+
+        currentHP = newHP;
     }
 
     public void CheckLevelUp()

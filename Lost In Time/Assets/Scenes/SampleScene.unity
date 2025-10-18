@@ -436,7 +436,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &119741694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5421,6 +5421,8 @@ MonoBehaviour:
   weaponIndex: 3
   modifiers:
   - {fileID: 11400000, guid: e6bae47754b5b304a832c143e09568d8, type: 2}
+  - {fileID: 11400000, guid: 8f77ddb853761274bb83a27e8ddc2aa9, type: 2}
+  - {fileID: 11400000, guid: 9bf65292ccc83894c874c8e78786ffd3, type: 2}
 --- !u!114 &1683466804
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -53,7 +53,15 @@ public class Player : MonoBehaviour, IDamageable
         core.Movement.SetPlayerGravity(charData.defaultGravity);
         playerInput = GetComponent<PlayerInputManager>();
 
-        
+        // TEMP
+        foreach (var mod in modifiers)
+        {
+            if (mod is IStatModifier statMod)
+            {
+                characterStats.AddModifier(statMod);
+            }
+        }
+        // TEMP
     }
 
     // Update is called once per frame
@@ -90,9 +98,10 @@ public class Player : MonoBehaviour, IDamageable
         }
 
         timeSinceDamageTaken = Time.time;
-        currentHealth--;
+        characterStats.SetTimeSinceLastDamage();
+        characterStats.TakeDamage(damage);
 
-        if (currentHealth <= 0)
+        if (characterStats.currentHP <= 0)
         {
             // Dead
             Die();
