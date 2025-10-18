@@ -22,7 +22,6 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] int weaponIndex = 0;
     public Weapon weapon { get; private set; }
 
-    private float currentHealth;
     private float timeSinceDamageTaken;
     private float takeDamageCooldown = 0.1f;
     private bool dead;
@@ -33,6 +32,17 @@ public class Player : MonoBehaviour, IDamageable
         core = GetComponentInChildren<Core>();
         weapon = GetComponentInChildren<Weapon>();
         anim = GetComponentInChildren<Animator>();
+        characterStats = GetComponent<CharacterStats>();
+
+        // TEMP
+        foreach (var mod in modifiers)
+        {
+            if (mod is IStatModifier statMod)
+            {
+                characterStats.AddModifier(statMod);
+            }
+        }
+        // TEMP
 
         stateMachine = new PlayerStateMachine();
         playerIdleState = new PlayerIdleState(this, stateMachine, charData, "idle");
@@ -49,19 +59,8 @@ public class Player : MonoBehaviour, IDamageable
     void Start()
     {
         characterStats = GetComponent<CharacterStats>();
-        currentHealth = charData.health;
         core.Movement.SetPlayerGravity(charData.defaultGravity);
         playerInput = GetComponent<PlayerInputManager>();
-
-        // TEMP
-        foreach (var mod in modifiers)
-        {
-            if (mod is IStatModifier statMod)
-            {
-                characterStats.AddModifier(statMod);
-            }
-        }
-        // TEMP
     }
 
     // Update is called once per frame

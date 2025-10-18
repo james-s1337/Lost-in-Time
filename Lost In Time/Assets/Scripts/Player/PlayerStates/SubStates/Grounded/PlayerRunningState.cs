@@ -21,7 +21,7 @@ public class PlayerRunningState : PlayerGrounded
         {
             core.Movement.CheckIfShouldFlip(InputX);
         }
-        core.Movement.SetVelocityX(charData.movementSpeed * InputX);
+        core.Movement.SetVelocityX(player.characterStats.baseSpeed * InputX);
 
         if (!isExitingState)
         {

@@ -6,21 +6,21 @@ public class PlayerJumpingState : PlayerAbility
     private int jumpsLeft;
     public PlayerJumpingState(Player player, PlayerStateMachine stateMachine, CharacterData charData, string animBoolName) : base(player, stateMachine, charData, animBoolName)
     {
-        jumpsLeft = charData.jumps;
+        jumpsLeft = player.characterStats.baseJumps;
     }
     public override void Enter()
     {
         base.Enter();
 
         player.playerInput.UseJumpInput();
-        core.Movement.SetVelocityY(charData.jumpPower);
+        core.Movement.SetVelocityY(player.characterStats.baseJumpPower);
         isAbilityDone = true;
         jumpsLeft--;
         player.playerInAirState.SetIsJumping();
         Debug.Log("Jumping");
     }
 
-    public void ResetJumps() => jumpsLeft = charData.jumps;
+    public void ResetJumps() => jumpsLeft = player.characterStats.baseJumps;
     public void DecreaseAmountOfJumpsLeft() => jumpsLeft--;
     public bool CanJump()
     {
