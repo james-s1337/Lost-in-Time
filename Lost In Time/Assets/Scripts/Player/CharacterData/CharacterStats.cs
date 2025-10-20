@@ -22,8 +22,8 @@ public class CharacterStats : MonoBehaviour
     public float baseOvershield;
 
     // Dynamic
-    public float currentHP;
-    public float overshield;
+    [SerializeField] private float currentHP;
+    [SerializeField] private float overshield;
 
     // On Touch
     public float infectiousTouch;
@@ -123,6 +123,11 @@ public class CharacterStats : MonoBehaviour
         currentHP += regenAmount;
     }
 
+    public float GetCurrentHP()
+    {
+        return currentHP;
+    }
+
     private void RegenOvershield()
     {
         float missingShield = baseOvershield - overshield;
@@ -143,9 +148,28 @@ public class CharacterStats : MonoBehaviour
 
     private void CheckTempStatTimes()
     {
-        if (Time.time >= timeSinceTempHPRegen)
+        if (Time.time >= timeSinceTempHPRegen + tempHpRegenDuration)
         {
+            tempHPRegen = 0;
+            CalculateStats();
+        }
 
+        if (Time.time >= timeSinceTempArmor + tempArmorDuration)
+        {
+            tempArmor = 0;
+            CalculateStats();
+        }
+
+        if (Time.time >= timeSinceTempDamage + tempDamageDuration)
+        {
+            tempDamage = 0;
+            CalculateStats();
+        }
+
+        if (Time.time >= timeSinceTempSpeed + tempSpeedDuration)
+        {
+            tempSpeed = 0;
+            CalculateStats();
         }
     }
 
@@ -255,7 +279,7 @@ public class CharacterStats : MonoBehaviour
         baseDamage = charData.baseDamage + tempDamage + (charData.baseDamage * statIncreasePerLevel * (level - 1));
     }
 
-    public IEnumerator ApplyTempStat(StatType mod, float duration, float amount)
+    public void ApplyTempStat(StatType mod, float duration, float amount)
     {
         switch (mod)
         {
@@ -264,17 +288,11 @@ public class CharacterStats : MonoBehaviour
                 timeSinceTempSpeed = Time.time;
                 tempSpeedDuration = duration;
                 CalculateStats();
-                yield return new WaitForSeconds(duration);
-                tempSpeed = 0;
-                CalculateStats();
                 break;
             case StatType.Armor:
                 tempArmor = amount;
                 timeSinceTempArmor = Time.time;
                 tempArmorDuration = duration;
-                CalculateStats();
-                yield return new WaitForSeconds(duration);
-                tempArmor = 0;
                 CalculateStats();
                 break;
             case StatType.HealthRegen:
@@ -282,17 +300,11 @@ public class CharacterStats : MonoBehaviour
                 timeSinceTempHPRegen = Time.time;
                 tempHpRegenDuration = duration;
                 CalculateStats();
-                yield return new WaitForSeconds(duration);
-                tempHPRegen = 0;
-                CalculateStats();
                 break;
             default:
                 tempDamage = amount;
                 timeSinceTempDamage = Time.time;
                 tempDamageDuration = duration;
-                CalculateStats();
-                yield return new WaitForSeconds(duration);
-                tempDamage = 0;
                 CalculateStats();
                 break;
         }

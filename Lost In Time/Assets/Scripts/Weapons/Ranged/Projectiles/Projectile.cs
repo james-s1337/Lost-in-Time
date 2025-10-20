@@ -17,9 +17,14 @@ public class Projectile : MonoBehaviour
     protected int piercing;
     protected int targetsPierced;
 
+    protected Vector2 startPos;
+    protected Vector2 endPos;
+
+    protected WeaponStats weaponStats;
+
     private void Awake()
     {
-        
+
     }
     private void Start()
     {
@@ -28,6 +33,7 @@ public class Projectile : MonoBehaviour
 
     protected virtual void OnEnable()
     {
+        startPos = transform.position;
         Invoke(nameof(DisableBullet), travelTime);
     }
 
@@ -48,24 +54,17 @@ public class Projectile : MonoBehaviour
         transform.Translate(new Vector2(travelSpeed * Time.deltaTime, 0f));
     }
 
-    public void SetDamage(float damage)
+    public void SetWeaponStats(WeaponStats weaponStats)
     {
-        this.damage = damage;
+        if (this.weaponStats == null)
+        {
+            this.weaponStats = weaponStats;
+        }
     }
 
     public void SetTravelTime(float travelTime)
     {
         this.travelTime = travelTime;
-    }
-
-    public void SetCritChance(float critChance)
-    {
-        this.critChance = critChance;
-    }
-
-    public void SetCritDamage(float critDamage)
-    {
-        this.critDamage = critDamage;
     }
 
     public void SetKnockback(float knockback)
@@ -95,34 +94,11 @@ public class Projectile : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        // CHECK ON HIT EFFECTS
-        if (Random.value < critChance)
-        {
-            damage *= 2;
-            damage += (damage * critDamage);
-        }
+        endPos = transform.position;
     }
 
     protected virtual void ApplyKnockback(Enemy enemy)
     {
         enemy.core.Movement.AddForce(-(transform.position - enemy.gameObject.transform.position), knockback);
-    }
-
-    protected virtual void DamageEnemy(IDamageable enemyDamageable)
-    {
-        if (enemyDamageable == null)
-        {
-            return;
-        }
-
-        enemyDamageable.TakeDamage(damage);
-
-        targetsPierced++;
-        if (targetsPierced < piercing)
-        {
-            return;
-        }
-
-        DisableBullet();
     }
 }

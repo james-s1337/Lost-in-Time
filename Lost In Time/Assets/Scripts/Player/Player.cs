@@ -147,7 +147,7 @@ public class Player : MonoBehaviour, IDamageable
         characterStats.SetTimeSinceLastDamage();
         characterStats.TakeDamage(damage);
 
-        if (characterStats.currentHP <= 0)
+        if (characterStats.GetCurrentHP() <= 0)
         {
             // Dead
             Die();

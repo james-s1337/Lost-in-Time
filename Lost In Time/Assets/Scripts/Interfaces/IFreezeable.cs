@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface IFreezeable
 {
-    void ApplyFreeze(float duration);
+    void ApplyFreeze();
 }

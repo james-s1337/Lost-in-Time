@@ -9,7 +9,6 @@ public class Boomerang : Projectile
     private float travelDistance = 8f;
     private int targetsHit;
     // travel time is the lerp time
-    private Vector2 startPos;
     private Vector2 targetPos;
     private Player player;
     private float lerpTime;
@@ -21,8 +20,6 @@ public class Boomerang : Projectile
         targetsHit = 0;
         maxTargets = piercing;
         travelTime = travelDistance / travelSpeed;
-
-        startPos = transform.position;
         targetPos = startPos + (Vector2)(travelDirection.normalized * travelDistance);
     }
 
@@ -60,6 +57,7 @@ public class Boomerang : Projectile
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);
+
         if (isReturning)
         {
             Rang rang = collision.GetComponent<Rang>();
@@ -77,23 +75,13 @@ public class Boomerang : Projectile
             targetsHit += 1;
 
             ApplyKnockback(collision.GetComponent<Enemy>());
-            DamageEnemy(collision.GetComponent<IDamageable>());
+            weaponStats.ApplyEffects(collision.gameObject, startPos, endPos);
 
             if (targetsHit >= maxTargets && !isReturning)
             {
                 ResetLerpForReturn();
             }   
         }
-    }
-
-    protected override void DamageEnemy(IDamageable enemyDamageable)
-    {
-        if (enemyDamageable == null)
-        {
-            return;
-        }
-
-        enemyDamageable.TakeDamage(damage);
     }
 
     private void ResetLerpForReturn()

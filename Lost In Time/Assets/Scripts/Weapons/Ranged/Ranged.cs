@@ -89,9 +89,8 @@ public class Ranged : WeaponType
         bullet.transform.position = transform.position;
 
         Projectile proj = bullet.GetComponent<Projectile>();
-        proj.SetDamage(weaponStats.baseDamage);
-        proj.SetCritChance(weaponStats.baseCritChance);
-        proj.SetCritDamage(weaponStats.baseCritDamage);
+
+        proj.SetWeaponStats(weaponStats);
         proj.SetTravelTime(weaponStats.baseTravelTime);
         proj.SetKnockback(weaponStats.baseKnockback);
         proj.SetPiercing(weaponStats.piercing);

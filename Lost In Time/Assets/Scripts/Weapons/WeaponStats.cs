@@ -124,7 +124,7 @@ public class WeaponStats : MonoBehaviour
 
     private void SetBaseStatDefaults()
     {
-        baseDamage = weaponData.damage * tempDamage;
+        baseDamage = weaponData.damage * (tempDamage + 1f);
         baseCooldown = weaponData.cooldown / (tempFireRate + 1f);
         baseReloadTime = weaponData.reloadTime;
         baseKnockback = weaponData.knockback;
@@ -172,7 +172,7 @@ public class WeaponStats : MonoBehaviour
     }
 
     // Called when a projectile first hits an enemy
-    public void ApplyEffects(GameObject hit, Vector2 startPos, Vector2 endPos, int facingDirTotal)
+    public void ApplyEffects(GameObject hit, Vector2 startPos, Vector2 endPos)
     {
         if (hit == null)
         {
@@ -187,7 +187,15 @@ public class WeaponStats : MonoBehaviour
             return;
         }
 
+        IDamageable enemyDamageable = enemy.GetComponent<IDamageable>();
+
+        if (enemyDamageable == null)
+        {
+            return;
+        }
+
         float totalDamage = 0;
+        float scaledBaseDamage = baseDamage * player.characterStats.baseDamage;
         // Check if enemy is executable
         float enemyHealthPercentage = enemy.currentHealth / enemy.maxHealth;
         bool executed = false;
@@ -210,23 +218,23 @@ public class WeaponStats : MonoBehaviour
             {
                 if (effect.effect == StatusEffect.Burn)
                 {
-                    burnDMG = baseDamage * fireDamage;
+                    burnDMG = scaledBaseDamage * fireDamage;
                 }
                 else if (effect.effect == StatusEffect.Freeze)
                 {
-                    freezeDMG = baseDamage * freezeDamage;
+                    freezeDMG = scaledBaseDamage * freezeDamage;
                 }
                 else if (effect.effect == StatusEffect.Poison)
                 {
-                    poisonDMG = baseDamage * poisonDamage;
+                    poisonDMG = scaledBaseDamage * poisonDamage;
                 }
                 else if (effect.effect == StatusEffect.Slow)
                 {
-                    slowDMG = baseDamage * poisonDamage;
+                    slowDMG = scaledBaseDamage * poisonDamage;
                 }
                 else if (effect.effect == StatusEffect.Bleed)
                 {
-                    bleedDMG = baseDamage * poisonDamage;
+                    bleedDMG = scaledBaseDamage * poisonDamage;
                 }
             }
 
@@ -236,41 +244,41 @@ public class WeaponStats : MonoBehaviour
             float distanceTravelled = (startPos - endPos).magnitude;
 
             float maxFarDamage = distanceTravelled / maxFar;
-            maxFarDamage = Mathf.Clamp(maxFarDamage, 0f, 10f) * (baseDamage * farDamage);
+            maxFarDamage = Mathf.Clamp(maxFarDamage, 0f, 10f) * (scaledBaseDamage * farDamage);
 
             float maxNearDamage = maxNear / distanceTravelled;
-            maxNearDamage = Mathf.Clamp(maxNearDamage, 0f, 10f) * (baseDamage * nearDamage);
+            maxNearDamage = Mathf.Clamp(maxNearDamage, 0f, 10f) * (scaledBaseDamage * nearDamage);
 
             float fullHPDMG = 0;
-            if (player.characterStats.currentHP == player.characterStats.baseHP)
+            if (player.characterStats.GetCurrentHP() == player.characterStats.baseHP)
             {
-                fullHPDMG = fullHPDamage * baseDamage;
+                fullHPDMG = fullHPDamage * scaledBaseDamage;
             }
 
             float weakDamage = 0;
             float weakHealthThreshold = 0.3f;
             if (enemyHealthPercentage < weakHealthThreshold)
             {
-                weakDamage = baseDamage * weakDamage;
+                weakDamage = scaledBaseDamage * weakDamage;
             }
 
             float overheadDamage = 0;
             if (startPos.y > endPos.y && hit.transform.position.y < endPos.y)
             {
-                overheadDamage = baseDamage * overheadDamage;
+                overheadDamage = scaledBaseDamage * overheadDamage;
             }
 
             float backstabDamage = 0;
             if (Mathf.Abs(hit.transform.position.x + enemy.core.Movement.facingDir + endPos.x) > Mathf.Abs(hit.transform.position.x + endPos.x))
             {
-                backstabDamage = baseDamage * backDamage;
+                backstabDamage = scaledBaseDamage * backDamage;
             }
 
             float firstStrikeDamage = 0;
             float hitAndRunTime = 1.5f;
             if (enemy.currentHealth == enemy.maxHealth)
             {
-                firstStrikeDamage = baseDamage * firstStrikeDamage;
+                firstStrikeDamage = scaledBaseDamage * firstStrikeDamage;
                 // Hit and run as well
                 player.characterStats.ApplyTempStat(StatType.MovementSpeed, hitAndRunTime, hitAndRun);
             }
@@ -280,53 +288,36 @@ public class WeaponStats : MonoBehaviour
             float statueDamage = 0;
             if (player.core.Movement.velocity.magnitude == 0f)
             {
-                statueDamage = baseDamage * statueDamage;
+                statueDamage = scaledBaseDamage * statueDamage;
             }
 
             float inAirDamage = 0;
             if (player.GetCurrentState() is PlayerInAir)
             {
-                inAirDamage = baseDamage * inAirDamage;
+                inAirDamage = scaledBaseDamage * inAirDamage;
             }
 
-            float soulDMG = baseDamage * soulDamage;
+            float soulDMG = scaledBaseDamage * soulDamage;
 
-            totalDamage = (baseDamage * player.characterStats.baseDamage) + maxFarDamage + maxNearDamage + fullHPDMG + weakDamage
+            totalDamage = scaledBaseDamage + maxFarDamage + maxNearDamage + fullHPDMG + weakDamage
                 + overheadDamage + backstabDamage + firstStrikeDamage + statueDamage + inAirDamage + soulDMG + burnDMG + freezeDMG
                 + poisonDMG + slowDMG + bleedDMG;
         }
 
-        enemy.TakeDamage(totalDamage);
+        enemyDamageable.TakeDamage(totalDamage);
 
         // On-hit effects on player
-        player.characterStats.RegenHP(baseDamage * player.characterStats.baseDamage * lifesteal);
+        player.characterStats.RegenHP(scaledBaseDamage * lifesteal);
 
         // Proc
         if (enemy && enemy.currentHealth > 0)
         {
-            // Percentage
-            float burnDamagePerTick = 0.08f;
-            float burnTickRate = 1f;
-            float burnDuration = 2f;
-
-            float poisonDamagePerTick = 0.02f;
-            float poisonTickRate = 0.5f;
-            float poisonDuration = 4f;
-
-            float freezeDuration = 1.5f;
-
-            float slowAmount = 0.5f;
-            float slowDuration = 2f;
-
-            float bleedDamagePerTick = 0.04f;
-            float bleedTickRate = 0.6f;
-            float bleedDuration = 3f;
             if (Random.value < burnChance * (doubleProc + 1))
             {
                 IBurnable status = enemy.GetComponent<IBurnable>();
                 if (status != null)
                 {
-                    status.ApplyBurn(burnDamagePerTick, burnTickRate, burnDuration);
+                    status.ApplyBurn();
                 }
             }
 
@@ -335,7 +326,7 @@ public class WeaponStats : MonoBehaviour
                 IPoisonable status = enemy.GetComponent<IPoisonable>();
                 if (status != null)
                 {
-                    status.ApplyPoison(poisonDamagePerTick, poisonTickRate, poisonDuration);
+                    status.ApplyPoison();
                 }
             }
 
@@ -344,7 +335,7 @@ public class WeaponStats : MonoBehaviour
                 IFreezeable status = enemy.GetComponent<IFreezeable>();
                 if (status != null)
                 {
-                    status.ApplyFreeze(freezeDuration);
+                    status.ApplyFreeze();
                 }
             }
 
@@ -353,7 +344,7 @@ public class WeaponStats : MonoBehaviour
                 ISlowable status = enemy.GetComponent<ISlowable>();
                 if (status != null)
                 {
-                    status.ApplySlow(slowAmount, slowDuration);
+                    status.ApplySlow();
                 }
             }
 
@@ -362,7 +353,7 @@ public class WeaponStats : MonoBehaviour
                 IBleedable status = enemy.GetComponent<IBleedable>();
                 if (status != null)
                 {
-                    status.ApplyBleed(bleedDamagePerTick, bleedTickRate, bleedDuration);
+                    status.ApplyBleed();
                 }
             }
         }

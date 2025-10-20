@@ -173,7 +173,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 82930715}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -271,6 +271,7 @@ MonoBehaviour:
   lightningChance: 0
   executeThreshold: 0
   damageBoostAfterKill: 0
+  fireRateBoostAfterKill: 0
   speedBoostAfterKill: 0
   armorAfterKill: 0
   regenAfterKill: 0
@@ -536,6 +537,7 @@ MonoBehaviour:
   lightningChance: 0
   executeThreshold: 0
   damageBoostAfterKill: 0
+  fireRateBoostAfterKill: 0
   speedBoostAfterKill: 0
   armorAfterKill: 0
   regenAfterKill: 0
@@ -1272,6 +1274,7 @@ MonoBehaviour:
   lightningChance: 0
   executeThreshold: 0
   damageBoostAfterKill: 0
+  fireRateBoostAfterKill: 0
   speedBoostAfterKill: 0
   armorAfterKill: 0
   regenAfterKill: 0
@@ -1390,6 +1393,7 @@ MonoBehaviour:
   lightningChance: 0
   executeThreshold: 0
   damageBoostAfterKill: 0
+  fireRateBoostAfterKill: 0
   speedBoostAfterKill: 0
   armorAfterKill: 0
   regenAfterKill: 0
@@ -2042,6 +2046,7 @@ MonoBehaviour:
   lightningChance: 0
   executeThreshold: 0
   damageBoostAfterKill: 0
+  fireRateBoostAfterKill: 0
   speedBoostAfterKill: 0
   armorAfterKill: 0
   regenAfterKill: 0
@@ -2160,6 +2165,7 @@ MonoBehaviour:
   lightningChance: 0
   executeThreshold: 0
   damageBoostAfterKill: 0
+  fireRateBoostAfterKill: 0
   speedBoostAfterKill: 0
   armorAfterKill: 0
   regenAfterKill: 0
@@ -2362,6 +2368,7 @@ MonoBehaviour:
   lightningChance: 0
   executeThreshold: 0
   damageBoostAfterKill: 0
+  fireRateBoostAfterKill: 0
   speedBoostAfterKill: 0
   armorAfterKill: 0
   regenAfterKill: 0
@@ -2568,6 +2575,7 @@ MonoBehaviour:
   lightningChance: 0
   executeThreshold: 0
   damageBoostAfterKill: 0
+  fireRateBoostAfterKill: 0
   speedBoostAfterKill: 0
   armorAfterKill: 0
   regenAfterKill: 0
@@ -2874,7 +2882,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charData: {fileID: 11400000, guid: 0c1d96ec6dfdcc64ebc228ab1f876811, type: 2}
-  weaponIndex: 1
+  weaponIndex: 0
   modifiers:
   - {fileID: 11400000, guid: e6bae47754b5b304a832c143e09568d8, type: 2}
   - {fileID: 11400000, guid: 8f77ddb853761274bb83a27e8ddc2aa9, type: 2}
@@ -2920,10 +2928,6 @@ MonoBehaviour:
   deadlyRush: 0
   goldGoldGold: 0
   extraExp: 0
-  exp: 0
-  gold: 0
-  level: 0
-  statIncreasePerLevel: 0.2
 --- !u!1 &1693529377
 GameObject:
   m_ObjectHideFlags: 0

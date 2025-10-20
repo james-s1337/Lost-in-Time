@@ -31,17 +31,7 @@ public class Flames : Projectile
         if (collision.tag == "Enemy")
         {
             ApplyKnockback(collision.GetComponent<Enemy>());
-            DamageEnemy(collision.GetComponent<IDamageable>());
+            weaponStats.ApplyEffects(collision.gameObject, startPos, endPos);
         }
-    }
-
-    protected override void DamageEnemy(IDamageable enemyDamageable)
-    {
-        if (enemyDamageable == null)
-        {
-            return;
-        }
-
-        enemyDamageable.TakeDamage(damage);
     }
 }

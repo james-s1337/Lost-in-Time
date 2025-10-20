@@ -16,10 +16,16 @@ MonoBehaviour:
   - mod: 0
     amount: 0.5
   - mod: 1
-    amount: 1
+    amount: 0.5
   - mod: 11
     amount: 3
   - mod: 8
     amount: 10
   - mod: 12
     amount: 10
+  - mod: 25
+    amount: 1
+  - mod: 28
+    amount: 1
+  - mod: 24
+    amount: 0.5
