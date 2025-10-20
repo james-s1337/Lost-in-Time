@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamageable
@@ -13,7 +15,12 @@ public class Enemy : MonoBehaviour, IDamageable
     private Player player;
 
     private float movementSpeed;
-    private float currentHealth;
+
+    public float damage { get; private set; }
+    public int maxHealth { get; private set; } 
+    public float currentHealth { get; private set; }
+
+    public List<StatusEffectApplier> statusEffects = new List<StatusEffectApplier>();
 
     private void Awake()
     {
@@ -21,7 +28,9 @@ public class Enemy : MonoBehaviour, IDamageable
         boxCollider = GetComponent<BoxCollider2D>();
 
         movementSpeed = enemyData.speed;
-        currentHealth = enemyData.health;
+        maxHealth = enemyData.health;
+        currentHealth = maxHealth;
+        damage = enemyData.damage;
     }
 
     private void Start()
@@ -100,7 +109,32 @@ public class Enemy : MonoBehaviour, IDamageable
                 return;
             }
 
-            playerDamageable.TakeDamage(enemyData.damage);
+            playerDamageable.TakeDamage(damage);
         }
     }
+}
+
+public struct StatusEffectApplier
+{
+    public StatusEffect effect;
+
+    public float duration;
+    public float damagePerTick;
+    public float tickRate;
+
+    public float timeSinceLastTick;
+
+    public void AddDuration(float duration)
+    {
+        this.duration = duration;
+    }
+}
+
+public enum StatusEffect
+{
+    Burn,
+    Freeze,
+    Poison,
+    Slow,
+    Bleed,
 }

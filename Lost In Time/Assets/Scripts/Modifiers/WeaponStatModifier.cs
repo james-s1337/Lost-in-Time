@@ -3,11 +3,9 @@ using NUnit.Framework;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Modifiers/WeaponModifier")]
-public class WeaponStatModifier : ScriptableObject, IWeaponModifier, IOnHitEffect
+public class WeaponStatModifier : ScriptableObject, IWeaponModifier
 {
     public List<WeaponMod> mods = new List<WeaponMod>();
-    public bool isOnHit;
-    public bool isOnKill;
 
     public void Apply(WeaponStats stats)
     {
@@ -68,6 +66,7 @@ public class WeaponStatModifier : ScriptableObject, IWeaponModifier, IOnHitEffec
                 case WeaponModifier.ExecuteEnemies: stats.executeThreshold += amount; break;
 
                 case WeaponModifier.DamageBoostAfterKill: stats.damageBoostAfterKill += amount; break;
+                case WeaponModifier.FireRateBoostAfterKill: stats.fireRateBoostAfterKill += amount; break;
                 case WeaponModifier.SpeedBoostAfterKill: stats.speedBoostAfterKill += amount; break;
                 case WeaponModifier.ArmorAfterKill: stats.armorAfterKill += amount; break;
                 case WeaponModifier.RegenAfterKill: stats.regenAfterKill += amount; break;
@@ -82,48 +81,6 @@ public class WeaponStatModifier : ScriptableObject, IWeaponModifier, IOnHitEffec
                 case WeaponModifier.Fuel: stats.fuel += amount; break;
                 case WeaponModifier.Predator: stats.predator += (int) amount; break;
             }
-        }
-    }
-
-    public void ApplyEffects(GameObject hit, Vector2 startPos, Vector2 endPos, int facingDirTotal, WeaponStats stats)
-    {
-        if (!isOnHit || hit == null)
-        {
-            return;
-        }
-
-        Enemy enemy = hit.GetComponent<Enemy>();
-        Player player = stats.GetComponentInParent<Player>();
-
-        if (enemy == null || player == null)
-        {
-            return;
-        }
-
-        // Check if enemy is affected by any status
-        float maxFar = 20f;
-        float maxNear = 2f;
-        float distanceTravelled = (startPos - endPos).magnitude;
-
-        float maxFarDamage = distanceTravelled / maxFar;
-        maxFarDamage = Mathf.Clamp(maxFarDamage, 0f, 10f) * (stats.baseDamage * stats.farDamage);
-
-        float maxNearDamage = maxNear / distanceTravelled;
-        maxNearDamage = Mathf.Clamp(maxNearDamage, 0f, 10f) * (stats.baseDamage * stats.nearDamage);
-
-        float fullHPDMG = 0;
-        if (player.characterStats.currentHP == player.characterStats.baseHP)
-        {
-            fullHPDMG = stats.fullHPDamage * stats.baseDamage;
-        }
-
-        float totalDamage = maxFarDamage + maxNearDamage;
-
-        enemy.TakeDamage(totalDamage);
-
-        if (Random.value < stats.burnChance)
-        {
-            // enemy.ApplyBurn();
         }
     }
 }
@@ -185,6 +142,7 @@ public enum WeaponModifier
     ExecuteEnemies,
     // On Kill
     DamageBoostAfterKill,
+    FireRateBoostAfterKill,
     SpeedBoostAfterKill,
     ArmorAfterKill,
     RegenAfterKill,
@@ -206,4 +164,17 @@ public struct WeaponMod
 {
     public WeaponModifier mod;
     public float amount;
+
+    public void AddAmount(float amount)
+    {
+        switch (mod)
+        {
+            case WeaponModifier.SoulDMG: 
+                if (amount < 1f && this.amount + amount <= 1f)
+                {
+                    this.amount += amount;
+                }
+                break;
+        }
+    }
 }

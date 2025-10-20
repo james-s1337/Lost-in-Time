@@ -91,6 +91,10 @@ public class Player : MonoBehaviour, IDamageable
         UpdateRemoveModifier(modifier);
     }
 
+    public PlayerState GetCurrentState()
+    {
+        return stateMachine.currentState;
+    }
     private void UpdateModifiers()
     {
         foreach (var mod in modifiers)

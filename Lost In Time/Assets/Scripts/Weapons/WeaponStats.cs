@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class WeaponStats : MonoBehaviour
@@ -67,6 +69,7 @@ public class WeaponStats : MonoBehaviour
 
     // On kill
     public float damageBoostAfterKill;
+    public float fireRateBoostAfterKill;
     public float speedBoostAfterKill;
     public float armorAfterKill;
     public float regenAfterKill;
@@ -82,6 +85,10 @@ public class WeaponStats : MonoBehaviour
 
     public float fuel; // Cooldown reduction on kill
     public int predator; // After getting a kill with melee, do x2 damage for 3 seconds
+
+    // Temp stats
+    private float tempDamage;
+    private float tempFireRate;
 
     private List<IWeaponModifier> weaponModifiers = new List<IWeaponModifier>();
 
@@ -105,9 +112,20 @@ public class WeaponStats : MonoBehaviour
     public void CalculateWeaponStats()
     {
         ResetAllStats();
+        SetBaseStatDefaults();
 
-        baseDamage = weaponData.damage;
-        baseCooldown = weaponData.cooldown;
+        foreach (var modifier in weaponModifiers)
+        {
+            modifier.Apply(this);
+        }
+
+        
+    }
+
+    private void SetBaseStatDefaults()
+    {
+        baseDamage = weaponData.damage * tempDamage;
+        baseCooldown = weaponData.cooldown / (tempFireRate + 1f);
         baseReloadTime = weaponData.reloadTime;
         baseKnockback = weaponData.knockback;
         baseTravelTime = weaponData.travelTime;
@@ -118,13 +136,6 @@ public class WeaponStats : MonoBehaviour
         ammo = weaponData.ammo;
         numOfShots = weaponData.numOfShots;
         piercing = weaponData.piercing;
-
-        foreach (var modifier in weaponModifiers)
-        {
-            modifier.Apply(this);
-        }
-
-        
     }
 
     private void ResetAllStats()
@@ -137,5 +148,231 @@ public class WeaponStats : MonoBehaviour
             else if (field.FieldType == typeof(int))
                 field.SetValue(this, 0);
         }
+    }
+
+    public IEnumerator ApplyTempStat(WeaponModifier mod, float duration, float amount)
+    {
+        switch (mod)
+        {
+            case WeaponModifier.Damage:
+                tempDamage += amount;
+                CalculateWeaponStats();
+                yield return new WaitForSeconds(duration);
+                tempDamage -= amount;
+                CalculateWeaponStats();
+                break;
+            case WeaponModifier.Cooldown:
+                tempFireRate += amount;
+                CalculateWeaponStats();
+                yield return new WaitForSeconds(duration);
+                tempFireRate -= amount;
+                CalculateWeaponStats();
+                break;
+        }
+    }
+
+    // Called when a projectile first hits an enemy
+    public void ApplyEffects(GameObject hit, Vector2 startPos, Vector2 endPos, int facingDirTotal)
+    {
+        if (hit == null)
+        {
+            return;
+        }
+
+        Enemy enemy = hit.GetComponent<Enemy>();
+        Player player = GetComponentInParent<Player>();
+
+        if (enemy == null || player == null)
+        {
+            return;
+        }
+
+        float totalDamage = 0;
+        // Check if enemy is executable
+        float enemyHealthPercentage = enemy.currentHealth / enemy.maxHealth;
+        bool executed = false;
+        if (enemyHealthPercentage <= executeThreshold)
+        {
+            totalDamage = enemy.currentHealth;
+            executed = true;
+        }
+
+        if (!executed)
+        {
+            // Check if enemy is affected by any status
+            float burnDMG = 0;
+            float freezeDMG = 0;
+            float poisonDMG = 0;
+            float slowDMG = 0;
+            float bleedDMG = 0;
+
+            foreach (StatusEffectApplier effect in enemy.statusEffects)
+            {
+                if (effect.effect == StatusEffect.Burn)
+                {
+                    burnDMG = baseDamage * fireDamage;
+                }
+                else if (effect.effect == StatusEffect.Freeze)
+                {
+                    freezeDMG = baseDamage * freezeDamage;
+                }
+                else if (effect.effect == StatusEffect.Poison)
+                {
+                    poisonDMG = baseDamage * poisonDamage;
+                }
+                else if (effect.effect == StatusEffect.Slow)
+                {
+                    slowDMG = baseDamage * poisonDamage;
+                }
+                else if (effect.effect == StatusEffect.Bleed)
+                {
+                    bleedDMG = baseDamage * poisonDamage;
+                }
+            }
+
+            // Other
+            float maxFar = 20f;
+            float maxNear = 2f;
+            float distanceTravelled = (startPos - endPos).magnitude;
+
+            float maxFarDamage = distanceTravelled / maxFar;
+            maxFarDamage = Mathf.Clamp(maxFarDamage, 0f, 10f) * (baseDamage * farDamage);
+
+            float maxNearDamage = maxNear / distanceTravelled;
+            maxNearDamage = Mathf.Clamp(maxNearDamage, 0f, 10f) * (baseDamage * nearDamage);
+
+            float fullHPDMG = 0;
+            if (player.characterStats.currentHP == player.characterStats.baseHP)
+            {
+                fullHPDMG = fullHPDamage * baseDamage;
+            }
+
+            float weakDamage = 0;
+            float weakHealthThreshold = 0.3f;
+            if (enemyHealthPercentage < weakHealthThreshold)
+            {
+                weakDamage = baseDamage * weakDamage;
+            }
+
+            float overheadDamage = 0;
+            if (startPos.y > endPos.y && hit.transform.position.y < endPos.y)
+            {
+                overheadDamage = baseDamage * overheadDamage;
+            }
+
+            float backstabDamage = 0;
+            if (Mathf.Abs(hit.transform.position.x + enemy.core.Movement.facingDir + endPos.x) > Mathf.Abs(hit.transform.position.x + endPos.x))
+            {
+                backstabDamage = baseDamage * backDamage;
+            }
+
+            float firstStrikeDamage = 0;
+            float hitAndRunTime = 1.5f;
+            if (enemy.currentHealth == enemy.maxHealth)
+            {
+                firstStrikeDamage = baseDamage * firstStrikeDamage;
+                // Hit and run as well
+                player.characterStats.ApplyTempStat(StatType.MovementSpeed, hitAndRunTime, hitAndRun);
+            }
+
+            // Dash damage: Check timeSinceLastDash, if <= 0.5f, then set dashDamage to something
+
+            float statueDamage = 0;
+            if (player.core.Movement.velocity.magnitude == 0f)
+            {
+                statueDamage = baseDamage * statueDamage;
+            }
+
+            float inAirDamage = 0;
+            if (player.GetCurrentState() is PlayerInAir)
+            {
+                inAirDamage = baseDamage * inAirDamage;
+            }
+
+            float soulDMG = baseDamage * soulDamage;
+
+            totalDamage = (baseDamage * player.characterStats.baseDamage) + maxFarDamage + maxNearDamage + fullHPDMG + weakDamage
+                + overheadDamage + backstabDamage + firstStrikeDamage + statueDamage + inAirDamage + soulDMG + burnDMG + freezeDMG
+                + poisonDMG + slowDMG + bleedDMG;
+        }
+
+        enemy.TakeDamage(totalDamage);
+
+        // On-hit effects on player
+        player.characterStats.RegenHP(baseDamage * player.characterStats.baseDamage * lifesteal);
+
+        // Proc
+        if (enemy && enemy.currentHealth > 0)
+        {
+            // Percentage
+            float burnDamagePerTick = 0.08f;
+            float burnTickRate = 1f;
+            float burnDuration = 2f;
+
+            float poisonDamagePerTick = 0.02f;
+            float poisonTickRate = 0.5f;
+            float poisonDuration = 4f;
+
+            float freezeDuration = 1.5f;
+
+            float slowAmount = 0.5f;
+            float slowDuration = 2f;
+
+            float bleedDamagePerTick = 0.04f;
+            float bleedTickRate = 0.6f;
+            float bleedDuration = 3f;
+            if (Random.value < burnChance * (doubleProc + 1))
+            {
+                IBurnable status = enemy.GetComponent<IBurnable>();
+                if (status != null)
+                {
+                    status.ApplyBurn(burnDamagePerTick, burnTickRate, burnDuration);
+                }
+            }
+
+            if (Random.value < poisonChance * (doubleProc + 1))
+            {
+                IPoisonable status = enemy.GetComponent<IPoisonable>();
+                if (status != null)
+                {
+                    status.ApplyPoison(poisonDamagePerTick, poisonTickRate, poisonDuration);
+                }
+            }
+
+            if (Random.value < freezeChance * (doubleProc + 1))
+            {
+                IFreezeable status = enemy.GetComponent<IFreezeable>();
+                if (status != null)
+                {
+                    status.ApplyFreeze(freezeDuration);
+                }
+            }
+
+            if (Random.value < slowChance * (doubleProc + 1))
+            {
+                ISlowable status = enemy.GetComponent<ISlowable>();
+                if (status != null)
+                {
+                    status.ApplySlow(slowAmount, slowDuration);
+                }
+            }
+
+            if (Random.value < bleedChance * (doubleProc + 1))
+            {
+                IBleedable status = enemy.GetComponent<IBleedable>();
+                if (status != null)
+                {
+                    status.ApplyBleed(bleedDamagePerTick, bleedTickRate, bleedDuration);
+                }
+            }
+        }
+        // After-effects
+        // Spawn Lightning Object that uses an overlap and hitList to transfer to enemies
+        // Spawn bomb that explodes onces and damage nearby enemies
+    }
+
+    public void ApplyOnKillEffects()
+    {
+
     }
 }
