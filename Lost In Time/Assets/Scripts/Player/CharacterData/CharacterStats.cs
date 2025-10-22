@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Xml;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
@@ -34,6 +36,8 @@ public class CharacterStats : MonoBehaviour
 
     // Misc
     public float momentum;
+    private float currentMomentum;
+
     public float lastStand;
     public int falseCard;
     public int explodingGift;
@@ -58,6 +62,12 @@ public class CharacterStats : MonoBehaviour
     private float overshieldRegenAmount = 0.1f; // 10%
 
     private float HPRegenStep = 2f; // Every 2 seconds
+
+    private float momentumWaitTime = 5f;
+    private float timeSinceMomentumStart;
+    private float timeSinceLastMomentum;
+    private float momentumTime = 10f;
+    private float momentumStep = 0.5f;
 
     // Temp
     private float tempHPRegen;
@@ -103,6 +113,7 @@ public class CharacterStats : MonoBehaviour
         }
 
         CheckTempStatTimes();
+        CheckMomentum();
     }
 
     public void RegenHP(float HPRegen)
@@ -120,7 +131,12 @@ public class CharacterStats : MonoBehaviour
         }
 
         timeSinceLastRegen = Time.time;
-        currentHP += regenAmount;
+        ChangeHP(regenAmount);
+    }
+
+    private void ChangeHP(float amount)
+    {
+        currentHP += amount;
     }
 
     public float GetCurrentHP()
@@ -144,6 +160,27 @@ public class CharacterStats : MonoBehaviour
 
         timeSinceLastShieldRegen = Time.time;
         overshield += regenAmount;
+    }
+
+    private void CheckMomentum()
+    {
+        if (Time.time < timeSinceLastDamage + momentumWaitTime)
+        {
+            currentMomentum = 0f;
+            return;
+        }
+        else if (currentMomentum == 0f)
+        {
+            timeSinceMomentumStart = Time.time;
+        }
+
+        if (Time.time < timeSinceLastMomentum + momentumStep || Time.time >= timeSinceMomentumStart + momentumTime)
+        {
+            return;
+        }
+
+        timeSinceLastMomentum = Time.time;
+        currentMomentum += momentum / (momentumTime / momentumStep);
     }
 
     private void CheckTempStatTimes()
@@ -223,13 +260,12 @@ public class CharacterStats : MonoBehaviour
             return;
         }
 
-        float newHP = currentHP - amount;
         if (currentHP - amount < 0f)
         {
-            newHP = 0f;
+            amount = currentHP;
         }
 
-        currentHP = newHP;
+        ChangeHP(-amount);
     }
 
     public void CheckLevelUp()
@@ -270,13 +306,14 @@ public class CharacterStats : MonoBehaviour
         baseHP = charData.health + (charData.health * statIncreasePerLevel * (level - 1));
         baseHPRegen = charData.healthRegen * baseHP / charData.health;
         baseHPRegen += baseHPRegen * tempHPRegen;
-        baseSpeed = charData.movementSpeed + (charData.movementSpeed * tempSpeed);
+        baseSpeed = charData.movementSpeed + (charData.movementSpeed * tempSpeed) + (charData.movementSpeed * currentMomentum);
         baseJumpPower = charData.jumpPower;
         baseJumps = charData.jumps;
         baseDashForce = charData.dashForce;
         baseDashes = charData.dashes;
         baseArmor = charData.armor + tempArmor;
-        baseDamage = charData.baseDamage + tempDamage + (charData.baseDamage * statIncreasePerLevel * (level - 1));
+        baseDamage = charData.baseDamage + (charData.baseDamage * statIncreasePerLevel * (level - 1));
+        baseDamage += baseDamage * tempDamage;
     }
 
     public void ApplyTempStat(StatType mod, float duration, float amount)
@@ -284,25 +321,25 @@ public class CharacterStats : MonoBehaviour
         switch (mod)
         {
             case StatType.MovementSpeed:
-                tempSpeed = amount;
+                tempSpeed += amount;
                 timeSinceTempSpeed = Time.time;
                 tempSpeedDuration = duration;
                 CalculateStats();
                 break;
             case StatType.Armor:
-                tempArmor = amount;
+                tempArmor += amount;
                 timeSinceTempArmor = Time.time;
                 tempArmorDuration = duration;
                 CalculateStats();
                 break;
             case StatType.HealthRegen:
-                tempHPRegen = amount;
+                tempHPRegen += amount;
                 timeSinceTempHPRegen = Time.time;
                 tempHpRegenDuration = duration;
                 CalculateStats();
                 break;
             default:
-                tempDamage = amount;
+                tempDamage += amount;
                 timeSinceTempDamage = Time.time;
                 tempDamageDuration = duration;
                 CalculateStats();

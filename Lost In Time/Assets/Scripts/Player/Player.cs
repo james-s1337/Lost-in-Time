@@ -158,4 +158,70 @@ public class Player : MonoBehaviour, IDamageable
         Debug.Log("PLayer ded");
         //dead = true;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Enemy")
+        {
+            Enemy enemy = collision.GetComponent<Enemy>();
+            if (enemy == null)
+            {
+                return;
+            }
+
+            ApplyOnHitEffects(enemy);
+        }
+    }
+
+    // When enemy hits the player
+    private void ApplyOnHitEffects(Enemy enemy)
+    {
+        if (enemy && enemy.currentHealth > 0)
+        {
+            if (Random.value < characterStats.burningTouch)
+            {
+                IBurnable status = enemy.GetComponent<IBurnable>();
+                if (status != null)
+                {
+                    status.ApplyBurn();
+                }
+            }
+
+            if (Random.value < characterStats.infectiousTouch)
+            {
+                IPoisonable status = enemy.GetComponent<IPoisonable>();
+                if (status != null)
+                {
+                    status.ApplyPoison();
+                }
+            }
+
+            if (Random.value < characterStats.freezingTouch)
+            {
+                IFreezeable status = enemy.GetComponent<IFreezeable>();
+                if (status != null)
+                {
+                    status.ApplyFreeze();
+                }
+            }
+
+            if (Random.value < characterStats.stickyTouch)
+            {
+                ISlowable status = enemy.GetComponent<ISlowable>();
+                if (status != null)
+                {
+                    status.ApplySlow();
+                }
+            }
+
+            if (Random.value < characterStats.spikyTouch)
+            {
+                IBleedable status = enemy.GetComponent<IBleedable>();
+                if (status != null)
+                {
+                    status.ApplyBleed();
+                }
+            }
+        }
+    }
 }

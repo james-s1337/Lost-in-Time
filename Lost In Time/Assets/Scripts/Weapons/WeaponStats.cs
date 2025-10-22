@@ -95,6 +95,7 @@ public class WeaponStats : MonoBehaviour
     private void Start()
     {
         CalculateWeaponStats();
+        Debug.Log(weaponModifiers);
     }
 
     public void AddModifier(IWeaponModifier modifier)
@@ -207,6 +208,16 @@ public class WeaponStats : MonoBehaviour
 
         if (!executed)
         {
+            // StatType
+            float lastStandDamageBoost = 1f;
+            float lastStandThreshold = 0.2f;
+            float lastStandDamage = 0;
+
+            if (player.characterStats.GetCurrentHP() / player.characterStats.baseHP <= lastStandThreshold)
+            {
+                lastStandDamage = scaledBaseDamage * lastStandDamageBoost;
+            }
+
             // Check if enemy is affected by any status
             float burnDMG = 0;
             float freezeDMG = 0;
@@ -297,11 +308,19 @@ public class WeaponStats : MonoBehaviour
                 inAirDamage = scaledBaseDamage * inAirDamage;
             }
 
+            float speedDamage = scaledBaseDamage * speedDamageScaling
+                * (Mathf.Clamp(player.core.Movement.velocity.x - player.characterStats.charData.movementSpeed, 0f, 40f));
+
             float soulDMG = scaledBaseDamage * soulDamage;
 
             totalDamage = scaledBaseDamage + maxFarDamage + maxNearDamage + fullHPDMG + weakDamage
                 + overheadDamage + backstabDamage + firstStrikeDamage + statueDamage + inAirDamage + soulDMG + burnDMG + freezeDMG
-                + poisonDMG + slowDMG + bleedDMG;
+                + poisonDMG + slowDMG + bleedDMG + lastStandDamage;
+
+            if (Random.value < baseCritChance)
+            {
+                totalDamage *= 2f + baseCritDamage;
+            }
         }
 
         enemyDamageable.TakeDamage(totalDamage);
@@ -360,10 +379,46 @@ public class WeaponStats : MonoBehaviour
         // After-effects
         // Spawn Lightning Object that uses an overlap and hitList to transfer to enemies
         // Spawn bomb that explodes onces and damage nearby enemies
+        ApplyOnKillEffects(enemy, player);
     }
 
-    public void ApplyOnKillEffects()
+    private void ApplyOnKillEffects(Enemy enemy, Player player)
     {
+        if (enemy.currentHealth > 0)
+        {
+            return;
+        }
+        float baseBoostTime = 2.5f;
 
+        for (int i = 0; i < predator; i++)
+        {
+            float predatorBoostTime = 3f;
+            float predatorDamageBoost = 2f;
+            StartCoroutine(ApplyTempStat(WeaponModifier.Damage, predatorBoostTime, predatorDamageBoost));
+        }
+
+        StartCoroutine(ApplyTempStat(WeaponModifier.Damage, baseBoostTime, damageBoostAfterKill));
+        StartCoroutine(ApplyTempStat(WeaponModifier.Cooldown, baseBoostTime, fireRateBoostAfterKill));
+        player.characterStats.ApplyTempStat(StatType.MovementSpeed, baseBoostTime, speedBoostAfterKill);
+        player.characterStats.ApplyTempStat(StatType.Armor, baseBoostTime, armorAfterKill);
+        player.characterStats.ApplyTempStat(StatType.HealthRegen, baseBoostTime, regenAfterKill);
+
+
+
+        float soulDamageAddAmount = 0.005f;
+        for (int i = 0; i < weaponModifiers.Count; i++)
+        {
+            WeaponStatModifier weaponModifier = (WeaponStatModifier) weaponModifiers[i];
+            for (int j = 0; j < weaponModifier.mods.Count; j++)
+            {
+                if (weaponModifier.mods[i].mod != WeaponModifier.SoulDMG)
+                {
+                    continue;
+                }
+
+                weaponModifier.mods[i].AddAmount(soulDamageAddAmount);
+                break;
+            }
+        }
     }
 }
