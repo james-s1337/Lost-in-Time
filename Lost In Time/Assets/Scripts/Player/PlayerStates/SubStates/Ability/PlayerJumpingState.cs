@@ -17,7 +17,6 @@ public class PlayerJumpingState : PlayerAbility
         isAbilityDone = true;
         jumpsLeft--;
         player.playerInAirState.SetIsJumping();
-        Debug.Log("Jumping");
     }
 
     public void ResetJumps() => jumpsLeft = player.characterStats.baseJumps;

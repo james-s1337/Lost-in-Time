@@ -10,7 +10,6 @@ public class PlayerIdleState : PlayerGrounded
     {
         base.Enter();
 
-        Debug.Log("Idle");
         core.Movement.SetVelocityX(0f);
     }
 

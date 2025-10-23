@@ -1,16 +1,8 @@
 using UnityEngine;
 
-public class PlayerLedgeClimbState : MonoBehaviour
+public class PlayerLedgeClimbState : PlayerOnWall
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public PlayerLedgeClimbState(Player player, PlayerStateMachine stateMachine, CharacterData charData, string animBoolName) : base(player, stateMachine, charData, animBoolName)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

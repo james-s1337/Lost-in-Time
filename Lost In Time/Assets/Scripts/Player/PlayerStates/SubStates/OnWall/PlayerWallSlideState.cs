@@ -1,16 +1,15 @@
 using UnityEngine;
 
-public class PlayerWallSlideState : MonoBehaviour
+public class PlayerWallSlideState : PlayerOnWall
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public PlayerWallSlideState(Player player, PlayerStateMachine stateMachine, CharacterData charData, string animBoolName) : base(player, stateMachine, charData, animBoolName)
     {
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void LogicUpdate()
     {
-        
+        base.LogicUpdate();
+
+        player.core.Movement.SetVelocityY(-player.characterStats.charData.wallSlideVelocity);
     }
 }

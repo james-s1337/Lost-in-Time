@@ -9,8 +9,6 @@ public class PlayerRunningState : PlayerGrounded
     public override void Enter()
     {
         base.Enter();
-
-        Debug.Log("Moving");
     }
 
     public override void LogicUpdate()

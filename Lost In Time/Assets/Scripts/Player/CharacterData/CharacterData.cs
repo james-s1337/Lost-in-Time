@@ -16,6 +16,10 @@ public class CharacterData : ScriptableObject
     public float defaultGravity = 2.5f;
     public float gravityFallMult = 2f;
 
+    [Header("Wall Slide")]
+    public float wallSlideVelocity = 3f;
+
+
     [Header("Vitals")]
     public float health = 50;
     public float healthRegen = 4; // Rate per 2 second

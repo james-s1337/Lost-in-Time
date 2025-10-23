@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CollisionSense : CoreComponent
 {
@@ -6,12 +7,33 @@ public class CollisionSense : CoreComponent
     public float GroundCheckRadius { get => groundCheckRadius; private set => groundCheckRadius = value; }
     public LayerMask WhatIsGround { get => whatIsGround; private set => whatIsGround = value; }
 
+    public Transform WallCheck {  get => wallCheck; private set => wallCheck = value; }
+    public float WallCheckDistance { get => wallCheckDistance; private set => wallCheckDistance = value; }
+    public LayerMask WhatIsWall { get => whatIsWall; private set => whatIsWall = value; }
+
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckRadius;
     [SerializeField] private LayerMask whatIsGround;
+
+    [SerializeField] private Transform wallCheck;
+    [SerializeField] private float wallCheckDistance;
+    [SerializeField] private LayerMask whatIsWall;
 
     public bool Ground
     {
         get => Physics2D.OverlapCircle(GroundCheck.position, groundCheckRadius, whatIsGround);
     }
+
+
+    public bool Wall
+    {
+        get => Physics2D.Raycast(wallCheck.position, Vector2.right * core.Movement.facingDir, wallCheckDistance, whatIsWall);
+    }
+
+    public void CheckWall()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(wallCheck.position, Vector2.right * core.Movement.facingDir, wallCheckDistance, whatIsWall);
+        Debug.DrawRay(wallCheck.position, Vector2.right * core.Movement.facingDir * wallCheckDistance, Color.red);
+    }
+
 }

@@ -45,7 +45,11 @@ public class PlayerState
         isExitingState = true;
     }
 
-    public virtual void LogicUpdate() { mouseWorldPos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()); } // Updates every Update()
+    public virtual void LogicUpdate() 
+    {
+        DoChecks();
+        mouseWorldPos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()); 
+    } // Updates every Update()
 
     public virtual void DoChecks() { } // Ground check, ledge check etc.
 

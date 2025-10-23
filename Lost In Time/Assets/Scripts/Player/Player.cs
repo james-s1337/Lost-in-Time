@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, IDamageable
 {
+    #region Essentials
     public PlayerInputManager playerInput { get; private set; }
     public Core core { get; private set; }
     public Animator anim { get; private set; }
     [SerializeField] CharacterData charData;
     public CharacterStats characterStats { get; private set; }
+    #endregion
 
+    #region States
     private PlayerStateMachine stateMachine;
     public PlayerIdleState playerIdleState { get; private set; }
     public PlayerRunningState playerRunningState { get; private set; }
@@ -18,6 +21,10 @@ public class Player : MonoBehaviour, IDamageable
     public PlayerJumpingState playerJumpingState { get; private set; }
     public PlayerMeleeAttackState playerMeleeState{ get; private set; }
     public PlayerInAir playerInAirState { get; private set; }
+    public PlayerWallSlideState playerWallSlideState { get; private set; }
+    public PlayerLedgeClimbState playerLedgeClimbState { get; private set; }
+    public PlayerWallJumpState playerWallJumpState { get; private set; }
+    #endregion
 
     [SerializeField] int weaponIndex = 0;
     public Weapon weapon { get; private set; }
@@ -41,6 +48,9 @@ public class Player : MonoBehaviour, IDamageable
         playerLandedState = new PlayerLandedState(this, stateMachine, charData, "landed");
         playerMeleeState = new PlayerMeleeAttackState(this, stateMachine, charData, "melee");
         playerInAirState = new PlayerInAir(this, stateMachine, charData, "inAir");
+        playerWallSlideState = new PlayerWallSlideState(this, stateMachine, charData, "wallSlide");
+        playerLedgeClimbState = new PlayerLedgeClimbState(this, stateMachine, charData, "ledgeClimb");
+        playerWallJumpState = new PlayerWallJumpState(this, stateMachine, charData, "inAir");
 
         stateMachine.ChangeState(playerIdleState);
         ChangeWeapon(weaponIndex);

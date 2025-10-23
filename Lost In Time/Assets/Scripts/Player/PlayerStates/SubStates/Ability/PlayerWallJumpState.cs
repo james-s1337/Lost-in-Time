@@ -1,16 +1,8 @@
 using UnityEngine;
 
-public class PlayerWallJumpState : MonoBehaviour
+public class PlayerWallJumpState : PlayerAbility
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public PlayerWallJumpState(Player player, PlayerStateMachine stateMachine, CharacterData charData, string animBoolName) : base(player, stateMachine, charData, animBoolName)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

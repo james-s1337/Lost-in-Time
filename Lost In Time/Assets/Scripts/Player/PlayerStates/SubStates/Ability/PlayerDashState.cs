@@ -1,16 +1,8 @@
 using UnityEngine;
 
-public class PlayerDashState : MonoBehaviour
+public class PlayerDashState : PlayerAbility
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public PlayerDashState(Player player, PlayerStateMachine stateMachine, CharacterData charData, string animBoolName) : base(player, stateMachine, charData, animBoolName)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

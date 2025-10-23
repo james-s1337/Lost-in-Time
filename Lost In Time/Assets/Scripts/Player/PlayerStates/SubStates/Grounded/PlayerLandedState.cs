@@ -9,8 +9,6 @@ public class PlayerLandedState : PlayerGrounded
     public override void Enter()
     {
         base.Enter();
-
-        Debug.Log("Landed on ground");
     }
 
     public override void LogicUpdate()

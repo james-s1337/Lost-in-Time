@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem.XInput;
 using UnityEngine.Windows;
 
 public class PlayerInAir : PlayerState
@@ -12,6 +13,8 @@ public class PlayerInAir : PlayerState
     private bool coyoteTime;
     private bool isJumping;
 
+    private bool isTouchingWall;
+
     private float maxYFallVelocity = -20f;
     public PlayerInAir(Player player, PlayerStateMachine stateMachine, CharacterData charData, string animBoolName) : base(player, stateMachine, charData, animBoolName)
     {
@@ -22,13 +25,12 @@ public class PlayerInAir : PlayerState
         base.DoChecks();
 
         isGrounded = core.CollisionSenses.Ground;
+        isTouchingWall = core.CollisionSenses.Wall;
     }
 
     public override void Enter()
     {
         base.Enter();
-
-        Debug.Log("In Air");
     }
 
     public override void LogicUpdate()
@@ -37,7 +39,6 @@ public class PlayerInAir : PlayerState
 
         CheckCoyoteTime();
 
-        isGrounded = core.CollisionSenses.Ground;
         InputX = player.playerInput.NormInputX;
         JumpInput = player.playerInput.jumpInput;
         JumpInputStop = player.playerInput.jumpInputStop;
@@ -73,6 +74,10 @@ public class PlayerInAir : PlayerState
         {
             coyoteTime = false;
             stateMachine.ChangeState(player.playerJumpingState);
+        }
+        else if (isTouchingWall && InputX == player.core.Movement.facingDir && player.core.Movement.velocity.y <= 0f)
+        {
+            stateMachine.ChangeState(player.playerWallSlideState);
         }
         else
         {
