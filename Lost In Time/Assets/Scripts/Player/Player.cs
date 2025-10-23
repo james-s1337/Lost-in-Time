@@ -16,7 +16,7 @@ public class Player : MonoBehaviour, IDamageable
     public PlayerRunningState playerRunningState { get; private set; }
     public PlayerLandedState playerLandedState { get; private set; }
     public PlayerJumpingState playerJumpingState { get; private set; }
-    public PlayerFireState playerFireState { get; private set; }
+    public PlayerMeleeAttackState playerMeleeState{ get; private set; }
     public PlayerInAir playerInAirState { get; private set; }
 
     [SerializeField] int weaponIndex = 0;
@@ -39,7 +39,7 @@ public class Player : MonoBehaviour, IDamageable
         playerRunningState = new PlayerRunningState(this, stateMachine, charData, "run");
         playerJumpingState = new PlayerJumpingState(this, stateMachine, charData, "inAir");
         playerLandedState = new PlayerLandedState(this, stateMachine, charData, "landed");
-        playerFireState = new PlayerFireState(this, stateMachine, charData, "fire");
+        playerMeleeState = new PlayerMeleeAttackState(this, stateMachine, charData, "melee");
         playerInAirState = new PlayerInAir(this, stateMachine, charData, "inAir");
 
         stateMachine.ChangeState(playerIdleState);
