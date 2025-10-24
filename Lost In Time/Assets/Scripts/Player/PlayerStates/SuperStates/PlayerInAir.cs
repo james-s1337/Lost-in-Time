@@ -34,7 +34,7 @@ public class PlayerInAir : PlayerState
 
         isGrounded = core.CollisionSenses.Ground;
         isTouchingWall = core.CollisionSenses.Wall;
-        isTouchingWallBack = player.core.CollisionSenses.WallBack();
+        isTouchingWallBack = core.CollisionSenses.WallBack();
 
         if (!wallJumpCoyoteTime && !isTouchingWall && !isTouchingWallBack && (oldIsTouchingWall || oldIsTouchingWallBack))
         {
@@ -45,6 +45,16 @@ public class PlayerInAir : PlayerState
     public override void Enter()
     {
         base.Enter();
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        oldIsTouchingWall = false;
+        oldIsTouchingWallBack = false;
+        isTouchingWall = false;
+        isTouchingWallBack = false;
     }
 
     public override void LogicUpdate()
@@ -88,7 +98,7 @@ public class PlayerInAir : PlayerState
         else if (JumpInput && (isTouchingWall || isTouchingWallBack || wallJumpCoyoteTime))
         {
             StopWallJumpCoyoteTime();
-            isTouchingWall = player.core.CollisionSenses.Wall;
+            isTouchingWall = core.CollisionSenses.Wall;
             player.playerWallJumpState.DetermineWallJumpDirection(isTouchingWall);
             stateMachine.ChangeState(player.playerWallJumpState);
         }
@@ -97,7 +107,7 @@ public class PlayerInAir : PlayerState
             coyoteTime = false;
             stateMachine.ChangeState(player.playerJumpingState);
         }
-        else if (isTouchingWall && InputX == player.core.Movement.facingDir && player.core.Movement.velocity.y <= 0f)
+        else if (((isTouchingWall && InputX == core.Movement.facingDir) || (isTouchingWallBack && InputX != core.Movement.facingDir)) && core.Movement.velocity.y <= 0f)
         {
             stateMachine.ChangeState(player.playerWallSlideState);
         }

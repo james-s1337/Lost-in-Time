@@ -187,7 +187,6 @@ public class CameraManager : MonoBehaviour
         }
 
         currentCamera = startingCamera;
-        Debug.Log(currentCamera);
         framingTransposer = currentCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
     }
     #endregion

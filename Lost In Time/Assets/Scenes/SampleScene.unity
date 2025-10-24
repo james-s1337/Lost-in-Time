@@ -411,7 +411,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1390080422}
+  - {fileID: 1644227299}
   m_Father: {fileID: 1051644842}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &220922280
@@ -426,16 +428,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 205cb0ac9e28c354eb2a8d72dd42b47a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundCheck: {fileID: 220922279}
-  groundCheckRadius: 0.52
+  groundCheck: {fileID: 1644227299}
+  groundCheckRadius: 0.45
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 384
+    m_Bits: 2432
   wallCheck: {fileID: 220922279}
   wallCheckDistance: 0.55
   whatIsWall:
     serializedVersion: 2
     m_Bits: 2048
+  ledgeCheck: {fileID: 1390080422}
 --- !u!1 &232853950
 GameObject:
   m_ObjectHideFlags: 0
@@ -852,7 +855,7 @@ Transform:
   m_GameObject: {fileID: 496268589}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.17, y: 4.6435, z: 0}
+  m_LocalPosition: {x: 12.06, y: 4.6435, z: 0}
   m_LocalScale: {x: 1, y: 14.367365, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2318,6 +2321,37 @@ MonoBehaviour:
   hemorrhage: 0
   fuel: 0
   predator: 0
+--- !u!1 &1390080421
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1390080422}
+  m_Layer: 6
+  m_Name: LedgeCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1390080422
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1390080421}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 220922279}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1393462936
 GameObject:
   m_ObjectHideFlags: 0
@@ -2774,6 +2808,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 1683466800}
   flipYRotationTime: 0.4
+--- !u!1 &1644227298
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1644227299}
+  m_Layer: 6
+  m_Name: GroundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1644227299
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644227298}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 220922279}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1645612366
 GameObject:
   m_ObjectHideFlags: 0
@@ -2900,6 +2965,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 5f8eb06e-9c92-484e-b92f-c1cf2718bf6e
     m_ActionName: 'Gameplay/Fire[/Mouse/leftButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9b861944-fa32-4a14-bfbd-5ab085b28fae
+    m_ActionName: 'Gameplay/Dash[/Keyboard/q]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b4152bd4-7b88-4e72-8340-57ce767fc224
+    m_ActionName: 'Gameplay/UpDown[/Keyboard/w,/Keyboard/s]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0055a0e7-aab4-4edb-8fd5-28cdcb6597f1
+    m_ActionName: 'Gameplay/PrimarySkill[/Keyboard/f]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0f1724ed-8144-40fc-944d-fcf90754a074
+    m_ActionName: 'Gameplay/SecondarySkill[/Keyboard/r]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -3025,10 +3106,6 @@ MonoBehaviour:
   modifiers:
   - {fileID: 11400000, guid: e6bae47754b5b304a832c143e09568d8, type: 2}
   - {fileID: 11400000, guid: 8f77ddb853761274bb83a27e8ddc2aa9, type: 2}
-  - {fileID: 11400000, guid: 9bf65292ccc83894c874c8e78786ffd3, type: 2}
-  - {fileID: 11400000, guid: de0d2c8504e9d2a4f95abc7692d96bf3, type: 2}
-  - {fileID: 11400000, guid: ec6f4bc6ce3af04478b58d82e5cfd9e6, type: 2}
-  - {fileID: 11400000, guid: ecf9a62266c3ac149aeb61687b36e8d3, type: 2}
 --- !u!114 &1683466804
 MonoBehaviour:
   m_ObjectHideFlags: 0

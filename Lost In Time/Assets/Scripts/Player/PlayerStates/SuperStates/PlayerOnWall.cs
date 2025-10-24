@@ -35,6 +35,11 @@ public class PlayerOnWall : PlayerState
     public override void Enter()
     {
         base.Enter();
+
+        if (isTouchingWall)
+        {
+            core.Movement.CheckIfShouldFlip(-core.Movement.facingDir);
+        }
     }
 
     public override void Exit()
@@ -59,7 +64,7 @@ public class PlayerOnWall : PlayerState
         {
             stateMachine.ChangeState(player.playerIdleState);
         }
-        else if (!isTouchingWall || InputX != player.core.Movement.facingDir)
+        else if ((!isTouchingWall && !isTouchingWallBack) || (isTouchingWallBack && InputX == core.Movement.facingDir) || (isTouchingWall && InputX != core.Movement.facingDir) || InputX == 0)
         {
             stateMachine.ChangeState(player.playerInAirState);
         }

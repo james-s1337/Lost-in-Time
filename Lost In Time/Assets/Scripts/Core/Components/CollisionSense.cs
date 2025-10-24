@@ -10,6 +10,7 @@ public class CollisionSense : CoreComponent
     public Transform WallCheck {  get => wallCheck; private set => wallCheck = value; }
     public float WallCheckDistance { get => wallCheckDistance; private set => wallCheckDistance = value; }
     public LayerMask WhatIsWall { get => whatIsWall; private set => whatIsWall = value; }
+    public Transform LedgeCheck { get => ledgeCheck; private set => ledgeCheck = value; }
 
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckRadius;
@@ -18,6 +19,8 @@ public class CollisionSense : CoreComponent
     [SerializeField] private Transform wallCheck;
     [SerializeField] private float wallCheckDistance;
     [SerializeField] private LayerMask whatIsWall;
+
+    [SerializeField] private Transform ledgeCheck;
 
     public bool Ground
     {
@@ -35,10 +38,20 @@ public class CollisionSense : CoreComponent
         return Physics2D.Raycast(wallCheck.position, Vector2.right * -core.Movement.facingDir, wallCheckDistance, whatIsWall);
     }
 
-    public void CheckWall()
+    void OnDrawGizmos()
     {
-        RaycastHit2D hit = Physics2D.Raycast(wallCheck.position, Vector2.right * core.Movement.facingDir, wallCheckDistance, whatIsWall);
+        if (core == null)
+        {
+            return;
+        }
+
+        Gizmos.DrawWireSphere(GroundCheck.position, groundCheckRadius);
         Debug.DrawRay(wallCheck.position, Vector2.right * core.Movement.facingDir * wallCheckDistance, Color.red);
+        Debug.DrawRay(wallCheck.position, Vector2.right * -core.Movement.facingDir * wallCheckDistance, Color.red);
     }
 
+    public bool CheckIfTouchingLedge()
+    {
+        return Physics2D.Raycast(ledgeCheck.position, Vector2.right * core.Movement.facingDir, wallCheckDistance, whatIsWall);
+    }
 }
