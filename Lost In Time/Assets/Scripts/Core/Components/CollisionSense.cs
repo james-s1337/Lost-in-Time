@@ -30,6 +30,11 @@ public class CollisionSense : CoreComponent
         get => Physics2D.Raycast(wallCheck.position, Vector2.right * core.Movement.facingDir, wallCheckDistance, whatIsWall);
     }
 
+    public bool WallBack()
+    {
+        return Physics2D.Raycast(wallCheck.position, Vector2.right * -core.Movement.facingDir, wallCheckDistance, whatIsWall);
+    }
+
     public void CheckWall()
     {
         RaycastHit2D hit = Physics2D.Raycast(wallCheck.position, Vector2.right * core.Movement.facingDir, wallCheckDistance, whatIsWall);

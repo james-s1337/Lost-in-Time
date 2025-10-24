@@ -10,6 +10,15 @@ public class PlayerWallSlideState : PlayerOnWall
     {
         base.LogicUpdate();
 
-        player.core.Movement.SetVelocityY(-player.characterStats.charData.wallSlideVelocity);
+        if (isExitingState)
+        {
+            return;
+        }
+
+        if (FireInput) {
+            player.weapon.UseWeapon();
+        }
+
+        player.core.Movement.SetVelocityY(-charData.wallSlideVelocity);
     }
 }

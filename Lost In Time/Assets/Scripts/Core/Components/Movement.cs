@@ -53,6 +53,13 @@ public class Movement : CoreComponent
     }
 
     // For dashing/recoil
+    public void SetVelocity(float v, Vector2 angle, int direction)
+    {
+        // v = speed
+        angle.Normalize();
+        workspace.Set(angle.x * v * direction, angle.y * v);
+        SetFinalVelocity();
+    }
     public void SetVelocity(float v, Vector2 angle)
     {
         // v = speed

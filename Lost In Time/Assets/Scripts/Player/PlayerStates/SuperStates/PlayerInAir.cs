@@ -14,6 +14,11 @@ public class PlayerInAir : PlayerState
     private bool isJumping;
 
     private bool isTouchingWall;
+    private bool isTouchingWallBack;
+    private bool oldIsTouchingWall;
+    private bool oldIsTouchingWallBack;
+    private bool wallJumpCoyoteTime;
+    private float startWallJumpCoyoteTime;
 
     private float maxYFallVelocity = -20f;
     public PlayerInAir(Player player, PlayerStateMachine stateMachine, CharacterData charData, string animBoolName) : base(player, stateMachine, charData, animBoolName)
@@ -24,8 +29,17 @@ public class PlayerInAir : PlayerState
     {
         base.DoChecks();
 
+        oldIsTouchingWall = isTouchingWall;
+        oldIsTouchingWallBack = isTouchingWallBack;
+
         isGrounded = core.CollisionSenses.Ground;
         isTouchingWall = core.CollisionSenses.Wall;
+        isTouchingWallBack = player.core.CollisionSenses.WallBack();
+
+        if (!wallJumpCoyoteTime && !isTouchingWall && !isTouchingWallBack && (oldIsTouchingWall || oldIsTouchingWallBack))
+        {
+            StartWallJumpCoyoteTime();
+        }
     }
 
     public override void Enter()
@@ -38,6 +52,7 @@ public class PlayerInAir : PlayerState
         base.LogicUpdate();
 
         CheckCoyoteTime();
+        CheckWallJumpCoyoteTime();
 
         InputX = player.playerInput.NormInputX;
         JumpInput = player.playerInput.jumpInput;
@@ -69,6 +84,13 @@ public class PlayerInAir : PlayerState
         if (isGrounded && core.Movement.velocity.y < 0.01f)
         {
             stateMachine.ChangeState(player.playerLandedState);
+        }
+        else if (JumpInput && (isTouchingWall || isTouchingWallBack || wallJumpCoyoteTime))
+        {
+            StopWallJumpCoyoteTime();
+            isTouchingWall = player.core.CollisionSenses.Wall;
+            player.playerWallJumpState.DetermineWallJumpDirection(isTouchingWall);
+            stateMachine.ChangeState(player.playerWallJumpState);
         }
         else if (JumpInput && player.playerJumpingState.CanJump())
         {
@@ -136,6 +158,19 @@ public class PlayerInAir : PlayerState
             player.playerJumpingState.DecreaseAmountOfJumpsLeft();
         }
     }
+    private void CheckWallJumpCoyoteTime()
+    {
+        if (wallJumpCoyoteTime && Time.time >= startWallJumpCoyoteTime + charData.coyoteTime)
+        {
+            StartWallJumpCoyoteTime();
+        }
+    }
     public void StartCoyoteTime() => coyoteTime = true;
+    public void StartWallJumpCoyoteTime()
+    {
+        wallJumpCoyoteTime = true;
+        startWallJumpCoyoteTime = Time.time;
+    }
+    public void StopWallJumpCoyoteTime() => wallJumpCoyoteTime = false;
     public void SetIsJumping() => isJumping = true;
 }
