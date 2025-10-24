@@ -8,6 +8,7 @@ public class CharacterData : ScriptableObject
     public float jumpPower = 10.0f;
     public int jumps = 1;
     public float dashForce = 15f;
+    public float dashTime = 0.5f;
     public int dashes = 1;
 
     // Const
@@ -21,6 +22,10 @@ public class CharacterData : ScriptableObject
     public float wallJumpVelocity = 10f;
     public float wallJumpTime = 0.3f;
     public Vector2 wallJumpAngle = new Vector2(1f, 2f);
+
+    [Header("Ledge Climb State")]
+    public Vector2 startOffset;
+    public Vector2 stopOffset;
 
     [Header("Vitals")]
     public float health = 50;

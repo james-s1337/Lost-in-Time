@@ -54,4 +54,19 @@ public class CollisionSense : CoreComponent
     {
         return Physics2D.Raycast(ledgeCheck.position, Vector2.right * core.Movement.facingDir, wallCheckDistance, whatIsWall);
     }
+
+    public Vector2 DetermineCornerPosition()
+    {
+        RaycastHit2D xHit = Physics2D.Raycast(wallCheck.position, Vector2.right * core.Movement.facingDir, wallCheckDistance, whatIsWall);
+        float xDistance = xHit.distance;
+
+        Vector2 cornerPos = new Vector2(xDistance * core.Movement.facingDir, 0f);
+        RaycastHit2D yHit = Physics2D.Raycast(ledgeCheck.position + (Vector3)cornerPos, Vector2.down,
+            ledgeCheck.position.y - wallCheck.position.y, whatIsWall);
+        float yDistance = yHit.distance;
+
+        cornerPos.Set(core.CollisionSenses.WallCheck.position.x + (xDistance * core.Movement.facingDir),
+            core.CollisionSenses.LedgeCheck.position.y - yDistance);
+        return cornerPos;
+    }
 }
