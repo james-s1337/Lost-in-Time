@@ -5,9 +5,12 @@ public class PlayerOnWall : PlayerState
 {
     protected bool isGrounded;
     protected bool isTouchingWall;
+
     protected int InputX;
     protected bool FireInput;
     protected bool JumpInput;
+    protected bool DashInput;
+
     protected bool isTouchingWallBack;
     public PlayerOnWall(Player player, PlayerStateMachine stateMachine, CharacterData charData, string animBoolName) : base(player, stateMachine, charData, animBoolName)
     {
@@ -54,11 +57,17 @@ public class PlayerOnWall : PlayerState
         InputX = player.playerInput.NormInputX;
         FireInput = player.playerInput.fireInput;
         JumpInput = player.playerInput.jumpInput;
+        DashInput = player.playerInput.dashInput;
 
         if (JumpInput)
         {
             player.playerWallJumpState.DetermineWallJumpDirection(isTouchingWall);
             stateMachine.ChangeState(player.playerWallJumpState);
+        }
+        else if (DashInput && player.playerDashState.CanDash())
+        {
+            player.playerDashState.SetDashingFromWall();
+            stateMachine.ChangeState(player.playerDashState);
         }
         else if (isGrounded)
         {

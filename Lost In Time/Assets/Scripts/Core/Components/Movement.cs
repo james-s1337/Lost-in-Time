@@ -80,6 +80,15 @@ public class Movement : CoreComponent
         SetFinalVelocity();
     }
 
+    public void SetDashVelocity(float v, Vector2 angle)
+    {
+        SetVelocityZero();
+
+        angle.Normalize();
+        workspace.Set(angle.x * v, 0f);
+        SetFinalVelocity();
+    }
+
     // Recoil + Knockback
     public void AddForce(Vector2 direction, float force)
     {

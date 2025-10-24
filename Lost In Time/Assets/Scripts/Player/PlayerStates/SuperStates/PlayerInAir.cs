@@ -8,6 +8,7 @@ public class PlayerInAir : PlayerState
     private bool JumpInput;
     private bool JumpInputStop;
     private bool FireInput;
+    private bool DashInput;
 
     private bool isGrounded;
     private bool coyoteTime;
@@ -18,7 +19,7 @@ public class PlayerInAir : PlayerState
     private bool oldIsTouchingWall;
     private bool oldIsTouchingWallBack;
     private bool isTouchingLedge;
-    private bool wallJumpCoyoteTime;
+    public bool wallJumpCoyoteTime { get; private set; }
     private float startWallJumpCoyoteTime;
 
     private float maxYFallVelocity = -20f;
@@ -75,6 +76,7 @@ public class PlayerInAir : PlayerState
         JumpInput = player.playerInput.jumpInput;
         JumpInputStop = player.playerInput.jumpInputStop;
         FireInput = player.playerInput.fireInput;
+        DashInput = player.playerInput.dashInput;
 
         CheckJumpMultiplier();
         CheckGravity();
@@ -117,6 +119,10 @@ public class PlayerInAir : PlayerState
         {
             coyoteTime = false;
             stateMachine.ChangeState(player.playerJumpingState);
+        }
+        else if (DashInput && player.playerDashState.CanDash())
+        {
+            stateMachine.ChangeState(player.playerDashState);
         }
         else if (((isTouchingWall && InputX == core.Movement.facingDir) || (isTouchingWallBack && InputX != core.Movement.facingDir)) && core.Movement.velocity.y <= 0f)
         {

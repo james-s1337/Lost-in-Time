@@ -95,7 +95,6 @@ public class WeaponStats : MonoBehaviour
     private void Start()
     {
         CalculateWeaponStats();
-        Debug.Log(weaponModifiers);
     }
 
     public void AddModifier(IWeaponModifier modifier)

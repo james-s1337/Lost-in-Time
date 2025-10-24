@@ -24,6 +24,7 @@ public class Player : MonoBehaviour, IDamageable
     public PlayerWallSlideState playerWallSlideState { get; private set; }
     public PlayerLedgeClimbState playerLedgeClimbState { get; private set; }
     public PlayerWallJumpState playerWallJumpState { get; private set; }
+    public PlayerDashState playerDashState { get; private set; }
     #endregion
 
     [SerializeField] int weaponIndex = 0;
@@ -51,6 +52,7 @@ public class Player : MonoBehaviour, IDamageable
         playerWallSlideState = new PlayerWallSlideState(this, stateMachine, charData, "wallSlide");
         playerLedgeClimbState = new PlayerLedgeClimbState(this, stateMachine, charData, "ledgeClimb");
         playerWallJumpState = new PlayerWallJumpState(this, stateMachine, charData, "inAir");
+        playerDashState = new PlayerDashState(this, stateMachine, charData, "dash");
 
         stateMachine.ChangeState(playerIdleState);
         ChangeWeapon(weaponIndex);

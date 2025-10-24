@@ -9,6 +9,7 @@ public class CharacterData : ScriptableObject
     public int jumps = 1;
     public float dashForce = 15f;
     public float dashTime = 0.5f;
+    public float dashCooldown = 1.5f;
     public int dashes = 1;
 
     // Const
