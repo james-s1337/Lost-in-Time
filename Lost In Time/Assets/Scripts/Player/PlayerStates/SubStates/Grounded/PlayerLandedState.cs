@@ -21,7 +21,7 @@ public class PlayerLandedState : PlayerGrounded
             {
                 stateMachine.ChangeState(player.playerRunningState);
             }
-            else // if (isAnimationFinished)
+            else if (isAnimationFinished)
             {
                 stateMachine.ChangeState(player.playerIdleState);
             }

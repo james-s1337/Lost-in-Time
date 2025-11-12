@@ -45,7 +45,7 @@ public class Player : MonoBehaviour, IDamageable
         stateMachine = new PlayerStateMachine();
         playerIdleState = new PlayerIdleState(this, stateMachine, charData, "idle");
         playerRunningState = new PlayerRunningState(this, stateMachine, charData, "run");
-        playerJumpingState = new PlayerJumpingState(this, stateMachine, charData, "inAir");
+        playerJumpingState = new PlayerJumpingState(this, stateMachine, charData, "jump");
         playerLandedState = new PlayerLandedState(this, stateMachine, charData, "landed");
         playerMeleeState = new PlayerMeleeAttackState(this, stateMachine, charData, "melee");
         playerInAirState = new PlayerInAir(this, stateMachine, charData, "inAir");

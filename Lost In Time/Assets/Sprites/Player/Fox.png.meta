@@ -221,10 +221,10 @@ TextureImporter:
       name: Fox_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 335
-        width: 30
-        height: 38
+        x: 0
+        y: 336
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -243,10 +243,10 @@ TextureImporter:
       name: Fox_1
       rect:
         serializedVersion: 2
-        x: 5
-        y: 287
-        width: 30
-        height: 38
+        x: 0
+        y: 288
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -265,10 +265,10 @@ TextureImporter:
       name: Fox_2
       rect:
         serializedVersion: 2
-        x: 52
-        y: 287
-        width: 31
-        height: 38
+        x: 48
+        y: 288
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -287,10 +287,10 @@ TextureImporter:
       name: Fox_3
       rect:
         serializedVersion: 2
-        x: 98
-        y: 287
-        width: 33
-        height: 38
+        x: 96
+        y: 288
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -309,10 +309,10 @@ TextureImporter:
       name: Fox_4
       rect:
         serializedVersion: 2
-        x: 146
-        y: 287
-        width: 33
-        height: 37
+        x: 144
+        y: 288
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -331,10 +331,10 @@ TextureImporter:
       name: Fox_5
       rect:
         serializedVersion: 2
-        x: 196
-        y: 287
-        width: 31
-        height: 38
+        x: 192
+        y: 288
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -353,10 +353,10 @@ TextureImporter:
       name: Fox_6
       rect:
         serializedVersion: 2
-        x: 3
-        y: 241
-        width: 46
-        height: 24
+        x: 0
+        y: 240
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -375,10 +375,10 @@ TextureImporter:
       name: Fox_7
       rect:
         serializedVersion: 2
-        x: 50
-        y: 239
-        width: 47
-        height: 26
+        x: 48
+        y: 240
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -398,9 +398,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 239
+        y: 240
         width: 48
-        height: 25
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -419,10 +419,10 @@ TextureImporter:
       name: Fox_9
       rect:
         serializedVersion: 2
-        x: 146
-        y: 239
-        width: 46
-        height: 23
+        x: 144
+        y: 240
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -441,10 +441,10 @@ TextureImporter:
       name: Fox_10
       rect:
         serializedVersion: 2
-        x: 195
-        y: 242
-        width: 46
-        height: 23
+        x: 192
+        y: 240
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -463,10 +463,10 @@ TextureImporter:
       name: Fox_11
       rect:
         serializedVersion: 2
-        x: 242
-        y: 239
-        width: 47
-        height: 26
+        x: 240
+        y: 240
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -486,9 +486,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 288
-        y: 239
+        y: 240
         width: 48
-        height: 26
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -507,10 +507,10 @@ TextureImporter:
       name: Fox_13
       rect:
         serializedVersion: 2
-        x: 338
-        y: 239
-        width: 45
-        height: 26
+        x: 336
+        y: 240
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -529,10 +529,10 @@ TextureImporter:
       name: Fox_14
       rect:
         serializedVersion: 2
-        x: 8
-        y: 191
-        width: 28
-        height: 26
+        x: 0
+        y: 192
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -551,10 +551,10 @@ TextureImporter:
       name: Fox_15
       rect:
         serializedVersion: 2
-        x: 15
+        x: 0
         y: 144
-        width: 21
-        height: 40
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -573,10 +573,10 @@ TextureImporter:
       name: Fox_16
       rect:
         serializedVersion: 2
-        x: 62
-        y: 143
-        width: 22
-        height: 41
+        x: 48
+        y: 144
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -595,10 +595,10 @@ TextureImporter:
       name: Fox_17
       rect:
         serializedVersion: 2
-        x: 14
-        y: 97
-        width: 21
-        height: 44
+        x: 0
+        y: 96
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -617,10 +617,10 @@ TextureImporter:
       name: Fox_18
       rect:
         serializedVersion: 2
-        x: 4
-        y: 55
-        width: 33
-        height: 38
+        x: 0
+        y: 48
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -639,10 +639,10 @@ TextureImporter:
       name: Fox_19
       rect:
         serializedVersion: 2
-        x: 56
-        y: 55
-        width: 29
-        height: 38
+        x: 48
+        y: 48
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -661,10 +661,10 @@ TextureImporter:
       name: Fox_20
       rect:
         serializedVersion: 2
-        x: 12
+        x: 0
         y: 0
-        width: 24
-        height: 38
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -683,10 +683,10 @@ TextureImporter:
       name: Fox_21
       rect:
         serializedVersion: 2
-        x: 62
+        x: 48
         y: 0
-        width: 22
-        height: 28
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -705,10 +705,10 @@ TextureImporter:
       name: Fox_22
       rect:
         serializedVersion: 2
-        x: 100
+        x: 96
         y: 0
-        width: 32
-        height: 35
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -727,7 +727,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 9a2245ecad81b3d488f35637425fb1e1
     internalID: 0
     vertices: []
     indices: 
@@ -735,7 +735,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":8.0,"y":8.0},"gridSpriteSize":{"x":48.0,"y":48.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       Fox_0: 1791904589581890566
       Fox_1: 2193286503029695119
