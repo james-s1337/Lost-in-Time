@@ -39,15 +39,14 @@ public class PlayerOnWall : PlayerState
     {
         base.Enter();
 
-        if (isTouchingWall)
-        {
-            core.Movement.CheckIfShouldFlip(-core.Movement.facingDir);
-        }
+        player.weapon.SetShootDirection(-1);
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        player.weapon.SetShootDirection(1);
     }
 
     public override void LogicUpdate()

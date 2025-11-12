@@ -24,7 +24,7 @@ public class CollisionSense : CoreComponent
 
     public bool Ground
     {
-        get => Physics2D.OverlapCircle(GroundCheck.position, groundCheckRadius, whatIsGround);
+        get => Physics2D.OverlapBox(GroundCheck.position, new Vector2(groundCheckRadius, groundCheckRadius), 0f, whatIsGround);
     }
 
 
@@ -45,7 +45,7 @@ public class CollisionSense : CoreComponent
             return;
         }
 
-        Gizmos.DrawWireSphere(GroundCheck.position, groundCheckRadius);
+        Gizmos.DrawWireCube(GroundCheck.position, new Vector2(groundCheckRadius, groundCheckRadius));
         Debug.DrawRay(wallCheck.position, Vector2.right * core.Movement.facingDir * wallCheckDistance, Color.red);
         Debug.DrawRay(wallCheck.position, Vector2.right * -core.Movement.facingDir * wallCheckDistance, Color.red);
     }
@@ -67,6 +67,7 @@ public class CollisionSense : CoreComponent
 
         cornerPos.Set(core.CollisionSenses.WallCheck.position.x + (xDistance * core.Movement.facingDir),
             core.CollisionSenses.LedgeCheck.position.y - yDistance);
+
         return cornerPos;
     }
 }

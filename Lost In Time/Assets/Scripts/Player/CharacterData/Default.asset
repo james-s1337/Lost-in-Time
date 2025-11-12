@@ -16,11 +16,19 @@ MonoBehaviour:
   jumpPower: 13
   jumps: 1
   dashForce: 15
+  dashTime: 0.5
+  dashCooldown: 1.5
   dashes: 1
   coyoteTime: 0.2
   jumpMult: 0.5
   defaultGravity: 2.5
   gravityFallMult: 2
+  wallSlideVelocity: 3
+  wallJumpVelocity: 10
+  wallJumpTime: 0.3
+  wallJumpAngle: {x: 1, y: 2}
+  startOffset: {x: 0, y: 0}
+  stopOffset: {x: 0, y: 1}
   health: 50
   healthRegen: 4
   armor: 0

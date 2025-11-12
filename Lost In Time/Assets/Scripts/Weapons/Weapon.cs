@@ -45,6 +45,11 @@ public class Weapon : MonoBehaviour
         weapon.Fire();
     }
 
+    public void SetShootDirection(int direction)
+    {
+        weapon.SetShootDirection(direction);
+    }
+
     public void ChangeWeapon(int weaponIndex, CharacterData charData)
     {
         weapon = weapons[weaponIndex];

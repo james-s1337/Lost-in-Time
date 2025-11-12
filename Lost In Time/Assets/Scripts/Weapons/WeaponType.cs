@@ -14,6 +14,8 @@ public class WeaponType : MonoBehaviour
     protected CharacterData charData;
 
     protected WeaponPerk perk;
+
+    protected int shootDirection = 1;
     protected virtual void Awake()
     {
         weaponStats = GetComponent<WeaponStats>();
@@ -52,6 +54,11 @@ public class WeaponType : MonoBehaviour
         RemoveWeaponModifier(perk.GetModifier());
         perk.Test(newMod, amount);
         ApplyWeaponModifier(perk.GetModifier());
+    }
+
+    public void SetShootDirection(int direction)
+    {
+        shootDirection = direction;
     }
 }
 
