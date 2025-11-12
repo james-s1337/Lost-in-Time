@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 public class PlayerDashState : PlayerAbility
 {
@@ -22,18 +23,13 @@ public class PlayerDashState : PlayerAbility
         base.Enter();
 
         mouseWorldPos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        if (mouseWorldPos.x - player.transform.position.x >= 0)
-        {
-            dashDirection = 1;
-        }
-        else
-        {
-            dashDirection = -1;
-        }
+
+        dashDirection = core.Movement.facingDir;
 
         if (dashingFromWall)
         {
-            dashDirection = core.Movement.facingDir;
+            dashDirection = -core.Movement.facingDir;
+            core.Movement.CheckIfShouldFlip(dashDirection);
         }
 
         timeSinceLastDash = Time.time;
