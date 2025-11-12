@@ -13,4 +13,9 @@ public class PlayerAnimationTrigger : MonoBehaviour
     {
         player.AnimationFinishTrigger();
     }
+
+    public void AnimationTrigger()
+    {
+        player.AnimationTrigger();
+    }
 }

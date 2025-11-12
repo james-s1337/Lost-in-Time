@@ -39,7 +39,7 @@ public class Player : MonoBehaviour, IDamageable
     {
         core = GetComponentInChildren<Core>();
         weapon = GetComponentInChildren<Weapon>();
-        anim = GetComponentInChildren<Animator>();
+        anim = GetComponent<Animator>();
         characterStats = GetComponent<CharacterStats>();
 
         stateMachine = new PlayerStateMachine();
