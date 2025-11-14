@@ -6,6 +6,8 @@ public class PlayerLedgeClimbState : PlayerAbility
     private Vector2 cornerPosition;
     private Vector2 startPos;
     private Vector2 stopPos;
+
+    private bool climbedUp;
     public PlayerLedgeClimbState(Player player, PlayerStateMachine stateMachine, CharacterData charData, string animBoolName) : base(player, stateMachine, charData, animBoolName)
     {
     }
@@ -13,9 +15,14 @@ public class PlayerLedgeClimbState : PlayerAbility
     public override void AnimationFinishTrigger()
     {
         base.AnimationFinishTrigger();
+    }
 
-        player.transform.position = stopPos;
-        isAbilityDone = true;
+    public override void AnimationTrigger()
+    {
+        base.AnimationTrigger();
+
+        climbedUp = true;
+        player.transform.position = new Vector2(stopPos.x, stopPos.y - charData.stopOffset.y*0.9f);
     }
 
     public override void Enter()
@@ -29,29 +36,31 @@ public class PlayerLedgeClimbState : PlayerAbility
         startPos.Set(cornerPosition.x - (core.Movement.facingDir * charData.startOffset.x), cornerPosition.y - charData.startOffset.y);
         stopPos.Set(cornerPosition.x + (core.Movement.facingDir * charData.stopOffset.x), cornerPosition.y + charData.stopOffset.y);
 
+        climbedUp = false;
         player.transform.position = startPos;
-
-        // Remove later when animations are added in
-        player.transform.position = stopPos;
-        isAbilityDone = true;
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        player.transform.position = stopPos;
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        if (isExitingState)
+        if (isAnimationFinished)
         {
-            return;
+            stateMachine.ChangeState(player.playerIdleState);
+        }
+        else if (!climbedUp)
+        { 
+            player.transform.position = startPos;
         }
 
         core.Movement.SetVelocityZero();
-        player.transform.position = startPos;
     }
 
     public void SetDetectedPosition(Vector2 position)

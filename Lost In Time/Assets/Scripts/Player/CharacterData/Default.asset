@@ -27,8 +27,8 @@ MonoBehaviour:
   wallJumpVelocity: 10
   wallJumpTime: 0.3
   wallJumpAngle: {x: 1, y: 2}
-  startOffset: {x: 0, y: 0}
-  stopOffset: {x: 0, y: 1}
+  startOffset: {x: 0.5, y: 0.5}
+  stopOffset: {x: 0.1, y: 1.5}
   health: 50
   healthRegen: 4
   armor: 0
