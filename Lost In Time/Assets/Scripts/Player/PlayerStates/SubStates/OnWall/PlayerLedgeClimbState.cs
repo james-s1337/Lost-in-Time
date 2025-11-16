@@ -22,7 +22,7 @@ public class PlayerLedgeClimbState : PlayerAbility
         base.AnimationTrigger();
 
         climbedUp = true;
-        player.transform.position = new Vector2(stopPos.x, stopPos.y - charData.stopOffset.y*0.9f);
+        player.transform.position = new Vector2(startPos.x, stopPos.y - charData.stopOffset.y*0.9f);
     }
 
     public override void Enter()

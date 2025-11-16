@@ -3,22 +3,12 @@ using UnityEngine.Windows;
 
 public class PlayerLandedState : PlayerGrounded
 {
-    private bool canTransition;
     public PlayerLandedState(Player player, PlayerStateMachine stateMachine, CharacterData charData, string animBoolName) : base(player, stateMachine, charData, animBoolName)
     {
     }
     public override void Enter()
     {
         base.Enter();
-
-        canTransition = false;
-    }
-
-    public override void AnimationTrigger()
-    {
-        base.AnimationTrigger();
-
-        canTransition = true;
     }
 
     public override void LogicUpdate()
@@ -31,7 +21,7 @@ public class PlayerLandedState : PlayerGrounded
             {
                 stateMachine.ChangeState(player.playerRunningState);
             }
-            if (!isAnimationFinished)
+            else if (isAnimationFinished)
             {
                 stateMachine.ChangeState(player.playerIdleState);
             }
