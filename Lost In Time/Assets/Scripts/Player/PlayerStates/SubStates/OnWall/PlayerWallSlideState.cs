@@ -15,10 +15,6 @@ public class PlayerWallSlideState : PlayerOnWall
             return;
         }
 
-        if (FireInput) {
-            player.weapon.UseWeapon();
-        }
-
         player.core.Movement.SetVelocityY(-charData.wallSlideVelocity);
     }
 }

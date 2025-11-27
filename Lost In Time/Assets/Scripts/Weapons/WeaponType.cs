@@ -7,7 +7,7 @@ public class WeaponType : MonoBehaviour
 {
     protected WeaponCatalogue weaponType;
     public WeaponStats weaponStats { get; private set; }
-    protected bool canFire;
+    public bool canFire { get; protected set; }
     protected bool isFiring;
     protected float timeSinceLastFire;
     protected Player player;

@@ -9,6 +9,7 @@ public class Player : MonoBehaviour, IDamageable
     public PlayerInputManager playerInput { get; private set; }
     public Core core { get; private set; }
     public Animator anim { get; private set; }
+    public Animator attackAnim;
     [SerializeField] CharacterData charData;
     public CharacterStats characterStats { get; private set; }
     #endregion
@@ -19,7 +20,7 @@ public class Player : MonoBehaviour, IDamageable
     public PlayerRunningState playerRunningState { get; private set; }
     public PlayerLandedState playerLandedState { get; private set; }
     public PlayerJumpingState playerJumpingState { get; private set; }
-    public PlayerMeleeAttackState playerMeleeState{ get; private set; }
+    public PlayerAttackState playerAttackState{ get; private set; }
     public PlayerInAir playerInAirState { get; private set; }
     public PlayerWallSlideState playerWallSlideState { get; private set; }
     public PlayerLedgeClimbState playerLedgeClimbState { get; private set; }
@@ -47,7 +48,7 @@ public class Player : MonoBehaviour, IDamageable
         playerRunningState = new PlayerRunningState(this, stateMachine, charData, "run");
         playerJumpingState = new PlayerJumpingState(this, stateMachine, charData, "jump");
         playerLandedState = new PlayerLandedState(this, stateMachine, charData, "landed");
-        playerMeleeState = new PlayerMeleeAttackState(this, stateMachine, charData, "melee");
+        playerAttackState = new PlayerAttackState(this, stateMachine, charData, "attack");
         playerInAirState = new PlayerInAir(this, stateMachine, charData, "inAir");
         playerWallSlideState = new PlayerWallSlideState(this, stateMachine, charData, "wallSlide");
         playerLedgeClimbState = new PlayerLedgeClimbState(this, stateMachine, charData, "ledgeClimb");

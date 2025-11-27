@@ -8,6 +8,7 @@ public class PlayerInAir : PlayerState
     private bool JumpInput;
     private bool JumpInputStop;
     private bool FireInput;
+    private bool MeleeInput;
     private bool DashInput;
 
     private bool isGrounded;
@@ -76,18 +77,23 @@ public class PlayerInAir : PlayerState
         JumpInput = player.playerInput.jumpInput;
         JumpInputStop = player.playerInput.jumpInputStop;
         FireInput = player.playerInput.fireInput;
+        MeleeInput = player.playerInput.meleeInput;
         DashInput = player.playerInput.dashInput;
 
         CheckJumpMultiplier();
         CheckGravity();
 
-        if (FireInput)
+        if (MeleeInput)
         {
-            player.weapon.UseWeapon();
-            // stateMachine.ChangeState(player.playerFireState);
+            player.playerAttackState.SetAttackType(1, 0);
+            stateMachine.ChangeState(player.playerAttackState);
         }
-
-        if (isGrounded && core.Movement.velocity.y < 0.01f)
+        else if(FireInput && player.weapon.weapon.canFire)
+        {
+            player.playerAttackState.SetAttackType(0, 0);
+            stateMachine.ChangeState(player.playerAttackState);
+        }
+        else if (isGrounded && core.Movement.velocity.y < 0.01f)
         {
             stateMachine.ChangeState(player.playerLandedState);
         }

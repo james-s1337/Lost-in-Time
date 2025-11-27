@@ -4,6 +4,7 @@ public class PlayerWallJumpState : PlayerAbility
 {
     private int wallJumpDirection;
     protected bool FireInput;
+    protected bool MeleeInput;
     public PlayerWallJumpState(Player player, PlayerStateMachine stateMachine, CharacterData charData, string animBoolName) : base(player, stateMachine, charData, animBoolName)
     {
     }
@@ -23,11 +24,23 @@ public class PlayerWallJumpState : PlayerAbility
     {
         base.LogicUpdate();
 
-        FireInput = player.playerInput.fireInput;
-
-        if (FireInput)
+        if (isExitingState)
         {
-            player.weapon.UseWeapon();
+            return;
+        }
+
+        FireInput = player.playerInput.fireInput;
+        MeleeInput = player.playerInput.meleeInput;
+
+        if (MeleeInput)
+        {
+            player.playerAttackState.SetAttackType(1, 0);
+            stateMachine.ChangeState(player.playerAttackState);
+        }
+        else if (FireInput && player.weapon.weapon.canFire)
+        {
+            player.playerAttackState.SetAttackType(0, 0);
+            stateMachine.ChangeState(player.playerAttackState);
         }
 
         player.anim.SetFloat("yVelocity", core.Movement.velocity.y);

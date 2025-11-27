@@ -10,6 +10,7 @@ public class PlayerInputManager : MonoBehaviour
     private float inputHoldTime = 0.2f;
     private float jumpInputStartTime;
     public bool fireInput { get; private set; }
+    public bool meleeInput { get; private set; }
     public bool dashInput { get; private set; }
 
     void Update()
@@ -63,6 +64,24 @@ public class PlayerInputManager : MonoBehaviour
     public void UseFireInput()
     {
         fireInput = false;
+    }
+
+    public void OnMeleeInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            meleeInput = true;
+        }
+
+        if (context.canceled)
+        {
+            meleeInput = false;
+        }
+    }
+
+    public void UseMeleeInput()
+    {
+        meleeInput = false;
     }
 
     public void OnDashInput(InputAction.CallbackContext context)
