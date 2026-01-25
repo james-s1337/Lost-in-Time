@@ -7,6 +7,7 @@ public class WeaponType : MonoBehaviour
 {
     protected WeaponCatalogue weaponType;
     public WeaponStats weaponStats { get; private set; }
+    public WeaponSkill weaponSkill { get; private set; } // Currently equipped weapon skill (can't change after game starts)
     public bool canFire { get; protected set; }
     protected bool isFiring;
     protected float timeSinceLastFire;

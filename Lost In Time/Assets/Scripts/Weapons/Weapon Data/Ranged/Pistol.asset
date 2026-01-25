@@ -27,3 +27,5 @@ MonoBehaviour:
   critDamage: 0
   burnChance: 0
   freezeChance: 0
+  defaultSkill: Rush
+  secondarySkill: Gunblazer

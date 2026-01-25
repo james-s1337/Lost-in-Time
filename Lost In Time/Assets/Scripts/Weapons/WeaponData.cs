@@ -22,4 +22,8 @@ public class WeaponData : ScriptableObject
 
     public float burnChance = 0;
     public float freezeChance = 0;
+
+    [Header("Weapon Skills")]
+    public string defaultSkill;
+    public string secondarySkill;
 }
